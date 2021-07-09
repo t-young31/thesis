@@ -1,0 +1,149 @@
+% -------------------------------- General formatting ------------------------------
+\documentclass[a4paper,12pt,twoside=false]{scrbook}
+\renewcommand{\baselinestretch}{1.8} 
+\renewcommand{\thefootnote}{\alph{footnote}}
+\setlength{\footnotesep}{\baselineskip}
+\setlength{\parskip}{2em}
+
+% ----------------------------------Package imports -------------------------------
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{mathtools, etoolbox}
+\usepackage{parskip}
+\usepackage{braket}
+\usepackage{chemformula}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{rotating}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{setspace}
+\usepackage[bottom]{footmisc}
+\usepackage{graphicx}
+\usepackage{cleveref}
+\usepackage{color}
+\usepackage{pifont}
+\usepackage{enumitem}
+\usepackage{subfiles}
+\usepackage{xr}                                                         % For cross-referencing
+\usepackage[font=small,labelfont=bf]{caption}
+
+
+% --------------------------------- Table formatting ----------------------------
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{b}{X}
+\newcolumntype{s}{>{\hsize=.3\hsize}Y}
+
+
+% ------------------------------  Figure Captions  ------------------------------
+\captionsetup[figure]{font={stretch=1.2,small},format=plain,labelsep=period,skip=2pt}
+\captionsetup[table]{font=small,format=plain,labelsep=period}
+
+\crefname{section}{§}{§§}
+
+% -------------------------------- Referenceing --------------------------
+\usepackage[backend=bibtex,
+                      sorting=none,
+                      citestyle=numeric-comp,
+                      bibstyle=chem-acs,
+                      firstinits=true]{biblatex}
+                      
+\bibliography{refs}
+
+
+% ----------------------------- Specific page formatting ---------------
+\usepackage[a4paper, total={6.5in, 9in}]{geometry}
+\numberwithin{equation}{chapter}
+\pagestyle{fancy}
+\footskip=30pt
+
+\fancyhf{}
+\fancyhead[L]{\rightmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\skip\footins}{1.2pc plus 5pt minus 10pt}
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+\interfootnotelinepenalty=10000
+
+% Re-define the plain page style to overide the default \chapter page style
+\fancypagestyle{plain}{%
+	\footskip=30pt
+	\fancyhf{}
+	\rfoot[]{\thepage}
+	\cfoot{}
+	\lfoot[\thepage]{}
+}
+
+% ----------------- Custom document-wide commands --------------
+\DeclareMathOperator{\sgn}{sgn}
+
+\newcommand{\kcal}{kcal mol$^{-1}$}
+\newcommand{\kcalx}{kcal mol$^{-1}$ }
+\newcommand\standardstate{{\circ\kern-0.495em-}}
+
+
+% ------------------------- Code formatting ------------------------
+\lstset{frame=tb,
+	language=Python,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{gray},
+	stringstyle=\color{orange},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
+
+
+\begin{document}	
+
+
+\subfile{0/preamble}
+\subfile{0/list_of_abbrv}
+
+% -------------------- Main body only formatting --------------------
+\setcounter{page}{1}                      % Reset the page numbering 
+\pagenumbering{arabic}
+\numberwithin{figure}{section}      % Number figures within sections
+% ----------------------------------------------------------------------
+
+\subfile{1/intro}
+
+\subfile{2/theory}
+
+\subfile{3/overview/overview}
+\subfile{3/da/da}
+\subfile{3/cgbind/cgbind}
+
+\subfile{4/entropy}
+
+\subfile{5/overview/overview}
+\subfile{5/autode/autode}
+\subfile{5/further/further}
+
+\subfile{6/overview/overview}
+\subfile{6/gap/gap}
+
+\subfile{7/conclusions}
+
+\subfile{8/appendicies}
+
+\printbibliography
+
+\end{document}
