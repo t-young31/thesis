@@ -1,0 +1,270 @@
+\documentclass[main.tex]{subfiles}
+
+
+
+
+\begin{document}
+	
+	
+	\rhead[]{\nouppercase{\rightmark}}
+	\lhead[\nouppercase{\leftmark}]{}
+	\rfoot[]{\thepage}
+	\cfoot{}
+	\lfoot[\thepage]{}
+
+	\setlength{\parindent}{15pt}
+	%  --------------------------------------------- Title page --------------------------------------
+
+	
+	\begin{titlepage}
+		\pagenumbering{roman}
+		\begin{center}
+			\begin{Large}
+				\ \\
+				\vspace{1.5cm}
+				{\bfseries Methods Towards Computational Catalyst Design}\\\vspace{0.3cm}
+			\end{Large}
+			\vspace{2.5cm}
+			{\bfseries Tom Young}\\
+			\vspace{1cm}
+			{\bfseries Balliol College}\\
+			{\bfseries University of Oxford}\\
+			\vspace{2.5cm}
+			\includegraphics[width=4cm]{0/figs/logo.png}
+			\vfill
+			A thesis submitted for the degree of\\
+			Doctor of Philosophy\\
+			at the University of Oxford\\
+			\ \\
+			Trinity 2021
+		\end{center}
+	\end{titlepage}
+	%  --------------------------------------------- abstract page --------------------------------------
+	
+	%- empty page I -----
+	%--------------------
+	\newpage
+	\thispagestyle{empty}
+	\ \\
+	\newpage
+	
+	%  --------------------------------------------- abstract page --------------------------------------
+	\setcounter{page}{1}
+	%\thispagestyle{empty}
+	\begin{center}
+		\begin{Large}
+    		\null
+			\vspace{-0.8cm}
+			%\addtocontents{toc}{~\hfill\textbf{Page}\par}
+			\addcontentsline{toc}{chapter}{Abstract}
+			
+			{\bfseries \Large \textsf{Methods Towards Computational Catalyst Design}}\\\vspace{0.3cm}
+		\end{Large}
+		\vspace{0.5cm}
+		Tom A. Young\\
+		Balliol College\\
+		University of Oxford\\
+		\ \\
+		A thesis submitted for the degree of\\
+		Doctor of Philosophy\\
+		at the University of Oxford, 12${}^\text{th}$ July 2021\\
+		\vspace{1cm}
+		{\bfseries Abstract}
+	\end{center}
+    \null
+    \vspace{-0.9cm}
+	Finding active, selective and stable catalysts computationally remains an unsolved problem with numerous benefits in chemistry and the wider world. Determining reaction free energy barriers enables such a classification and relies on predictions from calculations or chemical intuition. By understanding how a biomimetic metallocage achieves catalytic proficiency towards a [4+2] cycloaddition more active catalysts are proposed to require enhanced flexibility and electron deficiency (Chapter 3). In combination with automated approaches to construct metallocage.host geometries and generating transition states (Chapters 3 \& 5) the efficient methodology enables screening new metallocages for a reaction to become routine. A method to improve the accuracy of calculated reaction free energy differences is proposed that uses a more realistic expression for the translational entropy contribution for solution-phase solutes (Chapter 4). Towards calculating accurate free energy differences by dynamics sampling, an efficient method for training machine learned potentials is proposed en-route to fast yet accurate molecular force fields (Chapter 6).
+	\
+	%
+	%
+	% ****************** Are keywords needed?! *******8
+	%\vspace{1cm}
+	%\\\\
+	%{\bfseries Keywords:} 
+	
+	\newpage
+	%----------------------------------------------------------------------------------------------------
+	
+	
+
+	%---------------------------------- Statement of Originality ---------------------------------------
+	%\thispagestyle{empty}
+	\begin{center}
+		{\bfseries\Large \textsf{Statement of Originality}}
+	\end{center}
+	\addcontentsline{toc}{chapter}{Statement of Originality}
+	I, Tom Young, hereby confirm that this thesis and the work to which it refers are the results of my own efforts. Any ideas, data, images, or text resulting from the work of others (whether published or unpublished) are fully identified as such within the work and attributed to their originator in the text, bibliography, or in footnotes. This thesis has not been submitted in whole or in part for any other academic degree or professional qualification.\\
+	\ \\
+	\ \\
+	\ \\
+	\vspace{1.5cm}
+	Date:\\
+	\vspace{1.5cm}
+	Signature:
+	
+	
+	\newpage
+	%----------------------------------------------------------------------------------------------------
+	
+	
+	%--------------------
+	%- empty page III ---
+	%--------------------
+	%\newpage
+	%{\thispagestyle{empty}
+   %	\ \\
+	%\newpage}
+
+
+	%----------------------------------------  Acknowledgements -------------------------------------
+
+	%\thispagestyle{empty}
+	\begin{center}
+		{\bfseries\Large \textsf{Acknowledgments}}
+	\end{center}
+	\addcontentsline{toc}{chapter}{Acknowledgments}
+    \null
+	\vspace{-0.9cm}
+	Seemingly no sooner than I started, here I am writing the acknowledgements section of my thesis -- time really does fly when you're having fun. First and foremost I'd like to thank my supervisor, Prof. Fernanda Duarte for many interesting discussions and continued guidance. I'd also like to thank all the members of the Duarte group both past and present, without which the experience wouldn't have been the same: the OGs (Alistair and Matina/$\mu\alpha\lambda\acute{\alpha}\kappa\alpha$); the Part \RN{1}\RN{1}s, particularly Joe for all his work on \emph{autodE} and his continued support of the project; Tristan for listening and questioning all my terrible ideas, and making them better; Tomasz for many engaging discussions; and the rotation students, including Kate, Callum and Matthew for making the office an enjoyable place to be. Although not a member, I'd also like to thank Harry as an honorary member of the group, whose ideas and discussions on unanswerable scientific questions were fun and enlightening (\emph{what is a bond}\textinterrobang).  
+	\vspace{0.4cm}
+	\\
+	Thanks also to everyone in TMCS and the theoretical chemistry department: Izzy (or some spelling thereof); Hannah; Lachlan; Tom; Alex, for his trivial discussions; Mike; Ava; Tim, for his supervision during my TMCS rotation; Hugh for super helpful theory chats; and Max for his baked goods, and all the help teaching maths.
+	\vspace{0.4cm}
+	\\
+	Many thanks to Dr. Rob Penfold and Prof. William Barford, and Balliol college generally, for giving me the opportunity to teach during my time here. Thanks to all the supervisors I've had along the way: Dr. Natalie Fey, who introduced me to computation; Profs. Paul Pringle and John Bower for fun collaborative projects and Prof. Sir David Clary. And thanks to many others for their guidance and suggestions: Dr. Kjell Jorner; Prof. Volker Deringer, Prof. G\'abor Cs\'anyi, Dr. Paul Lusby and Prof. Tim Donohoe.
+	\vspace{0.4cm}
+	\\
+	Finally, thanks to my family whose support made this possible.
+	
+	\newpage
+	\begin{center}
+		{\bfseries\Large \textsf{Acknowledgments: Funding}}
+	\end{center}
+	I'd like to thank all the funding sources that have allowed me to undertake a DPhil. In particular, the TMCS CDT programme, AWE for the studentship, the Department of Chemistry in Oxford and Balliol College.
+		
+	\newpage
+	
+	%--------------------------------- Data and code availability --------------------------------------------
+	\newpage
+	\begin{center}
+		{\bfseries\Large \textsf{Data Availability}}
+	\end{center}
+	\addcontentsline{toc}{chapter}{Data Availability}
+	~
+	The computer code developed and itemised below is freely available on \emph{GitHub}. Raw data is presented in the online supporting information of published manuscripts or in  appendices where appropriate.
+	
+	\begin{enumerate}[label=\roman*., itemsep=1.5ex]
+		\item \emph{cgbind}: {\url{https://github.com/duartegroup/cgbind}}
+		\item \emph{autodE}: {\url{https://github.com/duartegroup/autodE}}
+		\item \emph{molfunc}: {\url{https://github.com/duartegroup/molfunc}}
+		\item \emph{othem}: {\url{https://github.com/duartegroup/otherm}}
+		\item \emph{gap-train}: {\url{https://github.com/t-young31/gap-train}}
+		\item \emph{soap-rust}: {\url{https://github.com/t-young31/soap-rust}}
+	\end{enumerate}
+	
+	
+	\newpage
+
+
+	%- empty page VI ----
+	%--------------------
+	%{\thispagestyle{empty}
+	%\ \\
+	%\newpage
+    % }
+	
+	%---------------------------------------------  Publications -----------------------------------------
+	%\thispagestyle{empty}
+	{
+	\begin{center}
+		{\bfseries\Large \textsf{Publications}}
+	\end{center}
+	\addcontentsline{toc}{chapter}{Publications}
+	
+	This thesis is based in part on the following publications:
+	\vspace{0.3cm}
+	
+	\begin{enumerate}[label=\Roman*., itemsep=2ex]
+		
+		\item %\underline{T. A. Young}, V. Martí-Centelles, J. Wang, P. J. Lusby and F. Duarte., \emph{J. Am. Chem. Soc.}, 2020, 142, 1300--1310.
+		\underline{Young, T. A.}; Martí-Centelles V.; Wang J.; Lusby P. J.;  Duarte F. \emph{J. Am. Chem. Soc.}, {\bfseries{2020}}, \emph{142}, 1300--1310.
+		
+		
+		\begin{minipage}{0.9\textwidth}
+			\singlespacing
+			{\small {\bfseries{Contribution}}: Methodology development, data generation and analysis, drafting.} \\
+			{\small Reprinted (adapted) with permission from the Journal of the American Chemical Society. Copyright 2020. American Chemical Society.}
+		\end{minipage}
+
+		
+		\item %\underline{T. A. Young}, R. Gheorghe, and F. Duarte, \emph{J. Chem. Inf. Model.}, 2020, 60, 7, 3546--3557.
+		\underline{Young, T. A}; Gheorghe R.;  Duarte F. \emph{J. Chem. Inf. Model.}, {\bfseries{2020}}, \emph{60}, 7, 3546--3557.
+		
+		\begin{minipage}{0.9\textwidth}
+			\singlespacing
+			{\small  {\bfseries{Contribution}}: Conceptualisation, methodology development, data generation and analysis, drafting.} \\
+			{\small Reprinted (adapted) with permission from the Journal of Chemical Information and Modeling. Copyright 2020. American Chemical Society.}
+		\end{minipage}
+		
+		\item \underline{Young, T. A.};  Silcock J. J.; Sterling A. J.;  Duarte F. \emph{Angew. Chem .Int. Ed.}, {\bfseries{2021}}, \emph{60}, 4266--4274.
+		
+		
+		\begin{minipage}{0.9\textwidth}
+			\singlespacing
+			{\small  {\bfseries{Contribution}}: Conceptualisation, methodology development, data generation and analysis, drafting.} \\
+			{\small Reprinted (adapted) with permission from Angewandte Chemie International Edition. Copyright 2021. John Wiley and Sons.}
+		\end{minipage}
+		
+		
+		\item \underline{Young, T. A.}; Johnston-Wood T.; Deringer V.;  Duarte F. \emph{Chemical Science}, {\bfseries{2021}}. DOIL \href{https://doi.org/10.1039/d1sc01825f}{10.1039/d1sc01825f}.
+		
+			\begin{minipage}{0.9\textwidth}
+			\singlespacing
+			{\small  {\bfseries{Contribution}}: Conceptualisation, methodology development, data generation and analysis, drafting.} 
+			\end{minipage}
+		
+	\end{enumerate}
+
+	\newpage
+	The following contributing-author publications do not form part of this thesis.
+	\vspace{0.3cm}
+	
+	\begin{enumerate}[label=\Roman*., itemsep=2ex]
+		\setcounter{enumi}{4}
+		\item Armstrong R. J.; Akhtar W. M.; \underline{Young, T. A.}, Duarte F.; Donohoe T. J. \emph{Angew. Chem. Int. Ed.}, {\bfseries{2019}}, \emph{58},12558--12562.
+		
+		\item Spicer R. L.; Stergiou A. D., \underline{Young, T. A.}; Duarte F.; Symes M. D.; Lusby P. J. \emph{J. Am. Chem. Soc.},  {\bfseries{2020}}, \emph{142}, 2134--2139.
+		
+		\item Wang G.-W.; Boyd O.; \underline{Young, T. A.}; Bertrand S. M.; Bower J. F., \emph{J. Am. Chem. Soc.}, {\bfseries{2020}}, \emph{142}, 1740--1745.
+		
+		\item Wang J.; \underline{Young, T. A.}; Duarte F.; Lusby P. J. \emph{J. Am. Chem. Soc.}, {\bfseries{2020}}, \emph{142}, 17743--17750.
+		
+		\item Wang G.-W.; Sokolova O. O.; \underline{Young, T. A.}; Christodoulou E. M. S.;  Butts C. P.; Bower J. F., \emph{J. Am. Chem. Soc.}, {\bfseries{2020}}, \emph{142}, 19006--19011.
+		
+		\item Branfoot C.; \underline{Young, T. A.}; Wass D. F.; Pringle P. G. \emph{Dalton Trans.}, {\bfseries{2021}}, \emph{50}, 7094--7104.
+		
+		\item Aoki Y. \emph{et. al}, \underline{Young, T. A.}; \emph{Faraday Discuss.}, {\bfseries{2019}}, \emph{220}, 282--316.
+		
+		
+		\item Aoki Y. \emph{et. al}, \underline{Young, T. A.}; \emph{Faraday Discuss.}, {\bfseries{2019}}, \emph{220}, 144--178.
+		
+		\item Bauer M. \emph{et. al}, \underline{Young, T. A.}; \emph{Faraday Discuss.}, {\bfseries{2019}}, \emph{220}, 464--488.
+	\end{enumerate}
+	\newpage
+    }
+	%----------------------------------------------------------------------------------------------------
+		
+	%--------------------
+	%- empty page -------
+	%--------------------
+	%{\thispagestyle{empty}
+	%	\ \\
+	%
+   % }
+	
+	%----------------------------------------  Table of Contents -------------------------------------
+	\tableofcontents
+	\newpage
+	%----------------------------------------------------------------------------------------------------
+		
+\end{document}
