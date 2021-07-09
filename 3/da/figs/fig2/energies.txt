@@ -1,0 +1,27 @@
+! TightOpt Freq PBE0 D3BJ def2-SVP RIJCOSX def2/J
+
+Filename,Energy / Ha
+cage_linker1_d4h, -3763.37049961
+cage_linker1_helical, -3763.36630036
+cage_linker1_twist, -3763.36933307
+
+Species,E,H,G
+
+cage_linker1_d4h,-3763.3680442,1.1350050099999862,0.9651988199998414
+cage_linker1_helical,-3763.36388406,1.1371628300003067,0.9634844900001553
+cage_linker1_twist,-3763.36684382,1.1352272500002982,0.9646974100000989
+
+
+! SP M062X def2-TZVP RIJCOSX def2/J CPCM PAL4
+%maxcore 4000
+%cpcm   smd true 
+ SMDsolvent "CH2Cl2" 
+ end
+
+cage_linker1_d4h_sp, -3770.093760955615
+cage_linker1_helical_sp, -3770.094049167699
+cage_linker1_twist_sp, -3770.092158996702
+
+
+
+
