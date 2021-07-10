@@ -1,0 +1,24 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\setcounter{footnote}{0} 
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+
+\chapter{Machine Learned Potentials}
+
+\section{Overview}
+
+Although DFT remains steadfast as the computational method of choice to study reactions of more than a few atoms,\cite{PribramJones2015} there remain significant limitations in speed and accuracy.\cite{Mardirossian2017} For example, while a DFT estimate of the catalytic activity of a metallocage may be obtained in a day\cite{Young2019} and faster than the corresponding experiment, efficient methods are required for high-throughput virtual screening. Similarly in accuracy, absolute barrier heights are rarely within 5 \kcalx of the true value (e.g. ref. \cite{Krongchon2017}). Therefore, a predictive computational approach to catalyst design using an enumerative \emph{ab initio} calculations requires faster access to accurate absolute potential energies. 
+
+Accurate inclusion of solvent effects is also a long-standing challenge, with errors in the 5 \kcalx range for neutral and
+$>5$ \kcalx for charged species.\cite{Zhang2017} Inclusion of solvent effects capturing directional interactions missing from implicit models require either cluster-continuum models or QM/MM. The former often lacks the sufficient sampling and/or convergence with respect to the number of explicit solvents,\cite{Basdogan2018} while the latter also suffers from how to couple the regions, and forcefield accuracy.\cite{Thiel2009} Methods that could calculate total periodic system energies quickly would thus alleviate these problems and enhance accuracy where solvent effects are non-negligible.
+
+Dynamical process can also be important in catalytic reactions,\cite{Grajciar2018, Stirling2014} but generally require \emph{ab initio} molecular dynamics which is computational expensive and generally cannot exceed DFT-level accuracy in the condensed phase.\cite{Hassanali2014} Once again, methods to rapidly generate energies and forces that are reactive and accurate would increase the understanding of catalytic processes.
+
+Manuscript \rom{4} outlines a route to developing bespoke machine learned potentials capable of delivering energies and forces in $O(\text{ms})$ for a wide range of systems. Using a Gaussian Approximation Potential framework,\cite{Bartok2010} hyperparameters and a method of generating reference configurations was developed so an ML potential can be trained for a variety of systems in a day or so. This method enabled CCSD(T)-quality dynamics for an S${}_\text{N}$2 reaction, accurate bulk (periodic) water simulations using hybrid DFT and reactive dynamics of a condensed phase reaction. The training method is also applicable to reaction discovery by initialising velocities sufficient to make/break bonds an exothermic  S${}_\text{N}$2 reaction was sampled from an association complex of reactants.
+
+The method and freely-available code ({\url{https://github.com/t-young31/gap-train}}) will enable more routine development of ML potentials where, for example, possible bifurcations occur. While solvent effects on reactions can be interrogated using this method, the accuracy is limited to that of periodic QM i.e. GGA DFT for potential generation within a day. It is also not applicable to finding intermediates and transition states of new reactions, with GAPs being limited in transferability. More data-intensive approaches are therefore likely to prevail in this domain.\cite{Smith2017, Devereux2020} 
+
+
+\clearpage
+\end{document}
