@@ -34,7 +34,7 @@ On the other hand, double-ended methods use knowledge of both reactants and prod
 \begin{figure}[h!]
 	\vspace{0.4cm}
 	\centering
-	\includegraphics[width=8.5cm]{5/autode/figs/fig1}
+	\includegraphics[width=7.5cm]{5/autode/figs/fig1}
 	\vspace{0.4cm}
 	\hrule
 	\caption{Comparison of approaches to generate reaction profiles.}
@@ -98,7 +98,6 @@ With a view to generating reaction profiles efficiently using currently availabl
 {\bfseries{Finding Lowest Energy Conformers for Reactant and Products}}. Locating the global minimum, or a structure close to it, on a PES is challenging but essential in estimating the feasibility of a reaction.\cite{Chan2019} To characterize the lowest energy conformer at a given level of theory requires transforming the 1D SMILES representation into a 3D geometry and searching the conformational space. Several open-source tools are available including RDKit\cite{Landrum2019} and CONFAB\cite{OBoyle2011} implemented in OpenBabel, but are generally limited to organic species. \ade uses the ETKDGv2\cite{Riniker2015} algorithm implemented in RDKit, which is known to perform well for organic species, along with its SMILES parser.\cite{Ebejer2012} To determine optimal parameters for the number of conformers generated and the root mean squared displacement (RMSD) threshold used to exclude identical conformers, a set of 20 amino acids were considered. Using CREST\cite{Pracht2020} as the benchmark method, the generation of 600 conformers and RMSD threshold = 0.1 \AA$;$ was sufficient to obtain reliable minima, rendering a conformer within 1 \kcalx of the most stable CREST conformer in 90\% of the cases (18/20, Figure \ref{fig::ade_si_2}). Therefore, this inexpensive conformer search was kept as the default for organic molecules and allows for \ade to remain method agnostic (i.e. \lmethod/\hmethodx can be chosen by the user). 
 
 For metal complexes, where OpenBabel and RDKit fail to interpret the SMILES string and/or generate a sensible 3D geometry, we utilize our own (Open)SMILES parser and a simple repulsion+bonded (RB) forcefield (Eqn. \eqref{equation::ade_1}) by randomizing atoms then minimizing the function (Figure \ref{fig::ade_si_3}--\ref{fig::ade_si_5a}):
-
 \begin{equation}
 	U_\text{RB}(\boldsymbol{x}) = \sum_{ij}^\text{bonds} k_1 (r_{ij} - r_{ij}^\text{avg})^2 + \sum_{i > j} \frac{k_2}{r_{ij}^n}
 	\label{equation::ade_1}
@@ -133,7 +132,7 @@ From these constraints, five scenarios exist:
 	\item 	(1, 2) – eliminations e.g., E2 eliminations.
 \end{enumerate}
 
-Defining the change in the number of bonds as $\Delta b = b_R – b_P$ as in refs. \cite{Jacobson2017,Crabtree2009} only when $\Delta b = 0$ does the full set of deleting and adding two edges need to be enumerated. Further acceleration is achieved by calculating $\{\Delta b_k\}$ where $k$ is a bond type (e.g., ‘C--C’) and ensuring any atom ($a$) does not exceed a maximal valence (e.g., $d(a) \le 4$ for a carbon atom). For example, in a Claisen rearrangement $\Delta b_\text{C--C} = 1$ and $\Delta b_\text{C--O} = -1$ such that the enumeration over (1, 1) transformations is targeted to only C–C and C–O bonds (Figure \ref{fig::ade_3}). Once the set of valid $\{g\}$ is found, a TS is located for each of them (if it exists), and following conformational sampling, the lowest energy TS is taken for the calculation of a reaction profile. For the Claisen reaction shown in Figure \ref{fig::ade_3}, only one bond rearrangement is obtained while for the all-carbon analogue (O $\rightarrow$ CH$_2$) two rearrangements are found ($g = \{g_1, g_2\}$). While reasonably exhaustive, we are yet to find a reaction where the process of generating/checking $R’$ and $P$ isomorphisms and finding the mapping is comparable or more demanding than a DFT calculation.
+Defining the change in the number of bonds as $\Delta b = b_R – b_P$ as in refs. \cite{Jacobson2017,Crabtree2009} only when $\Delta b = 0$ does the full set of deleting and adding two edges need to be enumerated. Further acceleration is achieved by calculating $\{\Delta b_k\}$ where $k$ is a bond type (e.g. C--C) and ensuring any atom ($a$) does not exceed a maximal valence (e.g., $d(a) \le 4$ for a carbon atom). For example, in a Claisen rearrangement $\Delta b_\text{C--C} = 1$ and $\Delta b_\text{C--O} = -1$ such that the enumeration over (1, 1) transformations is targeted to only C–C and C–O bonds (Figure \ref{fig::ade_3}). Once the set of valid $\{g\}$ is found, a TS is located for each of them (if it exists), and following conformational sampling, the lowest energy TS is taken for the calculation of a reaction profile. For the Claisen reaction shown in Figure \ref{fig::ade_3}, only one bond rearrangement is obtained while for the all-carbon analogue (O $\rightarrow$ CH$_2$) two rearrangements are found ($g = \{g_1, g_2\}$). While reasonably exhaustive, we are yet to find a reaction where the process of generating/checking $R’$ and $P$ isomorphisms and finding the mapping is comparable or more demanding than a DFT calculation.
 
 To generate a saddle point, while ensuring compatibility with multiple electronic structure codes, we favour finding a TS guess by performing a set of constrained geometry optimizations along a linear path between reactants and products. In general, \ade attempts 1D constrained searches over forming/breaking bonds except when $\Delta b$ = 2 (e.g., Diels-Alder). If this procedure fails and the number of active bonds is more than one, a 2D PES exploration is performed by constrained optimizations and fitting a polynomial up to order 3.\cite{SciPy} From a 2D PES, the lowest energy saddle point is found by locating where the first derivative vanishes, and then using Dijkstra's algorithm\cite{Dijkstra1959} implemented in NetworkX.\cite{NetworkX} A constrained optimization at the saddle point is then performed to generate the TS guess. Once the TS guess is obtained, it is optimized with the TS optimizers implemented in the electronic structure theory package selected by the user. ‘Goodness’ of the TS is defined by a significant imaginary mode ($|\nu_\text{imag}| > 45$ cm$^{-1}$) and a significant contribution from the active bonds, or forward/backward displacement along the mode affording graphs isomorphic to reactants/products (quick reaction coordinate calculation,\cite{Goodman2003} see description of \code{true_ts()} function in §\ref{section::ade_si_algorithm} for further details). In cases where the reactant or product(s) are not isomorphic to $R$ or $P$ (e.g. barrierless proton transfers), rigid-body conformers of the reactant- and product- complex are generated (see SI §\ref{section::ade_si_nci_complexes}) and isomorphisms checked for the forwards/backwards displaced structures to all optimized conformers. We envisage the implementation of nudged elastic band (NEB) approaches to accelerate the computationally intensive 2D PES scans using an initial a linear path from the reactant(complex) by making/breaking bonds to drive towards a product state.
 
@@ -142,8 +141,6 @@ To generate a saddle point, while ensuring compatibility with multiple electroni
 
 
 {\textbf{Finding Lowest Energy TS Conformers}}. TS conformers are located in a similar manner to the protocol described for metal complexes in §\ref{section::ade_si_metal_complex_confs} ($n$=8 in Eqn. \eqref{equation::ade_1} and randomization using a displacement vector of $~ 3$ \AA). However, here the ‘active’ bonds are constrained at distances found at the TS using a harmonic potential with a force constant $k_1’ = 10k_1$ (Eqn. \eqref{equation::ade_2}).
-
-
 \begin{equation}
 	U_\text{RB'}(\boldsymbol{x}) = \sum_{ij \in \text{bonds}} k_1 (r_{ij} - r_{ij}^\text{avg})^2 + \sum_{ij \in \text{const.}} k_1' (r_{ij} - r_{ij}^\text{avg})^2 + \sum_{i > j} \frac{k_2}{r_{ij}^8}
 	\label{equation::ade_2}
@@ -156,7 +153,6 @@ An identical method is then used to find the lowest energy transition state anal
 
 
 {\bfseries{Reactive Reactant Complexes}}. For bimolecular reactions (substitution and elimination, not addition as $b_P > b_R$) an initial association complex on the PES must be found that favours a linear arrangement of the nucleophile and the leaving group, while also reducing the required number of optimizations. For this reason, the energy function $U_\text{RR}$ (Eqn. \eqref{equation::ade_3}) is minimized with respect to rigid-body rotation and translation of one reactive component with empirical parameters $c_1 = c_2 = c_3 = 1, c_4 = 10$ and $c_5 = 2.5 (1.5)$ for charged (uncharged) complexes. 
-
 \begin{equation}
 	U_\text{RR}(\boldsymbol{x}_i) = \sum_\text{\{ac\}} c_1 (r_\text{ac} - c_5 r_\text{ac}^\text{avg})^2 + \sum_\text{\{acx\}} c_2 (1 - \cos\theta) + \sum_\text{\{acx\}} c_3 (1 - \cos\phi) + \sum_\text{\{ij\}} \frac{c_4}{r_\text{ij}^4}
 	\label{equation::ade_3}
@@ -166,14 +162,14 @@ An identical method is then used to find the lowest energy transition state anal
 \begin{figure}[h!]
 	\vspace{0.4cm}
 	\centering
-	\includegraphics[width=9cm]{5/autode/figs/fig4}
+	\includegraphics[width=8cm]{5/autode/figs/fig4}
 	\vspace{0.3cm}
 	\hrule
 	\caption{(a) Illustration of the geometric parameters used in Eqn. \eqref{equation::ade_2} the S$_\text{N}$2 reaction NH$_3$ + CH$_3$Cl as an example: van is the average of vectors $\{\boldsymbol{v}_{am}\}$ where m is a nearest neighbour to a. (b) Minimization of $U_\text{RR}$  for an E2 reaction.}
 	\label{fig::ade_4}
 \end{figure}
 
-This energy function has been designed to maximize the collinearity of vectors $\boldsymbol{v}_{an}$, $\boldsymbol{v}_{ac}$ and $\boldsymbol{v}_{cx}$ while maintaining both a low steric repulsion and distance ($r_{ac} = |\boldsymbol{v}_{ac}|$) close to that desired (Figure \ref{fig::ade_4}). This choice is guided by chemical intuition, and there are rare cases where this is not adhered to (e.g., front-side S$_\text{N}$2,\cite{Hamlin2018} which is found upon TS conformer searching). For example, adequate initial geometries are obtained for SN2 substitution, E2 elimination and S$_\text{N}$Ar reactions (Figure \ref{fig::ade_4}, \ref{fig::ade_si_9}). Note that there may be several minima on this surface; thus, multiple initial random rotations and translations ($\sim 10$) are performed to have a better chance of locating the global minimum while remaining computationally inexpensive (execution time $\sim$ seconds). Non-reactive association complex conformers are also available from optimization of random molecular orientations (SI §\ref{section::ade_si_nci_complexes}).
+This energy function has been designed to maximize the collinearity of vectors $\boldsymbol{v}_{an}$, $\boldsymbol{v}_{ac}$ and $\boldsymbol{v}_{cx}$ while maintaining both a low steric repulsion and distance ($r_{ac} = |\boldsymbol{v}_{ac}|$) close to that desired (Figure \ref{fig::ade_4}). This choice is guided by chemical intuition, and there are rare cases where this is not adhered to (e.g., front-side S$_\text{N}$2,\cite{Hamlin2018} which is found upon TS conformer searching). For example, adequate initial geometries are obtained for ${}_\text{N}2$ substitution, E2 elimination and S$_\text{N}$Ar reactions (Figure \ref{fig::ade_4}, \ref{fig::ade_si_9}). Note that there may be several minima on this surface; thus, multiple initial random rotations and translations ($\sim 10$) are performed to have a better chance of locating the global minimum while remaining computationally inexpensive (execution time $\sim$ seconds). Non-reactive association complex conformers are also available from optimization of random molecular orientations (SI §\ref{section::ade_si_nci_complexes}).
 
 
 \subsection{Results and Discussion}
@@ -256,7 +252,7 @@ With a view to expand the use of \ade for catalyst design campaigns, and followi
 {\bfseries{Further Examples}}. To demonstrate the generality of our method, we tested \ade on a set of 15 simple organic reactions of different classes. \ade finds all TSs in all cases and generates reactions profiles in a matter of hours (Figure \ref{fig::ade_si_18a}). Further examples include metal-catalysed carbonylation of methanol to generate acetic acid via the Monsanto and Cativa processes (see full SI),\cite{Jones2000} alkaline ester hydrolysis (Figure \ref{fig::ade_si_9}), a Houk-List TS (Figure \ref{fig::ade_si_23}),\cite{Armstrong2014} and 57 carbene insertion reactions reported in ref. \cite{Mieusset2008} (see full SI). In this latter case \ade correctly locates 55/57 insertion TSs, with two failures occurring when a QRC+graph isomorphism check fails to confirm the TS as linking reactants and products, despite the TS being correct. Moreover, TSs for synthetically relevant reactions including a key Diels-Alder step in a total synthesis of Brevianamide A investigated by Domingo et al.\cite{Domingo1997} and a diastereoselective epoxidation\cite{Schneebeli2009} are presented in the full SI.\footnote{Examples presented in the full SI were performed by Joseph J. Silcock}
 
 
-{\bfseries{Limitations}}. The graph-based approach affords two immediate limitations of the method: The need to define bonds, and checking stereochemistry. While bonds are generally well-defined in organic systems, they are not a rigid concept. This is partially alleviated by using not regenerating the molecular graphs from the 3D structure, rather than a molecular graph representation, and retaining the SMILES-defined connectivity but may afford an incorrect assignment of a ‘good’ TS, which actually does or does not lead to products/reactants. Furthermore, the isomorphism condition on reactants/products does not currently include a stereochemistry check – the algorithm simply finds the lowest energy TS. While this is often defined by the reaction type e.g., stereochemical inversion in S$_N$2 is generated by traversing the lowest energy TS, there are reactions where this is not adhered to. Furthermore, by enforcing a maximum connectivity change of four (up to 2 bonds breaking and forming) means that, for example, the TS in a synchronous Fritsch–Buttenberg–Wiechell rearrangement mechanism cannot be found. In this case, human intervention is necessary to prevent the very slow enumeration of 10 2D PES scans. Finally, we note a limitation in the current \lmethodx electronic structure theory methods used to generate conformers of reactant and product complexes. Reactions involving anions are particularly problematic, as at the GFN2-XTB level they are generally not sufficiently stable (even in implicit solvent) such that the reaction may be barrierless at the \lmethodx level. We hope that as semi-empirical/TB electronic structure methods become more accurate and/or DFT and WF methods become faster, this limitation will be mitigated. Because \ade does not rely on one specific method implementing novel methods should be straightforward.
+{\bfseries{Limitations}}. The graph-based approach affords two immediate limitations of the method: The need to define bonds, and checking stereochemistry. While bonds are generally well-defined in organic systems, they are not a rigid concept. This is partially alleviated by using not regenerating the molecular graphs from the 3D structure, rather than a molecular graph representation, and retaining the SMILES-defined connectivity but may afford an incorrect assignment of a ‘good’ TS, which actually does or does not lead to products/reactants. Furthermore, the isomorphism condition on reactants/products does not currently include a stereochemistry check – the algorithm simply finds the lowest energy TS. While this is often defined by the reaction type e.g., stereochemical inversion in S$_\text{N}$2 is generated by traversing the lowest energy TS, there are reactions where this is not adhered to. Furthermore, by enforcing a maximum connectivity change of four (up to 2 bonds breaking and forming) means that, for example, the TS in a synchronous Fritsch–Buttenberg–Wiechell rearrangement mechanism cannot be found. In this case, human intervention is necessary to prevent the very slow enumeration of 10 2D PES scans. Finally, we note a limitation in the current \lmethodx electronic structure theory methods used to generate conformers of reactant and product complexes. Reactions involving anions are particularly problematic, as at the GFN2-XTB level they are generally not sufficiently stable (even in implicit solvent) such that the reaction may be barrierless at the \lmethodx level. We hope that as semi-empirical/TB electronic structure methods become more accurate and/or DFT and WF methods become faster, this limitation will be mitigated. Because \ade does not rely on one specific method implementing novel methods should be straightforward.
 
 {\bfseries{Further Development}}. There are several opportunities to increase the accuracy and efficiency of \emph{autodE}, including (1) addition of explicit solvation; (2) inclusion of an online and open-source transition state library; (3) treatment of dynamical effects and (4) enhanced error correction. Initial progress has been made on explicit solvation using a simple QM/MM embedding scheme, but for the time being is too computationally demanding to routinely replace implicit solvation models. Future developments to the code will focus on these aspects to approach a fully automated protocol to predict reaction mechanisms with chemical accuracy.
 
@@ -273,7 +269,7 @@ Converting a 2D representation of a reaction to a reaction profile has long been
 
 \subsection{Computational Methods}
 
-All \ade calculations were performed with a development version of the code (1.0.0a0). Unless otherwise stated the \lmethodx used was GFN2-xTB v. 6.2\cite{Bannwarth2019} and the \hmethodx ORCA v. 4.2\cite{Neese2017} All ORCA optimizations employed resolution of identity DFT (RI or RIJCOSX for hybrid functionals)\cite{Neese2003, Neese2009} using the PBE\cite{Perdew1996} or PBE0\cite{Adamo1999} functional, in combination with the D3BJ dispersion correction,\cite{Grimme2010, Grimme2011} def2-SVP or def2-TZVP basis set\cite{Weigend2005} (with effective core potentials for Rh) and the default auxiliary basis set.\cite{Weigend2006} Gaussian09\cite{G09} calculations employed identical methods without density fitting unless otherwise specified. NWChem v. 6.6\cite{Valiev2010} calculations used no dispersion correction as D3BJ is unavailable with PBE0. Default integration grids were used in all DFT calculations. Conformers generated with RDKit\cite{Landrum2019} version 2020.03.1 and OpenBabel version 2.4.1.
+All \ade calculations were performed with a development version of the code (1.0.0a0). Unless otherwise stated the \lmethodx used was GFN2-XTB v. 6.2\cite{Bannwarth2019} and the \hmethodx ORCA v. 4.2\cite{Neese2017} All ORCA optimizations employed resolution of identity DFT (RI or RIJCOSX for hybrid functionals)\cite{Neese2003, Neese2009} using the PBE\cite{Perdew1996} or PBE0\cite{Adamo1999} functional, in combination with the D3BJ dispersion correction,\cite{Grimme2010, Grimme2011} def2-SVP or def2-TZVP basis set\cite{Weigend2005} (with effective core potentials for Rh) and the default auxiliary basis set.\cite{Weigend2006} Gaussian09\cite{G09} calculations employed identical methods without density fitting unless otherwise specified. NWChem v. 6.6\cite{Valiev2010} calculations used no dispersion correction as D3BJ is unavailable with PBE0. Default integration grids were used in all DFT calculations. Conformers generated with RDKit\cite{Landrum2019} version 2020.03.1 and OpenBabel version 2.4.1.
 
 
 \subsection{Compatibility of autodE with Different Electronic Structure Theory Codes}
@@ -307,7 +303,7 @@ Figure \ref{fig::ade_si_1a} shows the energy profile for the endo/exo Diels Alde
 \begin{figure}[h!]
 	\vspace{0.4cm}
 	\centering
-	\includegraphics[width=12cm]{5/autode/figs/figS2}
+	\includegraphics[width=11cm]{5/autode/figs/figS2}
 	\vspace{0.4cm}
 	\hrule
 	\caption{Probability that a conformer will be found -- using RDKit + XTB optimization -- within 1 \kcalx of the most stable conformer generated by CREST given a specific root mean squared deviation (RMSD) and a number of conformers threshold in the EKTDGv2 algorithm. Molecule set contains 20 L-amino acids. All optimizations were performed at the GFN2-XTB level. Crest v. 2.9 \& XTB v. 6.2.3 to find the lowest energy conformer, as it generated a more diverse set than the exhaustive algorithm in CONFAB. For example, CREST generated 90 conformers for serine for which 85 were found in ref. \cite{He2016} while CONFAB did not identify the correct rotatable bonds and afforded only 36 conformers.}
@@ -329,7 +325,7 @@ Figure \ref{fig::ade_si_1a} shows the energy profile for the endo/exo Diels Alde
 
 where the first harmonic term describes bonds between atoms, and the second term introduces a non-physical repulsion that enforces a notion of steric repulsion. Parameters $k_1 = 1$ and $k_2 = 0.01$ were selected based on empirical experience and comparison to optimized structures (Figure \ref{fig::ade_si_3}) while ideal bond lengths ($r^\text{avg}$) are obtained as averages from the Cambridge Structural Database.16
 
-To generate reasonable 3D structures for organometallic complexes, each atom is added sequentially and randomly in a 10 \AA$\;$ cubic box, and the function $U_\text{RB}$ is minimized with respect to all coordinates after each addition. Using a smooth potential with few local minima ($n = 2$ in Eqn. \eqref{equation::ade_1_repeat}) is required to obtain stable structures for large complexes (Figure \ref{fig::ade_si_4}). For a test set of 20 metal-complexes with up to 100 atoms, our approach delivers a stable conformer in all cases, while RDKit successfully generates only 15 geometries and CONFAB failed in all cases (Figure \ref{fig::ade_si_5a} and Table \ref{table::ade_si_1}). With the analytic derivative of $U_\text{RB}$ and a conjugate gradient algorithm implemented in SciPy,\cite{SciPy} an initial structure is available in a few seconds for complexes with more than 100 atoms. Stereo-defined metal complexes are currently not supported, as random initialization does not respect any chirality.
+To generate reasonable 3D structures for organometallic complexes, each atom is added sequentially and randomly in a 10 \AA$\;$ cubic box, and the function $U_\text{RB}$ is minimized with respect to all coordinates after each addition. Using a smooth potential with few local minima ($n = 2$ in Eqn. \eqref{equation::ade_1_repeat}) is required to obtain stable structures for large complexes (Figure \ref{fig::ade_si_4}). For a test set of 20 metal-complexes with up to 100 atoms, our approach delivers a stable conformer in all cases, while RDKit successfully generates only 15 geometries and CONFAB failed in all cases (Figure \ref{fig::ade_si_5a} and Table \ref{table::ade_si_1}). With the analytic derivative of $U_\text{RB}$ and a conjugate gradient algorithm implemented in \emph{scipy},\cite{SciPy} an initial structure is available in a few seconds for complexes with more than 100 atoms. Stereo-defined metal complexes are currently not supported, as random initialization does not respect any chirality.
 
 An alternative and slightly faster approach is used to generate metal complex conformers; a random displacement vector (length $\sim3$ \AA) is applied to all atoms and $U_\text{RB}$ minimized with $n = 8$. The steeper repulsive term is used as it generates a more realistic PES; for example, generating the expected three minima in the butane dihedral PES, Figure \ref{fig::ade_si_4}. While simple, this strategy affords more conformers than both RDKit and CONFAB for the metal complex test set (Figure \ref{fig::ade_si_5a} and Table \ref{table::ade_si_1}). It is also worth noting that we found no advantage in using the EMBED algorithm\cite{Havel2002} to generate initial coordinates for organic systems (Figure \ref{fig::ade_si_6a}). Moreover, conformers can be generated using arbitrary distance constraints specified by the user (e.g., to retain a square planar geometry given an 3D initial structure).
 
@@ -352,7 +348,7 @@ An alternative and slightly faster approach is used to generate metal complex co
 	\includegraphics[width=12cm]{5/autode/figs/figS4}
 	\vspace{0.4cm}
 	\hrule
-	\caption{Rotational barrier of butane using a simple repulsion + bonded potential Eqn. \ref{equation::ade_1_repeat}, with different n values, compared to a DFT reference (PBE0-D3BJ/def2-SVP). Relative energies normalized to the eclipsed conformation ($\theta$ = 0 $\deg$). Initial structure not symmetrized.}
+	\caption{Rotational barrier of butane using a simple repulsion + bonded potential Eqn. \ref{equation::ade_1_repeat}, with different n values, compared to a DFT reference (PBE0-D3BJ/def2-SVP). Relative energies normalized to the eclipsed conformation ($\theta$ = 0 $^{\circ}$). Initial structure not symmetrized.}
 	\label{fig::ade_si_4}
 \end{figure}
 
@@ -364,7 +360,7 @@ An alternative and slightly faster approach is used to generate metal complex co
 	\includegraphics[width=\textwidth]{5/autode/figs/figS5a}
 	\vspace{0.4cm}
 	\hrule
-	\caption{Metal complexes itemized in Table \ref{table::ade_si_1} generated by minimizing a simple repulsion + bonded potential Eqn. \eqref{equation::ade_1_repeat} and their subsequent XTB optimized geometries. Structures initialized by adding atoms sequentially from a random position within a 10 \AA$\;$ cube and minimizing $U-\text{RB}$ with $n$ = 2 repeatedly until all atoms were added, then performing a final minimization with $n = 8 (k = 1, c = 0.01)$.}
+	\caption{Metal complexes itemized in Table \ref{table::ade_si_1} generated by minimizing a simple repulsion + bonded potential Eqn. \eqref{equation::ade_1_repeat} and their subsequent XTB optimized geometries. Structures initialized by adding atoms sequentially from a random position within a 10 \AA$\;$ cube and minimizing $U-\text{RB}$ with $n$ = 2 repeatedly until all atoms were added, then performing a final minimization with $n = 8$ $(k = 1$, $c = 0.01)$.}
 	\label{fig::ade_si_5a}
 \end{figure}
 
@@ -433,7 +429,7 @@ An alternative and slightly faster approach is used to generate metal complex co
 	\end{tabularx}
 	\label{table::si_ade_1}
 	\hrule
-	\caption{Metal complex test set. The set comprises the first 10 complexes used to benchmark MolSimplify (ref \cite{Ioannidis2016}., all Cr(II)), 5 large complexes from ref. \cite{Ounkham2017} and 5 intermediates in hydroformylation catalysis. N is the number of conformers/isomers generated using RDKit (v. 2019.09.3), CONFAB (OpenBabel v. 2.4.1), and the repulsion + bonded (RB, Eqn. \eqref{equation::ade_3}) algorithm introduced in this work. Unique conformers are found by discarding those with energies within 0.24 \kcalx of others. RDKit and RB requested 50 conformers and CONFAB the default. 3D structure generated (SG) successfully is indicated with a  tick. See full supporting information for SMILES strings and \figurename{ \ref{fig::ade_si_5a}, \ref{fig::ade_si_5b}} for geometries.}
+	\caption{Metal complex test set. The set comprises the first 10 complexes used to benchmark MolSimplify (ref. \cite{Ioannidis2016}., all Cr(II)), 5 large complexes from ref. \cite{Ounkham2017} and 5 intermediates in hydroformylation catalysis. N is the number of conformers/isomers generated using RDKit (v. 2019.09.3), CONFAB (OpenBabel v. 2.4.1), and the repulsion + bonded (RB, Eqn. \eqref{equation::ade_3}) algorithm introduced in this work. Unique conformers are found by discarding those with energies within 0.24 \kcalx of others. RDKit and RB requested 50 conformers and CONFAB the default. 3D structure generated (SG) successfully is indicated with a  tick. See full supporting information for SMILES strings and \figurename{ \ref{fig::ade_si_5a}, \ref{fig::ade_si_5b}} for geometries.}
 	\label{table::ade_si_1}
 \end{table}
 
@@ -820,7 +816,7 @@ $M_i$ is the mass of atom $i$, $c_M$ = 1 amu, $v_\text{imag}(i)$ the normal mode
 	\includegraphics[width=14cm]{5/autode/figs/figS14.pdf}
 	\vspace{0.4cm}
 	\hrule
-	\caption{Most stable intermediates and transition states for the Ireland-Claisen reaction profile shown in Figure \ref{fig::ade_7} located by \ade at the B3LYP-D3BJ/6- 31G(d) level of theory using ORCA/XTB. }
+	\caption{Most stable intermediates and transition states for the Ireland-Claisen reaction profile shown in Figure \ref{fig::ade_7} located by \ade at the B3LYP-D3BJ/6-31G(d) level of theory using ORCA/XTB. }
 	\label{fig::ade_si_14}
 \end{figure}
 
@@ -885,7 +881,7 @@ All of the reaction profiles were generated successfully with the exception of t
 	\includegraphics[width=\textwidth]{5/autode/figs/figS18e-h}
 	\vspace{0.2cm}
 	\hrule
-	\caption{\figurename{ \ref{figure::ade_si_18a}} continued.}
+	\caption{\figurename{ \ref{fig::ade_si_18a}} continued.}
 	\label{fig::ade_si_18e}
 \end{figure}
 
@@ -896,7 +892,7 @@ All of the reaction profiles were generated successfully with the exception of t
 	\includegraphics[width=\textwidth]{5/autode/figs/figS18i-l}
 	\vspace{0.2cm}
 	\hrule
-	\caption{\figurename{ \ref{figure::ade_si_18a}} continued.}
+	\caption{\figurename{ \ref{fig::ade_si_18a}} continued.}
 	\label{fig::ade_si_18i}
 \end{figure}
 
@@ -907,7 +903,7 @@ All of the reaction profiles were generated successfully with the exception of t
 	\includegraphics[width=\textwidth]{5/autode/figs/figS18m-o}
 	\vspace{0.2cm}
 	\hrule
-	\caption{\figurename{ \ref{figure::ade_si_18a}} continued.}
+	\caption{\figurename{ \ref{fig::ade_si_18a}} continued.}
 	\label{fig::ade_si_18m}
 \end{figure}
 

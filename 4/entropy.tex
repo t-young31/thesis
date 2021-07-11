@@ -100,6 +100,8 @@ where approximations to each of these terms are outlined in the following sectio
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{4/figs/figX1/systems_methane_in_h2o.png}
+	\vspace{0.2cm}
+	\hrule
 	\caption{Example partitioning of a condensed phase molecular system.}
 	\label{fig::entropy_X1}
 	%systems_methane_in_h2o 
@@ -479,7 +481,7 @@ To ensure the exponential well is a good approximation beyond the $V_\text{trans
 \begin{figure}[h!]
 	\vspace{0.2cm}
 	\centering
-	\includegraphics[width=\textwidth]{4/figs/figX4/figX4.pdf}
+	\includegraphics[width=14.5cm]{4/figs/figX4/figX4.pdf}
 	\vspace{0.2cm}
 	\hrule
 	\caption{Translational potential energy surface for CO$_2$ in water evaluated by averaging GFN2-XTB single point energies over 100 frames separated by 1 ps obtained at the GAFF-TIP4P MM level using a 300 K $NVT$ simulation.} 
@@ -510,9 +512,9 @@ To develop a  widely applicable model that does not rely on explicitly solvated 
 Correlating $k$ and $a$ for the solute-solvent systems reveals they are reasonably independent and, although some broad trends can be extracted, generating a model for \emph{a priori} prediction of $k$ and $a$ may be challenging. Immediately, from \tablename{ \ref{table::figX5_params}} both parameters are tightly clustered ($k \sim 1$ \kcal and $a \sim 2.6 $ \AA$^{-1}$) irrespective of the system. Furthermore, solvents with a higher number density, such as water are  closer to the solute and thus generate a more enclosed cavity with a larger $a$. Unfortunately, this is not uniformly observed; CO$_2$ in benzene has amongst the largest $a$, which precludes a predictive model to avoid the time-consuming simulations. Nevertheless, with appropriate error bars on the derived quantities a semi-quantitative prediction may be made based on average parameters ($\bar{k}, \bar{a}$). 
 
 \vspace{0.2cm}
-\begin{figure}[h!]
+\begin{figure}[p!]
 	\centering
-	\includegraphics[width=14.5cm]{4/figs/figX5/figX5.png}
+	\includegraphics[width=\textwidth]{4/figs/figX5/figX5.png}
 	\vspace{0.2cm}
 	\hrule
 	\caption{Translational potential energy surfaces for the displacement of solute molecules immersed in an explicit solvent. Points are averaged over 500 evenly spaced frames selected from 20 ps DFTB(3ob) 300 K Langevin dynamics in a cubic box ($l = 12$ \AA) with a number of solvent molecule to reach the solvent density, excluding the solute volume. Potentials calculated using displacements of $\approx 0.35$ \AA$\,$ displacements in the $x$-direction. Error bars plotted as the statistical error of the mean over frames. Fully solvated clusters extracted from the periodic simulations by taking solvent molecules within 5 \AA$\;$ sphere around the solute. Overlaid exponential wells fit as \figurename{ \ref{fig::entropy_X3a}}.}
@@ -555,7 +557,7 @@ Correlating $k$ and $a$ for the solute-solvent systems reveals they are reasonab
 	\label{table::figX5_params}
 \end{table}
 
-
+\newpage
 \section{Translational Entropy from Spherical Wells}
 Given the average potential for solute translation is spherical and well approximated by an exponential well to obtain the partition function must be obtained in order to calculate the translational entropy more accurately than the IGM approximation. 
 
@@ -884,7 +886,7 @@ Regenerating surfaces over a narrower energy window generates more accurate para
 			\bottomrule
 		\end{tabularx}
 	\end{center}
-	\caption{Fitted parameters for exponential wells for different solute-solvent systems at the DFTB//XTB level of theory Fits performed over the [0, 10] \kcal energy window on $\sim 10$ points for average potentials (500 points) with $x \in [-1, 1]$. $T = 298.15$ K.} 
+	\caption{Fitted parameters for exponential wells for different solute-solvent systems at the DFTB//XTB level of theory Fits performed over the [0, 10] \kcalx energy window on $\sim 10$ points for average potentials (500 points) with $x \in [-1, 1]$ \AA. $T = 298.15$ K.} 
 	\label{table::figX9_params}
 \end{table}
 
@@ -946,7 +948,7 @@ In summary, while an EW approximation provides a more sound theoretical basis fo
 
 \section{Methods}
 
-Density functional theory (DFT) and wave function (WF) calculations were performed in ORCA v. 4.2.1 with Ahlrichs def2 basis sets\cite{Weigend2005}. DFT calculations used PBE0\cite{Adamo1999, Perdew1996} and M06-2X\cite{Zhao2007} density functional approximations with and without D3BJ\cite{Grimme2010, Grimme2011} damping respectively. Both DFT and WF (DLPNO-CCSD(T)\cite{Riplinger2013}) calculations made use of default auxiliary basis sets. Approximate counterpoise corrections performed using the gCP scheme from ref. \cite{Kruse2012} with parameters appropriate for the calculation. Fitted functions used \emph{scipy.optimise.curve\_fit}, numerical ordinary differential equation (ODE) propagation from  \emph{scipy.integrate.odeint} for toy models.\cite{SciPy} Converged partition functions obtained by summing partial eigenspecta located by root finding on numerically propagated ODEs using 4th order Runge Kutta\cite{Kutta1901} propagation implemented in \emph{odeint} from the \emph{Boost} C++ library.\cite{BoostODE2021} In all cases, numerical integration used \emph{scipy.integrate.quad} over a region that converges the integral with respect to the upper/lower bound (where infinite). Ideal gas and quasi-rigid rotor harmonic oscillator calculations performed in \emph{otherm}. Implicit solvent calculations made use of the CPCM\cite{Barone1998} and SMD\cite{Marenich2009} models implemented in \emph{ORCA} while explicitly solvated calculations used MD simulations. Classical molecular mechanics MD performed in GROMACS v. 2019.2 using a minimise-equilibrate-production sequence.\cite{Abraham2015} Unless otherwise specified, all simulations were performed at 298.15 K using velocity rescale or Langevin thermostats. Periodic DFTB calculations performed with DFTB+\cite{Hourahine2020} using 3ob\cite{Gaus2012} parameters.
+Density functional theory (DFT) and wave function (WF) calculations were performed in ORCA v. 4.2.1\cite{Neese2017} with Ahlrichs def2 basis sets\cite{Weigend2005}. DFT calculations used PBE0\cite{Adamo1999, Perdew1996} and M06-2X\cite{Zhao2007} density functional approximations with and without D3BJ\cite{Grimme2010, Grimme2011} damping respectively. Both DFT and WF (DLPNO-CCSD(T)\cite{Riplinger2013}) calculations made use of default auxiliary basis sets. Approximate counterpoise corrections performed using the gCP scheme from ref. \cite{Kruse2012} with parameters appropriate for the calculation. Fitted functions used \emph{scipy.optimise.curve\_fit}, numerical ordinary differential equation (ODE) propagation from  \emph{scipy.integrate.odeint} for toy models.\cite{SciPy} Converged partition functions obtained by summing partial eigenspecta located by root finding on numerically propagated ODEs using 4th order Runge Kutta\cite{Kutta1901} propagation implemented in \emph{odeint} from the \emph{Boost} C++ library.\cite{BoostODE2021} In all cases, numerical integration used \emph{scipy.integrate.quad} over a region that converges the integral with respect to the upper/lower bound (where infinite). Ideal gas and quasi-rigid rotor harmonic oscillator calculations performed in \emph{otherm}. Implicit solvent calculations made use of the CPCM\cite{Barone1998} and SMD\cite{Marenich2009} models implemented in ORCA while explicitly solvated calculations used MD simulations. Classical molecular mechanics MD performed in GROMACS v. 2019.2 using a minimise-equilibrate-production sequence.\cite{Abraham2015} Unless otherwise specified, all simulations were performed at 298.15 K using velocity rescale or Langevin thermostats. Periodic DFTB calculations performed with DFTB+\cite{Hourahine2020} using 3ob\cite{Gaus2012} parameters.
 
 \clearpage
 \end{document}

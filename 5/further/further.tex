@@ -10,13 +10,11 @@
 
 \section{Further Developments}
 
-Subsequently to the manuscript being published in late 2020 a number of developments have been added to enhance functionality and reduce computational expense. These are outlined in the following sections, with in-progress developments itemised on the online repository.\footnote{See {\color{blue} https://github.com/duartegroup/autodE/projects} for current developments.}
+Subsequently to the manuscript being published in late 2020 a number of developments have been added to enhance functionality and reduce computational expense. These are outlined in the following sections, with in-progress developments itemised on the online repository.\footnote{See \url{https://github.com/duartegroup/autodE/projects} for current developments.}
 
 \subsection{Transition State Guesses}
 
-The initial \ade implementation to generate TS guess geometries made use of relaxed 1D and 2D relaxed PES scans over the breaking/forming coordinates to search for a saddle point. This approach was employed based on the conventional human-guided method of calculating reaction profiles, but has some limitations: (1) a uniform step is taken, meaning the computational effort cannot be focused around the saddle point; (2) for high energy unphysical reactions involving two active bonds 1D low-level, 1D high-level, 2D low-level and 2D high-level searches were employed in sequence only to perhaps not find a TS; (3) 2D-high level surfaces are expensive to compute, thus for e.g. a Diels-Alder reaction where the low-level method is insufficiently accurate, 64 DFT optimisations were required. Therefore, a NEB\cite{NEB1998} along with its climbing image variant (CI-NEB) were implemented as follows in which the energy of a number of structures `images' along a path are minimised under a force $\boldsymbol{F}$.
-
-For an image $i$ in the nudged elastic band,
+The initial \ade implementation to generate TS guess geometries made use of relaxed 1D and 2D relaxed PES scans over the breaking/forming coordinates to search for a saddle point. This approach was employed based on the conventional human-guided method of calculating reaction profiles, but has some limitations: (1) a uniform step is taken, meaning the computational effort cannot be focused around the saddle point; (2) for high energy unphysical reactions involving two active bonds 1D low-level, 1D high-level, 2D low-level and 2D high-level searches were employed in sequence only to perhaps not find a TS; (3) 2D-high level surfaces are expensive to compute, thus for e.g. a Diels-Alder reaction where the low-level method is insufficiently accurate, 64 DFT optimisations were required. Therefore, a nudged elastic band (NEB)\cite{NEB1998} along with its climbing image variant (CI-NEB)\cite{Henkelman2000CINEB} were implemented as follows in which the energy of a number of structures `images' along a path are minimised under a force $\boldsymbol{F}$. The implementation follows that of Henkelman\cite{Henkelman2000NEB} where, for an image $i$ in the nudged elastic band,
 \begin{equation}
 	\boldsymbol{\tau}_i = 
 	\begin{cases}
@@ -26,29 +24,29 @@ For an image $i$ in the nudged elastic band,
 		\boldsymbol{\tau}_i^+\Delta V_i^{min} + \boldsymbol{\tau}_i^-\Delta V_i^{max} &\quad\text{if}\quad V_{i+1} < V_{i-1} \\
 	\end{cases}
 \end{equation}
-where
+where,
 \begin{equation}
 	\begin{aligned}
 		\boldsymbol{\tau}_i^+ &= \boldsymbol{R}_{i+1} - \boldsymbol{R}_i \\
 		\boldsymbol{\tau}_i^- &= \boldsymbol{R}_{i} - \boldsymbol{R}_{i-1}
 	\end{aligned}
 \end{equation}
-and
+and,
 \begin{equation}
 	\begin{aligned}
 		\Delta V_i^{max} &= \max(|V_{i+1} - V_i|, |V_{i-1} - V_i|) \\
 		\Delta V_i^{min} &= \min(|V_{i+1} - V_i|, |V_{i-1} - V_i|)
 	\end{aligned}
 \end{equation}
-and $\boldsymbol{R}_i$ are the coordinates of image $i$. The spring force is
+and $\boldsymbol{R}_i$ are the coordinates of image $i$. The spring force is,
 \begin{equation}
 	\boldsymbol{F}^s_i|_{\parallel} = (k_i|\boldsymbol{R}_{i+1} - \boldsymbol{R}_i| - k_{i-1}|\boldsymbol{R}_i - \boldsymbol{R}_{i-1}|) \hat{\boldsymbol{\tau}}_i
 \end{equation}
-and the total force on the image
+and the total force on the image,
 \begin{equation}
 	\boldsymbol{F}_i = \boldsymbol{F}^s_i|_{\parallel} - \nabla V(\boldsymbol{R}_i)|_\perp
 \end{equation}
-where
+where,
 \begin{equation}
 	\nabla V(\boldsymbol{R}_i)|_\perp = \nabla V(\boldsymbol{R}_i) - \nabla V(\boldsymbol{R}_i)\cdot \hat{\boldsymbol{\tau}}_i\hat{\boldsymbol{\tau}}_i
 \end{equation}
@@ -60,8 +58,9 @@ The climbing image (CI) NEB implementation follows that in ref. \cite{Henkelman2
 \end{equation}
 
 which is the force due to the potential along the band being inverted.
-\\
-Employing a NEB relaxation of a path and taking the highest lying point on the approximate MEP as a transition state guess, however, relies on an initial reasonable path to relax along and the NEB not corner cutting (i.e. the images relaxing into the reactant/product basins). To develop an initial path reactant and product complexes were overlapped and interpolation in Cartesian coordinates was employed. It is, however, challenging to align and rotate dihedrals to minimise the difference. Instead, a linear path from reactants to products over a the changing bond lengths (i.e. sequential constrained minimisations) was an improvement but can lead to unexpected dissociations.\footnote{For example, the E2 elimination using methoxide+propyl chloride on a linear path using GFN2-XTB generates an unphysical [H$_3$CCHCH$_3$]+ cation.}. In an attempt to reduce corner cutting an adaptive force constant, where $k$ is larger at images with higher energy, was introduced and is, generally, efficient.\cite{Henkelman2000NEB}
+
+
+Employing a NEB relaxation of a path and taking the highest lying point on the approximate minimum energy pathway (MEP) as a transition state guess, however, relies on an initial reasonable path to relax along and the NEB not corner cutting (i.e. the images relaxing into the reactant/product basins). To develop an initial path reactant and product complexes were overlapped and interpolation in Cartesian coordinates was employed. It is, however, challenging to align and rotate dihedrals to minimise the difference. Instead, a linear path from reactants to products over a the changing bond lengths (i.e. sequential constrained minimisations) was an improvement but can lead to unexpected dissociations.\footnote{For example, the E2 elimination using methoxide+propyl chloride on a linear path using GFN2-XTB generates an unphysical [H$_3$CCHCH$_3$]+ cation.} In an attempt to reduce corner cutting an adaptive force constant, where $k$ is larger at images with higher energy, was introduced and is, generally, efficient.\cite{Henkelman2000NEB}
 
 
 \begin{equation}
@@ -75,8 +74,8 @@ Employing a NEB relaxation of a path and taking the highest lying point on the a
 
 
 where $V_\text{ref} = \max(V_n, V_0)$ and $\Delta k = k_\text{max} - k+\text{min}$.
-\newpage
- For example, for a 1,2-shift in a terminal propyl radical using a fixed force constant and relaxing the NEB leads to two images very close to the fixed end points while the two higher lying images cut the barrier peak and miss a close TS geometry (\figurename{ \ref{fig::ade_further_1}}). Although improved using an adaptive force constant, this effect is one reason why NEB relaxation is not employed by default in \emph{autodE}.
+
+For example, for a 1,2-shift in a terminal propyl radical using a fixed force constant and relaxing the NEB leads to two images very close to the fixed end points while the two higher lying images cut the barrier peak and miss a close TS geometry (\figurename{ \ref{fig::ade_further_1}}). Although improved using an adaptive force constant, this effect is one reason why NEB relaxation is not employed by default in \emph{autodE}.
 
 \begin{figure}[h!]
 	\vspace{0.4cm}
@@ -89,7 +88,7 @@ where $V_\text{ref} = \max(V_n, V_0)$ and $\Delta k = k_\text{max} - k+\text{min
 \end{figure}
 
 
-While searching for an improved method to generate reaction paths upon which NEB relaxation may be performed an algorithm was developed for traversing a reasonable initial pathway. Motivated by steepest-decent minimisation where the direction is defined by the gradient of the surface an `adaptive' path may be defined using gradient dependent constraints. The initial constraints for the first point are
+While searching for an improved method to generate reaction paths upon which NEB relaxation may be performed, an algorithm was developed for traversing a reasonable initial pathway. Motivated by steepest-decent minimisation where the direction is defined by the gradient of the surface an `adaptive' path may be defined using gradient dependent constraints. The initial constraints for the first point are
 
 \begin{equation}
 	r_b^{(1)} = r_b^{(0)} + \sgn(r_b^\text{final} - r_b^{(0)})\Delta r_\text{init}

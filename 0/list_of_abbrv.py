@@ -90,7 +90,8 @@ glossary = {
         'DCM': 'Dichloromethane',
         'RESP': 'Restrained electrostatic potential',
         'ZPE': 'Zero point energy',
-        'LCC': 'Local coupled cluster'
+        'LCC': 'Local coupled cluster',
+        'EW': 'Exponential well'
     }
 
 
