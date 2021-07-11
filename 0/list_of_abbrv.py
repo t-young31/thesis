@@ -10,6 +10,7 @@ glossary = {
         'MP2': 'Moller-Plesset perturbation theory',
         'CC': 'Coupled cluster',
         'CI': 'Configuration interaction',
+        'CC': 'Coupled cluster',
         'CCSD': 'Coupled cluster singles and doubles',
         'CCSD(T)': 'CCSD with perturbative triples',
         'MO': 'Molecular orbtial',
@@ -62,7 +63,7 @@ glossary = {
         'MLP': 'Machine learned potential',
         'QSAR': 'Quantitative structure activity relationships',
         'HOMO': 'Highest occupied molecular orbtial',
-        'LUMO': 'lowest unoccupied molecular orbtial',
+        'LUMO': 'Lowest unoccupied molecular orbtial',
         'GAP': 'Gaussian approximation potential',
         'AIMD': 'Ab initio molecular dynamics',
         'PES': 'Potential energy surface',
@@ -88,16 +89,17 @@ glossary = {
         'LFM': 'Low frequency mode',
         'DCM': 'Dichloromethane',
         'RESP': 'Restrained electrostatic potential',
-        'ZPE': 'Zero point energy'
+        'ZPE': 'Zero point energy',
+        'LCC': 'Local coupled cluster'
     }
 
 
 def print_tex():
     """Print the file"""
 
-    with open('0_list_of_abbrv.tex', 'w') as out:
+    with open('list_of_abbrv.tex', 'w') as out:
 
-        print(r'\documentclass[main.tex]{subfiles}',
+        print(r'\documentclass[../main.tex]{subfiles}',
               r'\begin{document}',
               r'\begin{center}',
               r'		{\bfseries\Large \textsf{List of Abbreviations}}',
