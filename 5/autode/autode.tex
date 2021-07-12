@@ -26,7 +26,7 @@ Calculating reaction energy profiles to aid in mechanistic elucidation has long 
 \subsection{Introduction}
 
 
-Automating the search for new chemical reactions is seen as one of the ‘grand challenges’ in computational chemistry.\cite{Grimme2018, Foscato2020} Discovering such thermodynamically and kinetically accessible reactions requires knowledge of the underlying potential energy surface (PES), which -- to a first approximation -- involves the characterization of reactants, products, intermediates, and transition states (TSs).\cite{Cheng2015, Sameera2012, Kozuch2011} While this has been routine for computational chemists for decades, locating TSs remains time consuming and a highly non-systematic endeavour.\cite{Simm2019} To this end, many automated TS-search algorithms have been developed which may be broadly classified into single and double-ended methods.\cite{Jensen2020, Dewyer2018} The former requires a single chemical structure from which TSs, intermediates, and products are located with no \emph{a priori} information. Representative examples include the ab initio nanoreactor (AINR),\cite{Wang2014} which employs high temperature and pressure molecular dynamics (MD) simulations to identify chemical transformations; the single-ended growing-string method (SE-GSM),\cite{Zimmerman2015} which iteratively generates structures along the PES and optimizes them until a TS and minima at each side of the string are found; the artificial force induced reaction (AFIR) method,\cite{Maeda2016} which adds artificial external forces to the original PES of the target system, and the transition state search method which uses high-energy chemical dynamics simulations (CDS) and a geometry-based algorithm to identify reactive pathways.\cite{Martinez-Nunez2015} While they allow for free exploration of unknown pathways, these methods remain costly and limited to small systems ($\sim10$ reactant atoms) if left to explore all transformations.
+Automating the search for new chemical reactions is seen as one of the ‘grand challenges’ in computational chemistry.\cite{Grimme2018, Foscato2020} Discovering such thermodynamically and kinetically accessible reactions requires knowledge of the underlying potential energy surface (PES), which -- to a first approximation -- involves the characterization of reactants, products, intermediates, and transition states (TSs).\cite{Cheng2015, Sameera2012, Kozuch2011} While this has been routine for computational chemists for decades, locating TSs remains time consuming and a highly non-systematic endeavour.\cite{Simm2019} To this end, many automated TS-search algorithms have been developed which may be broadly classified into single and double-ended methods.\cite{Jensen2020, Dewyer2018} The former requires a single chemical structure from which TSs, intermediates, and products are located with no \emph{a priori} information. Representative examples include the ab initio nanoreactor (AINR),\cite{Wang2014} which employs high temperature and pressure molecular dynamics (MD) simulations to identify chemical transformations; the single-ended growing-string method (SE-GSM),\cite{Zimmerman2015} which iteratively generates structures along the PES and optimises them until a TS and minima at each side of the string are found; the artificial force induced reaction (AFIR) method,\cite{Maeda2016} which adds artificial external forces to the original PES of the target system, and the transition state search method which uses high-energy chemical dynamics simulations (CDS) and a geometry-based algorithm to identify reactive pathways.\cite{Martinez-Nunez2015} While they allow for free exploration of unknown pathways, these methods remain costly and limited to small systems ($\sim10$ reactant atoms) if left to explore all transformations.
 \\\\
 On the other hand, double-ended methods use knowledge of both reactants and products to generate TSs. Depending on the specific method either single or multiple steps can be studied. The latter includes reaction network enumeration algorithms, which allow for a systematic search of the reaction space, but hit an exponential wall of complexity if arbitrarily many intermediates are permitted.\cite{Kim2018, Habershon2016} Single-step methods, although seemingly limited in scope, remain a powerful and affordable approach to explore many chemical processes determined by elementary steps. This is the case, for example, when the goal is to elucidate the origin of regio- or enantioselectivity or compare different synthetically-plausible pathways for a given transformation. Several methods have been developed following this philosophy, from linear and quasi-synchronous transit\cite{Halgren1977, Peng1993} and related approaches\cite{Dewar1984, Elber1987} to more recent developments based on growing\cite{Dohm2020} and freezing string methods\cite{Suleimanov2015, Behn2011} (GSM/FSM, Figure \ref{fig::ade_1}). Finally, heuristic approaches guided by either graph-based chemical rules or electronic-structure theory have been employed to explore a wide range of chemical reactions; including the Reaction Mechanism Generator,\cite{Gao2016} which follows approaches pioneered by NetGen,\cite{Broadbelt1994} and other reaction network approaches.\cite{Rappoport2019, Bergeler2015}
 
@@ -103,7 +103,7 @@ For metal complexes, where OpenBabel and RDKit fail to interpret the SMILES stri
 	\label{equation::ade_1}
 \end{equation}
 
-For both organic molecules and metal complexes, the lowest energy conformer is found by optimizing each conformer at the \lmethodx and excluding non-unique structures based on an RMSD threshold (default 0.3 \AA), then an energy threshold (default 0.2 \kcal). The remaining structures are finally optimized at the desired low\_opt level with the \hmethod, and the lowest energy is kept (Figure \ref{fig::ade_si_6a}).  
+For both organic molecules and metal complexes, the lowest energy conformer is found by optimizing each conformer at the \lmethodx and excluding non-unique structures based on an RMSD threshold (default 0.3 \AA), then an energy threshold (default 0.2 \kcal). The remaining structures are finally optimised at the desired low\_opt level with the \hmethod, and the lowest energy is kept (Figure \ref{fig::ade_si_6a}).  
 
 {\bfseries{TS Location}}. Within \ade, each species has an associated molecular graph, in which the atoms correspond to vertices (V) and ‘bonds’ to edges (E). For a discussion of how bonds are defined, see the SI (Figure \ref{fig::ade_si_7}). From the set of reactant graphs $\{R_i\}$, the reactant graph ($R$) is formed as the graph union, and likewise with products $\{P_i\}$ to generate ($P$). This is represented in Figure \ref{fig::ade_3} for a Claisen rearrangement, where the graphs $R$ and $P$ are formed from a single reactant and product molecule. If $R$ and $P$ are isomorphic, as in an identity reaction, then the chemical transformation of interest is not obvious from the graph transformation and an exception is raised. Once this has been checked, to find an atom mapping (bijection) from $R$ to $P$, we generate a set of transformations of $R, \{R’\}$, obtained by adding and/or removing edges. This leads to a set of functions $\{g\}$ that represents all the possible bond rearrangements $[g: E(R) \rightarrow E(R’)]$.
 
@@ -134,7 +134,7 @@ From these constraints, five scenarios exist:
 
 Defining the change in the number of bonds as $\Delta b = b_R – b_P$ as in refs. \cite{Jacobson2017,Crabtree2009} only when $\Delta b = 0$ does the full set of deleting and adding two edges need to be enumerated. Further acceleration is achieved by calculating $\{\Delta b_k\}$ where $k$ is a bond type (e.g. C--C) and ensuring any atom ($a$) does not exceed a maximal valence (e.g., $d(a) \le 4$ for a carbon atom). For example, in a Claisen rearrangement $\Delta b_\text{C--C} = 1$ and $\Delta b_\text{C--O} = -1$ such that the enumeration over (1, 1) transformations is targeted to only C–C and C–O bonds (Figure \ref{fig::ade_3}). Once the set of valid $\{g\}$ is found, a TS is located for each of them (if it exists), and following conformational sampling, the lowest energy TS is taken for the calculation of a reaction profile. For the Claisen reaction shown in Figure \ref{fig::ade_3}, only one bond rearrangement is obtained while for the all-carbon analogue (O $\rightarrow$ CH$_2$) two rearrangements are found ($g = \{g_1, g_2\}$). While reasonably exhaustive, we are yet to find a reaction where the process of generating/checking $R’$ and $P$ isomorphisms and finding the mapping is comparable or more demanding than a DFT calculation.
 
-To generate a saddle point, while ensuring compatibility with multiple electronic structure codes, we favour finding a TS guess by performing a set of constrained geometry optimizations along a linear path between reactants and products. In general, \ade attempts 1D constrained searches over forming/breaking bonds except when $\Delta b$ = 2 (e.g., Diels-Alder). If this procedure fails and the number of active bonds is more than one, a 2D PES exploration is performed by constrained optimizations and fitting a polynomial up to order 3.\cite{SciPy} From a 2D PES, the lowest energy saddle point is found by locating where the first derivative vanishes, and then using Dijkstra's algorithm\cite{Dijkstra1959} implemented in NetworkX.\cite{NetworkX} A constrained optimization at the saddle point is then performed to generate the TS guess. Once the TS guess is obtained, it is optimized with the TS optimizers implemented in the electronic structure theory package selected by the user. ‘Goodness’ of the TS is defined by a significant imaginary mode ($|\nu_\text{imag}| > 45$ cm$^{-1}$) and a significant contribution from the active bonds, or forward/backward displacement along the mode affording graphs isomorphic to reactants/products (quick reaction coordinate calculation,\cite{Goodman2003} see description of \code{true_ts()} function in §\ref{section::ade_si_algorithm} for further details). In cases where the reactant or product(s) are not isomorphic to $R$ or $P$ (e.g. barrierless proton transfers), rigid-body conformers of the reactant- and product- complex are generated (see SI §\ref{section::ade_si_nci_complexes}) and isomorphisms checked for the forwards/backwards displaced structures to all optimized conformers. We envisage the implementation of nudged elastic band (NEB) approaches to accelerate the computationally intensive 2D PES scans using an initial a linear path from the reactant(complex) by making/breaking bonds to drive towards a product state.
+To generate a saddle point, while ensuring compatibility with multiple electronic structure codes, we favour finding a TS guess by performing a set of constrained geometry optimizations along a linear path between reactants and products. In general, \ade attempts 1D constrained searches over forming/breaking bonds except when $\Delta b$ = 2 (e.g., Diels-Alder). If this procedure fails and the number of active bonds is more than one, a 2D PES exploration is performed by constrained optimizations and fitting a polynomial up to order 3.\cite{SciPy} From a 2D PES, the lowest energy saddle point is found by locating where the first derivative vanishes, and then using Dijkstra's algorithm\cite{Dijkstra1959} implemented in NetworkX.\cite{NetworkX} A constrained optimization at the saddle point is then performed to generate the TS guess. Once the TS guess is obtained, it is optimised with the TS optimisers implemented in the electronic structure theory package selected by the user. ‘Goodness’ of the TS is defined by a significant imaginary mode ($|\nu_\text{imag}| > 45$ cm$^{-1}$) and a significant contribution from the active bonds, or forward/backward displacement along the mode affording graphs isomorphic to reactants/products (quick reaction coordinate calculation,\cite{Goodman2003} see description of \code{true_ts()} function in §\ref{section::ade_si_algorithm} for further details). In cases where the reactant or product(s) are not isomorphic to $R$ or $P$ (e.g. barrierless proton transfers), rigid-body conformers of the reactant- and product- complex are generated (see SI §\ref{section::ade_si_nci_complexes}) and isomorphisms checked for the forwards/backwards displaced structures to all optimised conformers. We envisage the implementation of nudged elastic band (NEB) approaches to accelerate the computationally intensive 2D PES scans using an initial a linear path from the reactant(complex) by making/breaking bonds to drive towards a product state.
 
 
 {\textbf{Truncation}}. Performing tens of constrained optimizations along one or two coordinates in a large system is currently computationally demanding. To accelerate the generation of a TS guess in such systems, the system is truncated. Our implementation truncates over C--X bonds where the carbon atom is fully saturated and is at least two bonds away from the active atoms, and the truncated group is replaced by a hydrogen atom (Figure \ref{fig::ade_si_8}). The TS is then located using this truncated complex and saved in the template library from which the full non-truncated TS may be found using the templating method described below. For truncation to be utilised it must remove $>10$ atoms. 
@@ -192,7 +192,7 @@ Without specifying which electronic structure codes to use, \ade employs the fir
 	\label{fig::ade_5}
 \end{figure}
 
-{\bfseries{TS Conformers}}. A thorough exploration of the conformational space in order to find the lowest energy conformer for reactants and TSs is essential in characterising the kinetic and thermodynamic parameters of a reaction. \ade provides two routes to locating TS conformers. The first uses reactant/product complex conformers, from which different TSs may be traversed, and the second locates TS conformers directly. If using templates, both approaches are efficient, generally requiring only one constrained optimisation and one TS optimisation per conformer once a TS has been found. Direct TS conformer searching is, however, faster as only the TSAs are optimized and the lowest energy found whereas full enumeration from reactant/product complexes can require rescanning over the PES.
+{\bfseries{TS Conformers}}. A thorough exploration of the conformational space in order to find the lowest energy conformer for reactants and TSs is essential in characterising the kinetic and thermodynamic parameters of a reaction. \ade provides two routes to locating TS conformers. The first uses reactant/product complex conformers, from which different TSs may be traversed, and the second locates TS conformers directly. If using templates, both approaches are efficient, generally requiring only one constrained optimisation and one TS optimisation per conformer once a TS has been found. Direct TS conformer searching is, however, faster as only the TSAs are optimised and the lowest energy found whereas full enumeration from reactant/product complexes can require rescanning over the PES.
 
 
 For example, for an E2 elimination reaction, the initial search may locate a transition state in which the deprotonation occurs with the proton and the leaving group in a \emph{syn} conformation, rather than the favoured \emph{anti} conformer. The latter TS is automatically found in \ade by randomizing and minimizing Eqn. \eqref{equation::ade_2} (Figure \ref{fig::ade_6}a). Similarly, the \ade algorithm correctly locates the lowest energy H-migration TS for the radical decomposition of 1-propanol, with an RMSD $< 0.1$ \AA$\;$compared to the human-generated TS from ref. \cite{Ferro-Costas2018} (Figure \ref{fig::ade_si_13}). The importance of this unbiased TS conformer generation is highlighted in the Michael addition of nitromethyl acetate and methyl vinyl ketone, where several rotatable bonds exist (Figure \ref{fig::ade_6}b). For this reaction, an exhaustive search from product conformers generated 21 TS conformers, which upon optimization, led to a range in activation energies of more than 5 \kcalx and reaction energies that differ by up to 17 \kcal. The weak correlation between $\Delta E^\ddagger$ and $\Delta E_r$ from the global reactant conformer to each TS-product conformer pair highlights the importance of a systematic conformer search at both minima and transition states.
@@ -323,7 +323,7 @@ Figure \ref{fig::ade_si_1a} shows the energy profile for the endo/exo Diels Alde
 \end{equation}
 
 
-where the first harmonic term describes bonds between atoms, and the second term introduces a non-physical repulsion that enforces a notion of steric repulsion. Parameters $k_1 = 1$ and $k_2 = 0.01$ were selected based on empirical experience and comparison to optimized structures (Figure \ref{fig::ade_si_3}) while ideal bond lengths ($r^\text{avg}$) are obtained as averages from the Cambridge Structural Database.16
+where the first harmonic term describes bonds between atoms, and the second term introduces a non-physical repulsion that enforces a notion of steric repulsion. Parameters $k_1 = 1$ and $k_2 = 0.01$ were selected based on empirical experience and comparison to optimised structures (Figure \ref{fig::ade_si_3}) while ideal bond lengths ($r^\text{avg}$) are obtained as averages from the Cambridge Structural Database.16
 
 To generate reasonable 3D structures for organometallic complexes, each atom is added sequentially and randomly in a 10 \AA$\;$ cubic box, and the function $U_\text{RB}$ is minimized with respect to all coordinates after each addition. Using a smooth potential with few local minima ($n = 2$ in Eqn. \eqref{equation::ade_1_repeat}) is required to obtain stable structures for large complexes (Figure \ref{fig::ade_si_4}). For a test set of 20 metal-complexes with up to 100 atoms, our approach delivers a stable conformer in all cases, while RDKit successfully generates only 15 geometries and CONFAB failed in all cases (Figure \ref{fig::ade_si_5a} and Table \ref{table::ade_si_1}). With the analytic derivative of $U_\text{RB}$ and a conjugate gradient algorithm implemented in \emph{scipy},\cite{SciPy} an initial structure is available in a few seconds for complexes with more than 100 atoms. Stereo-defined metal complexes are currently not supported, as random initialization does not respect any chirality.
 
@@ -336,7 +336,7 @@ An alternative and slightly faster approach is used to generate metal complex co
 	\includegraphics[width=11cm]{5/autode/figs/figS3}
 	\vspace{0.4cm}
 	\hrule
-	\caption{Using the molecules butane, proline and [RhH(ethene)(CO)${}_3$], the calculated RMSD between the geometries optimized with the repulsion + bonded forcefield [\eqref{equation::ade_1_repeat} $n=8$] and XTB for different $k_2$ values (Eqn. \eqref{equation::ade_1_repeat}). Initial conformer geometries are obtained by random displacements from XTB-optimized geometries (normally distributed, $\sigma$=0.5 \AA, $\mu$=0.0 \AA, on each direction). This approach provides a more realistic starting structure than optimizing at the local XTB minimum i.e. not overly favouring a very small repulsion where atoms do not move from their optimized positions. Error bars are quoted as the standard error in the mean of 20 repeats.}
+	\caption{Using the molecules butane, proline and [RhH(ethene)(CO)${}_3$], the calculated RMSD between the geometries optimised with the repulsion + bonded forcefield [\eqref{equation::ade_1_repeat} $n=8$] and XTB for different $k_2$ values (Eqn. \eqref{equation::ade_1_repeat}). Initial conformer geometries are obtained by random displacements from XTB-optimised geometries (normally distributed, $\sigma$=0.5 \AA, $\mu$=0.0 \AA, on each direction). This approach provides a more realistic starting structure than optimizing at the local XTB minimum i.e. not overly favouring a very small repulsion where atoms do not move from their optimised positions. Error bars are quoted as the standard error in the mean of 20 repeats.}
 	\label{fig::ade_si_3}
 \end{figure}
 
@@ -360,7 +360,7 @@ An alternative and slightly faster approach is used to generate metal complex co
 	\includegraphics[width=\textwidth]{5/autode/figs/figS5a}
 	\vspace{0.4cm}
 	\hrule
-	\caption{Metal complexes itemized in Table \ref{table::ade_si_1} generated by minimizing a simple repulsion + bonded potential Eqn. \eqref{equation::ade_1_repeat} and their subsequent XTB optimized geometries. Structures initialized by adding atoms sequentially from a random position within a 10 \AA$\;$ cube and minimizing $U-\text{RB}$ with $n$ = 2 repeatedly until all atoms were added, then performing a final minimization with $n = 8$ $(k = 1$, $c = 0.01)$.}
+	\caption{Metal complexes itemized in Table \ref{table::ade_si_1} generated by minimizing a simple repulsion + bonded potential Eqn. \eqref{equation::ade_1_repeat} and their subsequent XTB optimised geometries. Structures initialized by adding atoms sequentially from a random position within a 10 \AA$\;$ cube and minimizing $U-\text{RB}$ with $n$ = 2 repeatedly until all atoms were added, then performing a final minimization with $n = 8$ $(k = 1$, $c = 0.01)$.}
 	\label{fig::ade_si_5a}
 \end{figure}
 
@@ -442,7 +442,7 @@ An alternative and slightly faster approach is used to generate metal complex co
 	\includegraphics[width=\textwidth]{5/autode/figs/figS6a}
 	\vspace{0.4cm}
 	\hrule
-	\caption{Conformer ranking for 20 amino acids in their neutral form using energies from XTB optimization (XTB opt), DFT single points (sp, XTB optimized geometries) and DFT loose optimization (opt). DFT calculations performed at the PBE-D3BJ/def2-SVP level of theory. Conformers generated using RDKit with a maximum of 1000 requested and an RMSD threshold of 0.05 \AA.}
+	\caption{Conformer ranking for 20 amino acids in their neutral form using energies from XTB optimization (XTB opt), DFT single points (sp, XTB optimised geometries) and DFT loose optimization (opt). DFT calculations performed at the PBE-D3BJ/def2-SVP level of theory. Conformers generated using RDKit with a maximum of 1000 requested and an RMSD threshold of 0.05 \AA.}
 	\label{fig::ade_si_6a}
 \end{figure}
 
@@ -528,7 +528,7 @@ In many chemical processes, the formation of a reactant/product complex precedes
 	\includegraphics[width=\textwidth]{5/autode/figs/figS11}
 	\vspace{0.4cm}
 	\hrule
-	\caption{NCI complex conformer (a) generation methodology and (b) application to the water trimer. $(5\times3)^2$ = 225 conformers are generated and optimized.}
+	\caption{NCI complex conformer (a) generation methodology and (b) application to the water trimer. $(5\times3)^2$ = 225 conformers are generated and optimised.}
 	\label{fig::ade_si_11}
 \end{figure}
 
@@ -638,7 +638,7 @@ To outline the algorithm in more detail than shown in the high-level workflow (F
 			are parallelized.
 			
 			\item \code{for conf in mol.conformers: conf.optimise(lmethod)}
-			Initially optimize all conformers at the
+			Initially optimise all conformers at the
 			low-level method with keywords.opt to
 			generate structures (hopefully) closer to
 			the minima on the high-level method 
@@ -665,7 +665,7 @@ To outline the algorithm in more detail than shown in the high-level workflow (F
 	\item \code{optimise_reacs_prods()}
 	\begin{enumerate}
 		\item \code{for mol in reacs + prods: mol.optimise(hmethod)}
-		Optimize the geometry with the high-level method
+		Optimise the geometry with the high-level method
 		but don’t reset the molecular graph
 	\end{enumerate}
 	
@@ -738,17 +738,17 @@ To outline the algorithm in more detail than shown in the high-level workflow (F
 			TS has been found.
 			
 			\item \code{ts_guess = ts_func(reaction, ..)}
-			Use the function to generate a transition state guess geometry as in the first instance the saddle point in the 2D surface.
+			Use the function to generate a transition state guess geometry as, in the first instance, the saddle point in the 1D/2D surface.
 			
 			\item \code{could_have_correct_mode(ts_guess)} $\rightarrow$ True.\\
-			The ‘lowest’ mode in the hessian must be negative (imaginary), be $|\nu| > 45 \text{ cm}^{-1}$, and has a contribution from the active atoms. The latter is defined by the mass weighted $|\nu_i|$ for an active atom i being above a threshold. 
+			The ‘lowest’ mode in the Hessian must be negative (imaginary), be $|\nu| > 45 \text{ cm}^{-1}$, and has a contribution from the active atoms. The latter is defined by the mass weighted $|\nu_i|$ for an active atom i being above a threshold. 
 			
 			
 			\item \code{ts.optimise()}
-			Use the TS optimizer in the high-level method to optimize to a first order saddle point. If there is $>1$ imaginary frequency following the successful termination displace along the spurious mode forwards and backwards to try and remove it. 
+			Use the TS optimiser in the high-level method to optimise to a first order saddle point. If there is $>1$ imaginary frequency following the successful termination displace along the spurious mode forwards and backwards to try and remove it. 
 			
 			\item \code{is_true_ts()}
-			Check that the forward/reverse displacement leads to the expected change in active bond lengths (all $\Delta r$ $> 0.3$ \AA) or that displacement forwards and backwards along the largest magnitude imaginary mode leads to a structure that has a graph which is isomorphic to either the reactant complex or an optimized conformer of the reactant complex.
+			Check that the forward/reverse displacement leads to the expected change in active bond lengths (all $\Delta r$ $> 0.3$ \AA) or that displacement forwards and backwards along the largest magnitude imaginary mode leads to a structure that has a graph which is isomorphic to either the reactant complex or an optimised conformer of the reactant complex.
 			
 			\item \code{ts.save_template()}
 			If \code{Config.make_ts_template}
@@ -782,7 +782,7 @@ To outline the algorithm in more detail than shown in the high-level workflow (F
 	\end{enumerate}
 	
 	\item \code{plot_reaction_profile(..)}
-	Spline between the points in the profile and optimize the
+	Spline between the points in the profile and optimise the
 	points in the spline to generate stationary points at the
 	minima/maxima for a smooth profile.
 
@@ -804,7 +804,7 @@ $M_i$ is the mass of atom $i$, $c_M$ = 1 amu, $v_\text{imag}(i)$ the normal mode
 	\includegraphics[width=10cm]{5/autode/figs/figS13}
 	\vspace{0.4cm}
 	\hrule
-	\caption{H-migration reaction involved in the radical decomposition of 1-propanol. (a) Transition state analogue (TSA) conformers located with \ade and ranked in increasing energy (c0-c3)(b) optimized TS, starting from TSAC1 conformer, at PBE0-D3BJ/def2-SVP compared to the lowest energy TS conformer reported in ref. \cite{Ferro-Costas2018} (cyan). RMSD calculation include all atoms. Key distances quoted in \AA.}
+	\caption{H-migration reaction involved in the radical decomposition of 1-propanol. (a) Transition state analogue (TSA) conformers located with \ade and ranked in increasing energy (c0-c3)(b) optimised TS, starting from TSAC1 conformer, at PBE0-D3BJ/def2-SVP compared to the lowest energy TS conformer reported in ref. \cite{Ferro-Costas2018} (cyan). RMSD calculation include all atoms. Key distances quoted in \AA.}
 	\label{fig::ade_si_13}
 \end{figure}
 
