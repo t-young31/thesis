@@ -94,50 +94,43 @@ where
 \section{Solution Phase Entropy}
 \subsection{Partition Functions} \label{section::appendix_igm_partition_functions}
 
-Approximating the sum with an integral, which is valid provided the gaps between energy levels is small, then
+For completeness the well-known integral approximation to the particle in a box PF is reproduced below. Provided the gaps between energy levels are small the integral can be replaced by a sum to give,
 \begin{equation}
-	q_\text{trans} \approx \int_0^\infty dn_x\;dn_y\;dn_z\; \exp{ {\Big \{} -{\beta}\cdot  \frac{\hbar^2 \pi^2}{2ml^2}(n_x^2 + n_y^2 + n_z^2)}{\Big \}}
+	q_\text{trans} \approx \int_0^\infty dn_x\;dn_y\;dn_z\; \exp{ {\Big \{} -{\beta}\cdot  \frac{\hbar^2 \pi^2}{2ml^2}(n_x^2 + n_y^2 + n_z^2)}{\Big \}}.
 \end{equation}
 
-Converting into spherical polar coordinates with $n_x^2 + n_y^2 + n_z^2 = n_r^2$ and integrating over $n_\theta$ and $n_\phi$ in the positive octant
-\begin{equation}
-	q_\text{trans} \approx \frac{1}{8} \cdot 4\pi \int_0^\infty dn_r\; n_r^2\exp{ {\Big \{} -{\beta}\cdot  \frac{\hbar^2 \pi^2}{2ml^2}n_r^2}{\Big \}}
-\end{equation}
-
-Using the standard integral $\int_{0}^{\infty} dx\; x^2 e^{-ax^2} = \sqrt{\pi}/4a^{3/2}$ and noting $V = l^3$
+Converting into spherical polar coordinates with $n_x^2 + n_y^2 + n_z^2 = n_r^2$ and integrating over $n_\theta$ and $n_\phi$ in the positive octant,
 \begin{equation}
 	\begin{aligned}
-		q_\text{trans} &\approx \frac{\pi}{2} \cdot \frac{\sqrt{\pi}}{4} {\Big (} \frac{\hbar^2 \pi^2\beta}{2ml^2} {\Big )}^{-3/2} \\
+		q_\text{trans} \approx \frac{1}{8} \cdot 4\pi \int_0^\infty dn_r\; n_r^2\exp{ {\Big \{} -{\beta}\cdot  \frac{\hbar^2 \pi^2}{2ml^2}n_r^2}{\Big \}} \\
+		&\approx \frac{\pi}{2} \cdot \frac{\sqrt{\pi}}{4} {\Big (} \frac{\hbar^2 \pi^2\beta}{2ml^2} {\Big )}^{-3/2} \\
 		&\approx \pi^{3/2} {\Big (} \frac{ml^2}{2\hbar^2 \pi^2\beta} {\Big )}^{3/2} \\
 		&\approx {\Big (} \frac{2\pi m k_B T}{h^2} {\Big )}^{3/2} V 
 		\label{q_trans_pib}
 	\end{aligned}
 \end{equation}
-
-Interestingly, \eqref{q_trans_pib} is identical to that obtained classically \eqref{q_trans_pib_classical}.
-
+where the standard integral $\int_{0}^{\infty} dx\; x^2 e^{-ax^2} = \sqrt{\pi}/4a^{3/2}$ and $V = l^3$ have been used. Interestingly, \eqref{q_trans_pib} is identical to that obtained classically \eqref{q_trans_pib_classical}.
 \begin{equation}
 	\begin{aligned}
 		q_\text{trans, c} &= \frac{1}{h^{3}}\int\int e^{-\beta H(\boldsymbol{p}, \boldsymbol{x})} \; d\boldsymbol{p}^{3} d\boldsymbol{x}^{3} \\
 		&= \frac{1}{h^{3}}\int_{-\infty}^\infty e^{-\beta \boldsymbol{p}^2/2m} \; d\boldsymbol{p}^{3} \int_0^l e^{-\beta \cdot 0} \;  d\boldsymbol{x}^{3} \\
 		&= \frac{1}{h^{3}} {\Big \{}  \int_{-\infty}^\infty e^{-\beta {p_k}^2/2m} \; d{p_k} {\Big \}}^3 {\Big \{}  \int_0^l  \;  dx_k {\Big \}}^3 \\
 		&= \frac{l^3}{h^{3}} {\Big \{}  \sqrt{\frac{\pi}{1/(2 k_b T)}} {\Big \}}^3 \\
-		&={\Big (} \frac{2\pi m k_B T}{h^2} {\Big )}^{3/2} V 
+		&={\Big (} \frac{2\pi m k_B T}{h^2} {\Big )}^{3/2} V.
 		\label{q_trans_pib_classical}
 	\end{aligned}
 \end{equation}
 
 \subsection{Classical Truncated Harmonic Oscillator}
 
-The classical entropy of the truncated harmonic oscillator with potential energy 
+The classical entropy of the truncated harmonic oscillator with potential energy, 
 \begin{equation}
 	V(x) = \begin{cases}
 		\frac{1}{2}m\omega^2x^2 &\text{if} \quad x > -r_e \\
 		+\infty &\text{if} \quad x \le -r_e
 	\end{cases} 
 \end{equation}
-is derived as follows. First the classical partition function is\footnote{Using $\int_{a}^{+\infty}  e^{-bx^2} dx = \sqrt{\pi/b}\;\text{erfc}(a\sqrt{b})/2$}
-
+is derived as follows. First the classical partition function is,\footnote{Using $\int_{a}^{+\infty}  e^{-bx^2} dx = \sqrt{\pi/b}\;\text{erfc}(a\sqrt{b})/2$}
 \begin{equation}
 	\begin{aligned}
 		Z_c &= \frac{1}{h}\int_{-\infty}^\infty \; dp\int_{-\infty}^{\infty} \; dx \; e^{-\beta E(x,p)} \\
@@ -148,8 +141,7 @@ is derived as follows. First the classical partition function is\footnote{Using 
 	\end{aligned}
 \end{equation}
 
-where $\text{erfc}(x)$ is the complementary error function. The derivative with respect to temperature for $a = r_e^2/ 2k_B m$ and $b = r_e^2m\omega^2/2k_B$ is 
-
+where $\text{erfc}(x)$ is the complementary error function. The derivative with respect to temperature for $a = r_e^2/ 2k_B m$ and $b = r_e^2m\omega^2/2k_B$ is, 
 \begin{equation}
 	\begin{aligned}
 		\frac{d Z_c}{dT} &= \frac{d}{dT} {\Big \{} \frac{\pi k_b T}{2h\omega} \;\text{erfc}(- \sqrt{a/T})\;\text{erfc}(- \sqrt{b/T}) {\Big \}} \\
@@ -159,11 +151,11 @@ where $\text{erfc}(x)$ is the complementary error function. The derivative with 
 
 \subsection{Classical Morse Oscillator}
 
-The classical entropy of a Morse oscillator as a model of a chemical bond requires an upper bound to the total energy to prevent the configurational integral becoming unbounded. For a total energy 
+The classical entropy of a Morse oscillator as a model of a chemical bond requires an upper bound to the total energy to prevent the configurational integral becoming unbounded. For a total energy,
 \begin{equation}
 	E(p, x) = \frac{p^2}{2m} + D_e (1 - e^{-a(r-r_e)})^2
 \end{equation}
-where $r$ is the bond length and $r_e$ the equilibrium bond length. The maximum energy is the dissociation energy of the bond ($D_e$) such that the the momentum is bounded
+where $r$ is the bond length and $r_e$ the equilibrium bond length. The maximum energy is the dissociation energy of the bond ($D_e$) such that the the momentum is bounded,
 \begin{equation}
 	E(x, p) < D_e \qquad \implies \qquad p_\pm = \pm \sqrt{2mD_e(1 - (1-e^{-ax})^2)}
 \end{equation}
@@ -195,15 +187,14 @@ Although \eqref{morse_pf_integral} has no analytical solution, the integrand is 
 	\label{morse_pf_integrand_vs_x}
 \end{figure}
 
+
 \subsection{Exponential Well}
 
-To derive the entropy and internal energy due to translation of a molecule in an 3D exponential well the temperature derivative of the partition function ($Z_c^\text{exp}$) is required. For
-
+To derive the entropy and internal energy due to translation of a molecule in an 3D exponential well the temperature derivative of the partition function ($Z_c^\text{exp}$) is required. For,
 \begin{equation}
 	Z_c^\text{exp} =\left(\frac{2m\pi k_B T}{h^2} \right)^{3/2} \int_0^\infty 4\pi r^2 e^{- k(e^{ar} - 1) / k_B T} \; \text{d}r :=  \Lambda(T) I(T)
 \end{equation}
-
-
+the derivative is,
 \begin{equation}
 	\begin{aligned}
 		\left(\frac{\partial Z_c^\text{exp}}{\partial T}\right)_{N , V} &= \left(\frac{\partial \Lambda}{\partial T}\right)_{N , V} I(T) + \Lambda(T)\left(\frac{\partial I}{\partial T}\right)_{N , V} \\

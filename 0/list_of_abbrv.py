@@ -91,7 +91,8 @@ glossary = {
         'RESP': 'Restrained electrostatic potential',
         'ZPE': 'Zero point energy',
         'LCC': 'Local coupled cluster',
-        'EW': 'Exponential well'
+        'EW': 'Exponential well',
+        'GGA': 'Generalized gradient approximation'
     }
 
 
