@@ -82,7 +82,7 @@ Z = \frac{1}{n!} {\Big (} \sum_j g_j \, e^{-\beta E_j} {\Big )}^n \quad := \quad
 \label{Z_partion_q}
 \end{equation}
 
-where $q$ is the canonical PF of the sub-system and the $n!$ factor corrects for the indistinguishability of the sub-systems. The sum over $j$ now enumerates over all the eigenstates of the subsystem. Despite the system now containing $10^2$--$10^4$ particles it still requires diagonalising a large system and is generally intractable.
+where $z$ is the canonical PF of the sub-system and the $n!$ factor corrects for the indistinguishability of the sub-systems. The sum over $j$ now enumerates over all the eigenstates of the subsystem. Despite the system now containing $10^2$--$10^4$ particles it still requires diagonalising a large system and is generally intractable.
 
 A further simplification is therefore required; $z$ is assumed to be factorisable into translational, rotational, vibrational, electronic and conformational contributions for each component in the subsystem i.e. a complete decoupling of molecular motion (\figurename{ \ref{fig::entropy_X1}}),
 \begin{equation}
@@ -108,11 +108,11 @@ where approximations to each of these terms are outlined in the following sectio
 
 To calculate the sub-system's PF comprised of a species with a `gas phase' method the environment is completely neglected. Although this places the molecule in vacuum, it is commonly referred to as a `gas phase' method due to its similarity to a low-pressure gas. In this section $z$ [Eqn. \eqref{equation::subsystem_pf}] will refer to a gas phase molecular PF.
 
-If the gap between ground and excited electronic states of the system is large and only the ground state is accessible at room-temperature, thus the electronic component of the molecular PF $z_\text{elec}$ is assumed to be unity. The conformational component ($z_\text{conf.}$) is often neglected due to a cancellation between states when calculating an energy or entropy difference. Only within the last few years accurate methods to estimate this component have been developed.\cite{Chan2021, grimme2021} This means only the translation, rotation and vibrational states for a single molecule must be approximated.
+If the gap between ground and excited electronic states of the system is large and only the ground state is accessible at room-temperature, thus the electronic component of the molecular PF ($z_\text{elec}$) is assumed to be unity. The conformational component ($z_\text{conf.}$) is often neglected due to a cancellation between states when calculating an energy or entropy difference. Only within the last few years accurate methods to estimate this component have been developed.\cite{Chan2021, grimme2021} This means only the translation, rotation and vibrational states for a single molecule must be approximated.
 
 \subsection{Ideal Gas Method}
 
-Within the ideal gas method (IGM), the molecular PF for a rigid molecule is simply approximated using analytic expressions for $z_\text{trans}$, $z_\text{rot}$ and $z_\text{vib}$, derived from eigenvalues of a particle in a box (PIB), rigid rotor (RR) and harmonic oscillator (HO) respectively.\cite{mcquarrie200}
+Within the ideal gas method (IGM), the molecular PF for a rigid molecule is approximated using analytic expressions for $z_\text{trans}$, $z_\text{rot}$ and $z_\text{vib}$, derived from eigenvalues of a particle in a box (PIB), rigid rotor (RR) and harmonic oscillator (HO) respectively.\cite{mcquarrie200}
 
 \subsubsection{Translation: Particle in a Box}
 
@@ -153,7 +153,7 @@ The effective volume ($V$) available is chosen based on the standard state at wh
 
 \subsubsection{Rotation: Rigid Rotor}
 
-The standard IGM expression for the rotational PF is outlined below from completeness, but is regarded as accurate for most molecules in the gas phase and does not significantly contribute  to the entropy.
+The standard IGM expression for the rotational PF is outlined below for completeness and is generally accurate for most molecules in the gas phase as it does not significantly contribute to the entropy.
 
 
 %assuming rigid rotation are presented elsewhere.\cite{mcquarrie200} Again an integral approximation is made to evaluate the sum, and is accurate for most molecules in the gas phase.
@@ -161,11 +161,11 @@ The standard IGM expression for the rotational PF is outlined below from complet
 % ------------------------------- Unimportant for the story -------------------------------
 %\iffalse
 
-Evaluating the rigid rotor PF requires the species' symmetry, as $z_\text{rot}$ differs for symmetric, spherical and asymmetric tops (amongst others). Using a spherical top to simplify the calculation, with moment of inertia  $I$ has eigenvalues 
+Evaluating the rigid rotor PF requires the species' symmetry, as $z_\text{rot}$ differs for symmetric, spherical and asymmetric tops (amongst others). Using a spherical top to simplify the calculation, with moment of inertia  $I$ has eigenvalues,
 \begin{equation}
 E_J = \frac{\hbar^2}{2I} J(J+1) \qquad: J \in \mathbb{N}_{>0}
 \end{equation}
-with degeneracy $g_J = (2J + 1)^2$. The PF is evaluated at the continuum limit noting that large $J$ will contribute most to the integrand (provided $\hbar^2/2I\beta \ll 1$) so $J + 1 \sim J$
+with degeneracy $g_J = (2J + 1)^2$. The PF is evaluated at the continuum limit noting that large $J$ will contribute most to the integrand (provided $\hbar^2/2I\beta \ll 1$) so $J + 1 \sim J$,
 \begin{equation}
 z_\text{rot} = \sum_{J}^\infty (2J + 1)^2\exp{ {\Big \{} -{\beta}\cdot  \frac{\hbar^2}{2I}J(J+1)}{\Big \}} \approx \sqrt{\pi} {\Big (} \frac{2I k_b T}{\hbar^2} {\Big )}^{3/2}
 \label{z_rot_spherical_top}
@@ -227,34 +227,32 @@ While the IGM is commonplace in electronic structure theory codes for calculatin
 \begin{equation}
 V_\text{Garza} = N_c v_c
 \end{equation}
-where $N_c$ is the number of available cavities for the solute and $v_c$ the cavity volume within a solvent. The PIB approximation for condensed phase systems is, however, theoretically limited. Molecules are not hard spheres and have a free path in solution $O(1 \text{ \AA})$;\cite{Herman2016}; indeed, most empirical forcefields make use of a Lennard-Jones $1/r^{12}$ repulsive term rather than a step function. This may result in a over/under-estimation of the translational entropy depending on the box size.
-\\\\
+where $N_c$ is the number of available cavities for the solute and $v_c$ the cavity volume within a solvent. The PIB approximation for condensed phase systems is, however, theoretically limited. Molecules are not hard spheres and have a free path in solution $O(1 \text{ \AA})$;\cite{Herman2016} indeed, most empirical forcefields make use of a Lennard-Jones $1/r^{12}$ repulsive term rather than a step function. This may result in a over/under-estimation of the translational entropy depending on the box size.
+
 Other approaches have moved beyond the PIB treatment, to a harmonic oscillator approximation of the explicit translational motion. For example, the method by Henchmen and co-workers treats  translational/rotational and vibrational components by diagonalising the force covariance matrix in a particular reference frame to afford frequencies that are used within a quantum harmonic oscillator expression for the entropy.\cite{Chakravorty2020, Ali2019} A similar method based on QM calculations by Nakai and co-workers, referred to as the `harmonic solvation model' (HSM), treats all normal modes of the solute as vibrations.\cite{Nakai2014} At least superficially this would seem reasonable as in solution a molecule has no free translation, or -- to a lesser extent -- rotation. This method recovers the equipartition limit for the internal energy for translation and rotation as $\nu \rightarrow 0$ cm$^{-1}$ namely,
 
 \begin{equation}
-E_\text{trans/rot} = \frac{k_B T}{2} \sum_i^3 \lim\limits_{\nu_i \rightarrow 0} \left[ {\beta\nu_i} {\Big (} \frac{1}{2} + \frac{e^{-\beta\nu_i}}{1-e^{-\beta\nu_i}} {\Big )}\right] = \frac{3}{2} k_B T
+E_\text{trans/rot} = \frac{k_B T}{2} \sum_i^3 \lim\limits_{\nu_i \rightarrow 0} \left[ {\beta\nu_i} {\Big (} \frac{1}{2} + \frac{e^{-\beta\nu_i}}{1-e^{-\beta\nu_i}} {\Big )}\right] = \frac{3}{2} k_B T.
 \end{equation} 
 
 Nakai suggested computing the frequencies using an implicit solvent model (CPCM); however, this must be performed numerically as the implicit solvent cavity must remain fixed i.e. not relaxed to accommodate the displaced geometry. Moreover, the numerical frequency calculation must be performed on a structure that has been optimised in the solution phase, thereby increasing the calculation time by hindering geometry convergence. For large systems this method therefore becomes prohibitively expensive.
 
 
-The same authors reported in 2018 a variant of this approach,\cite{Tarumi2018} where the intramolecular vibrational modes are treated within the IGM (rigid-body HSM, RB-HSM). This model was tested on a small set of vaporisation (7) and combustion (5) entropies and performed similarly to the more expensive HSM. Translational and rotational motion are then calculated by diagonalising a 6$\times$6 Hessian matrix consisting of the second derivatives with respect to translation and rotation in the Cartesian directions. For water this treatment results in harmonic frequencies $>$ 70 cm$^{-1}$; however, for 1,2-dichloroethane (DCE) the lowest frequency mode treated harmonically is just 6.4 cm$^{-1}$. For such a small force constant, the harmonic approximation is a poor one, with the associated entropy contribution potentially overestimated.
+The same authors reported a variant of this approach in 2018,\cite{Tarumi2018} where the intramolecular vibrational modes are treated within the IGM (rigid-body HSM, RB-HSM). This model was tested on a small set of vaporisation (7) and combustion (5) entropies and performed similarly to the more expensive HSM. Translational and rotational motion are then calculated by diagonalising a 6$\times$6 Hessian matrix consisting of the second derivatives with respect to translation and rotation in the Cartesian directions. For water this treatment results in harmonic frequencies $>$ 70 cm$^{-1}$; however, for 1,2-dichloroethane (DCE) the lowest frequency mode treated harmonically is just 6.4 cm$^{-1}$. For such a small force constant, the harmonic approximation is a poor one, with the associated entropy contribution potentially overestimated.
 
 It is worth noting that in the systems tested by Garza, Henchmen and Nakai the agreement to experiment is excellent in all cases, despite the disparity in methods. Therefore, the question of which method is physically based and so generally applicable remains.
 
 \subsection{Concentration Corrections}
 
 A meaningful comparison to experiment requires comparing free energies that have been obtained at the same (standard) state, which for molecules is usually taken to be 1 M. A correction is then needed to calculate a free energy at the standard state for an unequal simulation volume of,\cite{General2010} 
-
 \begin{equation}
 	F^{\standardstate} = F^\text{sim} + k_BT \ln\left(\frac{V^\standardstate}{V^\text{sim}}\right)
 \end{equation}
-
 where $F$ is a free energy ($G, A$) and $V^\text{sim}$ the volume used for the simulation. 
 
 In calculating the translational entropy within a defined cavity the solute concentration is far from the 1 M standard. While solvent dependent, it should be of the same order of magnitude as the solute volume. For example, considering a methane-in-water system, which is close to ideal spherical case, the molecular volume is $\sim 30$ \AA$^3$\cite{Zhao2003} thus to correct into 1 M (an effective volume of 1661 \AA$^3$) an absolute upper bound is 2.4 \kcal. 
 %8.3145*298.15*ln(1661/30)/1000/4.184
-Therefore, 2.5 \kcalx provides a useful upper bound on the concentration correction the true `simulation' volume from which the exponential well is obtained is larger than just the molecular volume. In fact, with a molecular volume more representative of those usually studied in solution phase reactions, with a radius $\sim 5 $\AA$\;$  ($\sim 500-700$ \AA$^3$ is common in drug-like molecules\cite{Khanna2009}) the volume correction decreases to just 0.5–-0.7 \kcalx at room temperature. Thus, in all but the smallest solvated molecules, this contribution is small.
+Therefore, 2.5 \kcalx provides a useful upper bound on the concentration correction the true `simulation' volume from which the exponential well is obtained is larger than just the molecular volume. In fact, with a molecular volume more representative of those usually studied in solution phase reactions, with a radius $\sim 5$ \AA$\;$  ($\sim 500-700$ \AA$^3$ is common in drug-like molecules\cite{Khanna2009}) the volume correction decreases to just 0.5–-0.7 \kcalx at room temperature. Thus, in all but the smallest solvated molecules, this contribution is small.
 \\
 It is worth noting that this correction term is distinct from the entropy of mixing, as the maximum $TS_\text{mix} \sim 0.4\;$ \kcal,\footnote{Obtained from the standard statistical mechanics result $\Delta S_\text{mix} = -R(x \ln x + (1-x)\ln(1 - x))$ for a two component system one of which has mole fraction $x$.}  and thus generally negligible at ambient temperature or below.
 
