@@ -92,7 +92,8 @@ glossary = {
         'ZPE': 'Zero point energy',
         'LCC': 'Local coupled cluster',
         'EW': 'Exponential well',
-        'GGA': 'Generalized gradient approximation'
+        'GGA': 'Generalized gradient approximation',
+        'CCDC': 'Cambridge Crystallographic Data Centre'
     }
 
 

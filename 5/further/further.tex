@@ -10,7 +10,7 @@
 
 \section{Further Developments}
 
-Subsequent to the manuscript being published in late 2020 a number of developments have been added to enhance functionality and reduce computational expense. These are outlined in the following sections, with in-progress developments itemised on the online repository.\footnote{See \url{https://github.com/duartegroup/autodE/projects} for current developments.}
+Since its publication in late 2020, a number of developments have been introduced into \ade to enhance functionality and reduce computational expense. These are outlined in the following sections, with in-progress developments itemised on the online repository.\footnote{See \url{https://github.com/duartegroup/autodE/projects} for current developments.}
 
 \subsection{Transition State Guesses}
 
@@ -162,10 +162,10 @@ In particular, for Diels-Alder reactions the performance increase over previousl
 
 Converting a SMILES string into a 3D geometry was achieved within \ade using RDKit\cite{Landrum2019} for organic molecules and using a SMILES parser and a randomise+relax algorithm on all atoms for metal complexes. This approach, however, comes with two drawbacks: (1) cyclic organic molecules containing \emph{trans} ($E$) double bonds are (as of RDKit v. 2020) generated as their \emph{cis} ($Z$) analogues and (2) randomising all atoms does not respect any stereochemistry defined in the SMILES string (point tetrahedral or $E$/$Z$).
 
-To rectify these limitations a completely new (Open)SMILES parser was developed that is fast, well tested and extensible. From this 3D geometries are built by:
+To rectify these limitations a completely new (Open)SMILES parser was developed that is fast, well tested and extensible. From this, 3D geometries are built by:
 
 \begin{enumerate}
-	\item Converting all implicit hydrogen atoms defined in the SMILES string to explicit atoms (e.g. `XCY' refers to a central CH$_2$ group).
+	\item Converting all implicit hydrogen atoms defined in the SMILES string to explicit atoms (e.g. `CC' refers to a ethane molecule).
 	\item Setting the atom types with templated vacant sites, for example a tri-coordinate atom is assigned a trigonal template unless it is a group 15 element in which case a trigonal-pyramidal geometry is defined. 
 	\item For each atom in turn:
 	\begin{enumerate}
@@ -174,24 +174,24 @@ To rectify these limitations a completely new (Open)SMILES parser was developed 
 	\end{enumerate}
 \end{enumerate}
 
-While simple, this approach is remarkably efficient at generating simple linear molecules, with an execution time generally $<100$ milliseconds. There are, of course, special cases that require some care. For example, double bonds with a defined $E/Z$ stereochemistry require the dihedral angle across the double bond to be adjusted appropriately. Rings and particularly fused rings are challenging to build using this approach, as added atoms can no longer be chosen to minimise the repulsion with the rest of the structure. Once ring atoms have been added sequentially the dihedral angles are adjusted to minimise,
+While simple, this approach is remarkably efficient at generating linear molecules, with an execution time generally $<100$ milliseconds. There are, of course, special cases that require some care. For example, double bonds with a defined $E/Z$ stereochemistry require the dihedral angle across the double bond to be adjusted appropriately. Rings and particularly fused rings are challenging to build using this approach, as added atoms can no longer be chosen to minimise the repulsion with the rest of the structure. Once ring atoms have been added sequentially the dihedral angles are adjusted to minimise,
 \begin{equation}
 	V = k(r-r_\text{avg})^2 + \sum_{i>j} {c_{ij}}/{r^n}
 \end{equation}
-where $n$ is a positive integer. This `closes' the ring while maintaining a small steric repulsion. 
+where $n$ is a positive integer and average distances $r_\text{avg}$ are taken from the CCDC. This `closes' the ring while maintaining a small steric repulsion. 
 
-For a flat aromatic ring (e.g. phenyl) then the three dihedrals must be simply be zeroed. In a saturated or semi-saturated ring however many dihedrals must be minimised on as to close the ring. This is achieved using a stochastic global steepest-decent minimisation where random points in the space are selected.\footnote{Note an improved semi-stochastic algorithm by maximising the distance between the starting points in the $n$-dimensional space for $n$ dihedrals is under development.} Further complications arise when small rings ($< 5$-membered) or metallocycles are closed, as rotating dihedrals is no longer sufficient to adequately close a ring. In these contexts, either the bond angles within the ring are adjusted, or the whole ring minimised with a repulsion+bonded (RB) potential, as previously used to generate the whole structure.
+For a flat aromatic ring (e.g. phenyl) then the three dihedrals must be simply be zeroed. In a saturated or semi-saturated ring, however, many dihedrals must be minimised on as to close the ring. This is achieved using a stochastic global steepest-decent minimisation where random points in the space are selected.\footnote{Note an improved semi-stochastic algorithm by maximising the distance between the starting points in the $n$-dimensional space for $n$ dihedrals is under development.} Further complications arise when small rings ($< 5$-membered) or metallocycles are closed, as rotating dihedrals is no longer sufficient to adequately close a ring. In these contexts, either the bond angles within the ring are adjusted, or the whole ring minimised with a repulsion+bonded (RB) potential, as previously used to generate the whole structure.
 
 \subsection{Future Development}
 
-Currently, \ade provides access to reaction profiles for most single step (elementary) reactions and is broadly limited by a maximum of four active bonds and the inaccuracy of `low-level' electronic structure methods. Future developments will include:
-
+Currently, \ade provides access to reaction profiles for a wide range of reactions. However, some limitations remain that encourage further developments.Currently a maximum of four bonds can be been broken and formed in a a single step and the performance limited by the inaccuracy of `low-level’ electronic structure methods. Addressing these limitations will be the subject of future development, with the current focus on the following aspects:
+ 
 \begin{itemize}
 	\item Improved load balancing in conformer optimisation. Currently, each conformer optimisation or single-point energy evaluation is performed in serial. While this approach is close to optimal for calculations run on $\lesssim 8$ CPU cores, for which most electronic structure codes parallelise almost linearly up to, it is not for \ade calculations performed on more cores. A context-aware and dynamic multiprocessing approach therefore would be beneficial to reduce the total wall time.
 	
 	\item Consistent thermochemical calculations. Currently, \ade uses thermochemical data calculated by the electronic structure codes and is therefore inconsistent. Hessian extraction and diagonalisation to calculate frequencies thus enthalpy/entropy/free energies would provide a consistent framework.
 	
-	\item Implementation of minima and transition state optimisers. Currently, optimisations are performed using electronic structure codes, which means (1) Atomic Simulation Environment (ASE\cite{ASE2017})-wrapped codes cannot be used for efficient optimisations, as ASE optimisation are in Cartesian coordinates; (2) convergence criteria cannot be defined explicitly and (3) optimisations can crash irrevocably in both ORCA and Gaussian.\footnote{For example, when an angle approaches ${180}^{\circ}$ in Gaussian09 the calculation fails, which is handled in \ade but requires a recursive fix, which fails after a few attempts. On the other hand ORCA does not stop when the internal$\rightarrow$Cartesian back transformation fails, but enters a high-energy region of phase space.} Due to (2), an \emph{autodE}-based optimisation could afford faster path searches by employing loose convergence criteria for regions not close to the TS. Implementing minimisers would also enable greater functionality with newly emerging machine learned potentials (MLPs).
+	\item Implementation of minima and transition state optimisers. Currently, optimisations are performed using electronic structure codes, which means (1) Atomic Simulation Environment (ASE\cite{ASE2017})-wrapped codes cannot be used for efficient optimisations, as ASE optimisation are in Cartesian coordinates; (2) convergence criteria cannot be defined explicitly and (3) optimisations can crash irrevocably in both ORCA and Gaussian.\footnote{For example, when an angle approaches ${180}^{\circ}$ the calculation fails in Gaussian09, which is handled in \ade but requires a recursive fix, which may fail after a few attempts. On the other hand ORCA does not stop when the internal$\rightarrow$Cartesian back transformation fails, but enters a high-energy region of phase space.} Due to (2), an \emph{autodE}-based optimisation could afford faster path searches by employing loose convergence criteria for regions not close to the TS. Implementing minimisers would also enable greater functionality with newly emerging machine learned potentials (MLPs).
 	
 	\item Implementation of wrappers for other electronic structure packages e.g. TurboMole and PSI4. Adding these methods will enhance the flexibility and usability of \emph{autodE}.
 	
@@ -199,7 +199,7 @@ Currently, \ade provides access to reaction profiles for most single step (eleme
 	
 \end{itemize}
 
-I expect most or all of these to be included with version 1.1, which will be released at some point in 2021 which will further enhance the accuracy and speed of \ade.
+I expect most or all of these to be included with version 1.1, which will be released at some point in 2021, further enhancing the accuracy and speed of \emph{autodE}.
 
 
 \clearpage

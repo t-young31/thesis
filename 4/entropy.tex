@@ -10,14 +10,14 @@
 
 \section{Abstract}
 
-Predicting free energies using end-state methods from QM relies on calculating thermal corrections to the potential energy. The ideal gas model (IGM) provides a well established and accurate method for isolated molecules, but has limitations for large and condensed phase systems. One of the dominant terms and potential sources of error is the translational entropy, for which a new approximation is presented in this chapter. The potential for solute translation within a solvent cavity is spherical exponential, from which classical-quantum correspondence allows for rapid determination of the entropy. The resulting translational entropy is roughly half of that obtained from the IGM approximation, which has been previously suggested as an \emph{ad hoc} correction. This can method can correct for systematic entropy difference errors in bimolecular reactions.
+Predicting free energies using end-state methods from QM relies on calculating thermal corrections to the potential energy. The ideal gas model (IGM) provides a well established and accurate method for isolated molecules, but has limitations for large and condensed phase systems. One of the dominant terms and potential sources of error is the translational entropy, for which a new approximation is presented in this chapter. The potential for solute translation within a solvent cavity is spherical exponential, from which classical-quantum correspondence allows for rapid determination of the entropy. The resulting translational entropy is roughly half of that obtained from the IGM approximation, which has been previously suggested as an \emph{ad hoc} correction. This method can correct for systematic entropy difference errors in bimolecular reactions.
 
 
 \section{Introduction}
 
 Accurate prediction of free energy differences is central to generate reliable estimates of binding and kinetics. Unfortunately, despite progress towards this goal, conventional methods remain costly and/or inaccurate. Indeed, in Chapter 3 discrepancies of up to 10 \kcalx were observed in binding and activation energies using conventional methods.
 
-Although in some instances potential energy differences can be used to make predictions, computing absolute free energy differences at finite temperatures demand inclusion of an entropic component to the free energy ($F = E - TS$ where $E= H$ or $E=U$ in $NPT$ or $NVT$ ensembles respectively). The entropic component may be included implicitly in `free energy methods' where sampling from one state to another affords a free energy difference ($\Delta G$),\cite{Boresch2003, Mobley2017, Armacost2020, Zhou2009} or explicitly from end-states without any intermediate configurations. In the latter case an estimation of the absolute entropy of a sate (e.g. minimum/TS) is required.\cite{Jensen1999} Sufficient sampling to converge free energy methods with an accurate QM potential is generally not available for all but the systems of a few atoms.\cite{Iftimie2005} Therefore, estimating absolute thermal ($U$ and $S$) energy contributions will be the subject of this chapter (\figurename{ \ref{fig::entropy_XA_intro}}).
+Although in some instances potential energy differences can be used to make predictions, computing absolute free energy differences at finite temperatures demand inclusion of an entropic component to the free energy ($F = E - TS$, where $E= H$ or $E=U$ in $NPT$ or $NVT$ ensembles respectively). The entropic component may be included implicitly in `free energy methods' where sampling from one state to another affords a free energy difference ($\Delta G$),\cite{Boresch2003, Mobley2017, Armacost2020, Zhou2009} or explicitly from end-states without any intermediate configurations. In the latter case, an estimation of the absolute entropy of a state (e.g. minimum/TS) is required.\cite{Jensen1999} Sufficient sampling to converge free energy methods with an accurate QM potential is generally not available for all but the systems of a few atoms.\cite{Iftimie2005} Therefore, estimating absolute thermal ($U$ and $S$) energy contributions will be the subject of this chapter (\figurename{ \ref{fig::entropy_XA_intro}}).
 
 
 \begin{figure}[h!]
@@ -29,20 +29,15 @@ Although in some instances potential energy differences can be used to make pred
 	\label{fig::entropy_XA_intro}
 \end{figure}
 
-
-Depending on the system and interrogated end points, the entropic components may cancel and the entropy difference (approximately) vanish, e.g. in unimolecular transformations. However, in a intermolecular chemical process within an environment (e.g. solvent/supramolecular catalyst),
+Depending on the end points of the  system and process, the entropic components may cancel and the entropy difference (approximately) vanish, e.g. in unimolecular transformations. However, in an intermolecular chemical process within an environment (e.g. solvent/supramolecular catalyst),
 \begin{equation}
 \text{A} + \text{B} \xrightarrow{\text{env.}} \text{AB}
 \end{equation}
-such a cancellation is not generally observed, as the minimum or transition state complex (AB) has lost translational and rotational degrees of freedom compared to the separated components.\cite{Jensen1999} An interesting case occurs when AB comprises a supramolecular structure, where one component (a guest, A) can translate within the host B (as illuded to in Chapter 3). Of particular importance are binding processes in proteins, which govern the affinity of a drug to its biological target.\cite{Woo2005} While in the context of chemical reactivity an accurate calculation of entropy is required as the rate is exponential in the difference.
+such a cancellation is not generally observed, as the minimum or transition state complex (AB) has lost translational and rotational degrees of freedom compared to the separated components.\cite{Jensen1999} An interesting case occurs when AB comprises a supramolecular structure, where one component (a guest, A) can translate within the host B (as alluded to in Chapter 3). Of particular importance are binding processes in proteins, which govern the affinity of a drug to its biological target.\cite{Woo2005} While in the context of chemical reactivity, an accurate calculation of entropy is required as the rate is exponential in the difference.
 
 \section{Theory}
 
-Calculating $F$ for a stationary point on a PES with QM is achieved by adding  entropic and other contributions to the 0 K potential energy. With most chemical reactions take place at constant pressure, number of molecules and temperature, the appropriate ensemble is isothermal-isobaric ($NPT$). However, the volume change contribution ($P\Delta V$) to the Gibbs free energy is negligible for processes in the condensed phase, including small molecule\footnote{For example, the expt. \cite{Lateef1969} volume of activation for the S$_\text{N}$2 reaction: allyl chloride + H$_2$O $\rightarrow$ allyl alcohol + HCl is $\Delta V^\ddagger = $ ($-11.4 \pm 0.1$) ml mol$^{-1}$, which at $T = 323.4$ K and $P = $1 atm translates to a contribution $P\Delta V = -0.00116$ kJ mol$^{-1}$.} and enzymatic reactions.\cite{Low1975} It is therefore common to predict thermodynamic quantities in the isothermal-isochoric $NVT$ canonical ensemble, where the associated free energy is the Helmholtz energy,
-\begin{equation}
-A = U - TS
-\end{equation} 
-From statistical mechanics the Helmholtz energy is given by,\cite{mcquarrie200}
+Calculating $F$ for a stationary point on a PES with QM is achieved by adding  entropic and other contributions to the 0 K potential energy ($U_\text{0 K}$). As most chemical reactions take place at constant pressure, number of molecules and temperature, the appropriate ensemble is isothermal-isobaric ($NPT$). However, the volume change contribution ($P\Delta V$) to the Gibbs free energy is negligible for processes in the condensed phase, including small molecule\footnote{For example, the expt. \cite{Lateef1969} volume of activation for the S$_\text{N}$2 reaction: allyl chloride + H$_2$O $\rightarrow$ allyl alcohol + HCl is $\Delta V^\ddagger = $ ($-11.4 \pm 0.1$) ml mol$^{-1}$, which at $T = 323.4$ K and $P = $1 atm translates to a contribution $P\Delta V = -0.00116$ kJ mol$^{-1}$.} and enzymatic reactions.\cite{Low1975} It is therefore common to predict thermodynamic quantities in the isothermal-isochoric $NVT$ canonical ensemble, where the associated free energy is the Helmholtz energy. From statistical mechanics $A$ is given by,\cite{mcquarrie200}
 \begin{equation}
 A = -k_B T \ln[Z(N, V, T)]
 \label{helmhotlz}
@@ -51,7 +46,7 @@ where $Z$ is the canonical partition function (PF) and $k_B$ is the Boltzmann co
 \begin{equation}
 Z_P(N, P, T) =  \sum_j Z(N, V_j, T) e^{\beta P V_j}
 \end{equation}
-where $\beta = 1 / k_B T$. To simplify, with minimal loss in accuracy, thermodynamic quantities are outlined in a an $NVT$ ensemble. With electronic structure methods affording $U_{0\text{ K}}$,\footnote{Where the approximate zero-point energy (ZPE) is generally obtained from a harmonic approximation of vibrations and the remaining thermal energy given by standard expressions involving the PF.} the problem broadly reduces to calculating $S$ within the $NVT$ ensemble.\footnote{Note the non-ZPE thermal contributions to the internal energy are small and largely cancel. For example, $\Delta E_\text{internal}^\ddagger = 3.3$ \kcalx for F${}^{-}$+CH${}_3$Cl.} From Eq. \ref{helmhotlz} then,
+where $\beta = 1 / k_B T$. To simplify, with minimal loss in accuracy, thermodynamic quantities are outlined in an $NVT$ ensemble. With electronic structure methods affording $U_{0\text{ K}}$,\footnote{Where the approximate zero-point energy (ZPE) is generally obtained from a harmonic approximation of vibrations and the remaining thermal energy given by standard expressions involving the PF.} the problem broadly reduces to calculating $S$ within the $NVT$ ensemble.\footnote{Note the non-ZPE thermal contributions to the internal energy are small and largely cancel. For example, $\Delta E_\text{internal}^\ddagger = 3.3$ \kcalx for F${}^{-}$+CH${}_3$Cl.} From Eq. \ref{helmhotlz} then,
 
 \begin{equation}
 S = k_B T {\Big (} \frac{\partial \ln Z}{\partial T} {\Big )}_{N, V} + k_B \ln(Z)
@@ -117,7 +112,7 @@ If the gap between ground and excited electronic states of the system is large a
 
 \subsection{Ideal Gas Method}
 
-Within the ideal gas method (IGM) the molecular PF for a rigid molecule is simply approximated using analytic expressions for $z_\text{trans}$, $z_\text{rot}$ and $z_\text{vib}$, derived from eigenvalues of a particle in a box (PIB), rigid rotor (RR) and harmonic oscillator (HO) respectively.\cite{mcquarrie200}
+Within the ideal gas method (IGM), the molecular PF for a rigid molecule is simply approximated using analytic expressions for $z_\text{trans}$, $z_\text{rot}$ and $z_\text{vib}$, derived from eigenvalues of a particle in a box (PIB), rigid rotor (RR) and harmonic oscillator (HO) respectively.\cite{mcquarrie200}
 
 \subsubsection{Translation: Particle in a Box}
 
@@ -154,11 +149,11 @@ using an integral approximation to the sum.\footnote{The approximation is reason
 %print(100*(np.log(q_sum) - np.log(q_integral))/np.log(q_sum),
 %f'l = {l_ang} Å')
 
-The effective volume ($V$) available is chosen based on the standard state at which the entropy, and so free energy, are required.\cite{Zhou2009} For gases this is usually taken to be the volume available to an ideal gas at 1 atm ($V_\text{1 atm} = 1 / \beta p= 40605$ \AA${}^3$) and 1 mol dm${}^{-3}$ for solutions ($V_\text{1 M} = 1/ C =  1661$ \AA${}^3$). For gas phase reactions this approximation is excellent -- delivering quantitative accuracy to experiment in a selection of reaction rates.\cite{Shan2019} In solution using an effective volume appropriate for an ideal gas is, however, controversial, with `free volume' theories proposed to correct for the potential overestimation of the effective volume and so entropy.\cite{Amzel1997} These strategies will be discussed in the context of a new method outlined below.
+The effective volume ($V$) available is chosen based on the standard state at which the entropy, and so free energy, are required.\cite{Zhou2009} For gases this is usually taken to be the volume available to an ideal gas at 1 atm ($V_\text{1 atm} = 1 / \beta p= 40605$ \AA${}^3$) and 1 mol dm${}^{-3}$ for solutions ($V_\text{1 M} = 1/ C =  1661$ \AA${}^3$). For gas phase reactions this approximation is excellent -- delivering quantitative accuracy to experiment in a selection of reaction rates.\cite{Shan2019} However, in solution using an effective volume appropriate for an ideal gas is controversial, with `free volume' theories proposed to correct for the potential overestimation of the effective volume and so entropy.\cite{Amzel1997} These strategies will be discussed in the context of a new method outlined below.
 
 \subsubsection{Rotation: Rigid Rotor}
 
-The standard IGM expression for the rotational PF is outlined below from completeness, but is regarded as accurate for most molecules in the gas phase and does not form a large contribution to the entropy.
+The standard IGM expression for the rotational PF is outlined below from completeness, but is regarded as accurate for most molecules in the gas phase and does not significantly contribute  to the entropy.
 
 
 %assuming rigid rotation are presented elsewhere.\cite{mcquarrie200} Again an integral approximation is made to evaluate the sum, and is accurate for most molecules in the gas phase.
@@ -193,7 +188,7 @@ where the rotational constants are of the form $B_k = \hbar^2/2 I_k $ where $I_k
 
 \subsubsection{Vibrational: Harmonic Oscillator}
 
-By diagonalising the mass weighted matrix of second derivatives (the Hessian), the normal mode frequencies can be obtained from the eigenvalues, so that the vibrational PF can be obtained as a product over the individual uncoupled harmonic oscillators (HOs). Given for quantum HO,
+By diagonalising the mass-weighted matrix of second derivatives (the Hessian), the normal mode frequencies can be obtained from the eigenvalues, so that the vibrational PF can be obtained as a product over the individual uncoupled harmonic oscillators (HOs). Given for quantum HO,
 %By decomposing the vibrational motion into normal modes the Hessian becomes diagonal with the eigenvalues corresponding to independent harmonic frequencies (once mass weighted). The partition function may then be computed from product of the independent HO partition functions for all these modes. From the eigenvalues of a simple harmonic oscillator and summing directly,
 \begin{equation}
 E_n = \hbar\omega {\Big (} n + \frac{1}{2} {\Big )} \qquad : n \in \mathbb{N}_{\ge 0}
@@ -228,13 +223,13 @@ Grimme and co-workers proposed an alternative LFM treatment that improved the ag
 
 \subsection{Alternative Methods}
 
-While the IGM is commonplace in electronic structure theory codes for calculating the thermal (enthalpic and entropic) contributions to the absolute free energy, it is not without limitations. Specifically, the translational component of the entropy is often considered to be overestimated for molecules in solution.\cite{Gilson2010} Indeed, a variety of scaling factors have been proposed in order to improve computational accuracy with varying levels of justification. For example, neglecting both the translational and rotational components,\cite{Sumimoto2004} removing the translational component,\cite{Tanaka2011} scaling by 0.5 and inverting the sign,\cite{Deubel2006} scaling by 0.5,\cite{Li2016} and scaling by 2/3.\cite{DiTommaso2010} In addition to empirical scalings, recent work by Garza\cite{Garza2019} makes use of an effective volume within $z_\text{PIB}$ given by,
+While the IGM is commonplace in electronic structure theory codes for calculating the thermal (enthalpic and entropic) contributions to the absolute free energy, it is not without limitations. Specifically, the translational component of the entropy is often considered to be overestimated for molecules in solution.\cite{Gilson2010} Indeed, various scaling factors have been proposed in order to improve computational accuracy with varying levels of justification. For example, neglecting both the translational and rotational components,\cite{Sumimoto2004} removing the translational component,\cite{Tanaka2011} scaling by 0.5 and inverting the sign,\cite{Deubel2006} scaling by 0.5,\cite{Li2016} and scaling by 2/3.\cite{DiTommaso2010} In addition to empirical scalings, recent work by Garza\cite{Garza2019} makes use of an effective volume within $z_\text{PIB}$ given by,
 \begin{equation}
 V_\text{Garza} = N_c v_c
 \end{equation}
-where $N_c$ is the number of available cavities for the solute and $v_c$ the cavity volume within a solvent. The particle in a box approximation for condensed phase systems is, however, theoretically limited. Molecules are not hard spheres and have a free path in solution $O(1 \text{ \AA})$;\cite{Herman2016}; indeed, most empirical forcefields make use of a Lennard-Jones $1/r^{12}$ repulsive term rather than a step function. This may result in a over/under-estimation of the translational entropy depending on the box size.
+where $N_c$ is the number of available cavities for the solute and $v_c$ the cavity volume within a solvent. The PIB approximation for condensed phase systems is, however, theoretically limited. Molecules are not hard spheres and have a free path in solution $O(1 \text{ \AA})$;\cite{Herman2016}; indeed, most empirical forcefields make use of a Lennard-Jones $1/r^{12}$ repulsive term rather than a step function. This may result in a over/under-estimation of the translational entropy depending on the box size.
 \\\\
-Other approaches have moved beyond the particle in a box treatment, to a harmonic oscillator approximation of the explicit translational motion. For example, the method by Henchmen and co-workers treats  translational/rotational and vibrational components by diagonalising the force covariance matrix in a particular reference frame to afford frequencies that are used within a quantum harmonic oscillator expression for the entropy.\cite{Chakravorty2020, Ali2019} A similar method based on QM calculations by Nakai and co-workers, referred to as the `harmonic solvation model' (HSM), treats all normal modes of the solute as vibrations.\cite{Nakai2014} At least superficially this would seem reasonable as in solution a molecule has no free translation, or -- to a lesser extent -- rotation. This method recovers the equipartition limit for the internal energy for translation and rotation as $\nu \rightarrow 0$ cm$^{-1}$ namely,
+Other approaches have moved beyond the PIB treatment, to a harmonic oscillator approximation of the explicit translational motion. For example, the method by Henchmen and co-workers treats  translational/rotational and vibrational components by diagonalising the force covariance matrix in a particular reference frame to afford frequencies that are used within a quantum harmonic oscillator expression for the entropy.\cite{Chakravorty2020, Ali2019} A similar method based on QM calculations by Nakai and co-workers, referred to as the `harmonic solvation model' (HSM), treats all normal modes of the solute as vibrations.\cite{Nakai2014} At least superficially this would seem reasonable as in solution a molecule has no free translation, or -- to a lesser extent -- rotation. This method recovers the equipartition limit for the internal energy for translation and rotation as $\nu \rightarrow 0$ cm$^{-1}$ namely,
 
 \begin{equation}
 E_\text{trans/rot} = \frac{k_B T}{2} \sum_i^3 \lim\limits_{\nu_i \rightarrow 0} \left[ {\beta\nu_i} {\Big (} \frac{1}{2} + \frac{e^{-\beta\nu_i}}{1-e^{-\beta\nu_i}} {\Big )}\right] = \frac{3}{2} k_B T
@@ -243,9 +238,9 @@ E_\text{trans/rot} = \frac{k_B T}{2} \sum_i^3 \lim\limits_{\nu_i \rightarrow 0} 
 Nakai suggested computing the frequencies using an implicit solvent model (CPCM); however, this must be performed numerically as the implicit solvent cavity must remain fixed i.e. not relaxed to accommodate the displaced geometry. Moreover, the numerical frequency calculation must be performed on a structure that has been optimised in the solution phase, thereby increasing the calculation time by hindering geometry convergence. For large systems this method therefore becomes prohibitively expensive.
 
 
-The same authors reported in 2018 a variant of this approach,\cite{Tarumi2018} where the intramolecular vibrational modes are treated in within the IGM (rigid-body HSM, RB-HSM). This model was tested on a small set of vaporisation (7) and combustion (5) entropies and performed similarly to the more expensive HSM. Translational and rotational motion are then calculated by diagonalising a 6$\times$6 Hessian matrix consisting of the second derivatives with respect to translation and rotation in the Cartesian directions. For water this treatment results in harmonic frequencies $>$ 70 cm$^{-1}$; however, for 1,2-dichloroethane (DCE) the lowest frequency mode treated harmonically is just 6.4 cm$^{-1}$. For such a small force constant clearly the harmonic approximation is a poor one, with the associated entropy contribution potentially overestimated.
+The same authors reported in 2018 a variant of this approach,\cite{Tarumi2018} where the intramolecular vibrational modes are treated within the IGM (rigid-body HSM, RB-HSM). This model was tested on a small set of vaporisation (7) and combustion (5) entropies and performed similarly to the more expensive HSM. Translational and rotational motion are then calculated by diagonalising a 6$\times$6 Hessian matrix consisting of the second derivatives with respect to translation and rotation in the Cartesian directions. For water this treatment results in harmonic frequencies $>$ 70 cm$^{-1}$; however, for 1,2-dichloroethane (DCE) the lowest frequency mode treated harmonically is just 6.4 cm$^{-1}$. For such a small force constant, the harmonic approximation is a poor one, with the associated entropy contribution potentially overestimated.
 
-Here it is worth noting that in the systems tested by Garza, Henchmen and Nakai the agreement to experiment is excellent in all cases, despite the disparity in methods. Therefore, the question of which method is physically based and so generally applicable remains.
+It is worth noting that in the systems tested by Garza, Henchmen and Nakai the agreement to experiment is excellent in all cases, despite the disparity in methods. Therefore, the question of which method is physically based and so generally applicable remains.
 
 \subsection{Concentration Corrections}
 
@@ -259,7 +254,7 @@ where $F$ is a free energy ($G, A$) and $V^\text{sim}$ the volume used for the s
 
 In calculating the translational entropy within a defined cavity the solute concentration is far from the 1 M standard. While solvent dependent, it should be of the same order of magnitude as the solute volume. For example, considering a methane-in-water system, which is close to ideal spherical case, the molecular volume is $\sim 30$ \AA$^3$\cite{Zhao2003} thus to correct into 1 M (an effective volume of 1661 \AA$^3$) an absolute upper bound is 2.4 \kcal. 
 %8.3145*298.15*ln(1661/30)/1000/4.184
-Therefore, 2.5 \kcalx provides a useful upper bound on the concentration correction the true `simulation' volume from which the exponential well is obtained is larger than just the molecular volume. In fact, with a molecular volume more representative of those usually studied in solution phase reactions, with a radius $\sim 5 $\AA$\;$  ($\sim 500-700$ \AA$^3$ is common in drug-like molecules\cite{Khanna2009}) the volume correction decreases to just 0.5–-0.7 \kcalx at room temperature. Thus, in all but the smallest solvated molecules this contribution is small.
+Therefore, 2.5 \kcalx provides a useful upper bound on the concentration correction the true `simulation' volume from which the exponential well is obtained is larger than just the molecular volume. In fact, with a molecular volume more representative of those usually studied in solution phase reactions, with a radius $\sim 5 $\AA$\;$  ($\sim 500-700$ \AA$^3$ is common in drug-like molecules\cite{Khanna2009}) the volume correction decreases to just 0.5–-0.7 \kcalx at room temperature. Thus, in all but the smallest solvated molecules, this contribution is small.
 \\
 It is worth noting that this correction term is distinct from the entropy of mixing, as the maximum $TS_\text{mix} \sim 0.4\;$ \kcal,\footnote{Obtained from the standard statistical mechanics result $\Delta S_\text{mix} = -R(x \ln x + (1-x)\ln(1 - x))$ for a two component system one of which has mole fraction $x$.}  and thus generally negligible at ambient temperature or below.
 
@@ -267,7 +262,7 @@ It is worth noting that this correction term is distinct from the entropy of mix
 \section{Limitations of the IGM and Harmonic Approximation}
 \subsection{Model Systems}
 
-While the quantum PF and thus entropy of a HO diverges as the frequency becomes small\footnote{As it should with the Hamiltonian becoming that of a free particle, with $S_\text{HO}^\text{quantum} \sim k_B\ln(k_B T/h\nu) : \nu \ll 1$, but is clearly unphysical for a molecule.}, a classical treatment affords another an even greater deficiency. Specifically, the classical HO entropy is,
+While the quantum PF and thus entropy of a HO diverges as the frequency becomes small,\footnote{As it should with the Hamiltonian becoming that of a free particle, with $S_\text{HO}^\text{quantum} \sim k_B\ln(k_B T/h\nu) : \nu \ll 1$, but is clearly unphysical for a molecule.} a classical treatment affords another an even greater deficiency. Specifically, the classical HO entropy is,
 \begin{equation}
 S^\text{classical}_\text{HO} = k_B \ln\left(\frac{k_BT\text{e}}{h\nu}\right)
 \end{equation}
@@ -304,7 +299,7 @@ and a Morse oscillator,
 \begin{equation}
 	V(r) = D_e(1 - \exp\left[(-a(r- r_e))\right])^2.
 \end{equation}
-The truncated HO captures the region where the internuclear separation becomes negative, but fails to describe the bond dissociation. Whereas, the Morse oscillator has the opposite limitations describing the dissociation well but without $V \rightarrow \infty$ as $r \rightarrow 0$.\footnote{In fact, this region is largely captured correctly in calculation of the PF as the particle must be bound (to ensure convergence of the integral) thus $E < D_e$ and so $x > -\frac{1}{a}\ln(2)$ which is greater than $ -r_e$ for $\omega > 630$ cm$^{-1}$} 
+The truncated HO captures the region where the internuclear separation becomes negative, but fails to describe the bond dissociation. The Morse oscillator has the opposite limitations describing the dissociation well but without $V \rightarrow \infty$ as $r \rightarrow 0$.\footnote{In fact, this region is largely captured correctly in calculation of the PF as the particle must be bound (to ensure convergence of the integral) thus $E < D_e$ and so $x > -\frac{1}{a}\ln(2)$ which is greater than $ -r_e$ for $\omega > 630$ cm$^{-1}$} 
 
 
 
@@ -333,7 +328,7 @@ The truncated HO captures the region where the internuclear separation becomes n
 
 
 
-Despite these improvements over the HO potential, the resulting entropy still becomes negative for an oscillator with frequency above $1000$ cm$^{-1}$ (\figurename{ \ref{s_vs_nu}}). Derivations of truncated HO and Morse partition functions are presented in the Appendix \ref{section::appendix_igm_partition_functions}.
+Despite these improvements over the HO potential, the resulting entropy still becomes negative for an oscillator with a frequency above $1000$ cm$^{-1}$ (\figurename{ \ref{s_vs_nu}}). Derivations of truncated HO and Morse partition functions are presented in the Appendix \ref{section::appendix_igm_partition_functions}.
 
 %\begin{figure}[h!]
 %	\centering
@@ -363,14 +358,14 @@ the free energy and entropy change is zero. However, when calculated using the I
 	\includegraphics[width=\textwidth]{4/figs/figX2/figX2}
 	\vspace{0.2cm}
 	\hrule
-	\caption{Free energy and entropy changes upon dissociation of a single water molecule from a octamer cluster immersed in implicit solvent modelled either with CPCM or SMD models (as implemented in ORCA). Potential energies calculated at DLPNO-CCSD(T)//def2-TZVPP//PBE0-D3BJ/def2-SVP and  error bars quoted as standard error of the mean over the possible dissociation events. States appropriate for a 1 atm pressure (default in electronic structure codes) and the appropriate $55.5/n$ M  molarity for a cluster of $n$ molecules in water (liq.) are shown. Snapshot taken randomly from a revPBE0-D3 quality classical simulation of 64 water molecules at 300 K.}
+	\caption{Free energy and entropy changes upon dissociation of a single water molecule from an octamer cluster immersed in implicit solvent modelled either with CPCM or SMD models (as implemented in ORCA). Potential energies calculated at DLPNO-CCSD(T)//def2-TZVPP//PBE0-D3BJ/def2-SVP and  error bars quoted as standard error of the mean over the possible dissociation events. States appropriate for a 1 atm pressure (default in electronic structure codes) and the appropriate $55.5/n$ M  molarity for a cluster of $n$ molecules in water (liq.) are shown. Snapshot taken randomly from a revPBE0-D3 quality classical simulation of 64 water molecules at 300 K.}
 	\label{fig::entropy_X2}
 \end{figure}
 
-This is unsurprising when on the reactant side the translational entropy associated with a water molecule is treated as a vibration or rotation (within the qRRHO\cite{Grimme2012} approach) while on the right, the single water molecule has free translation within a particle in a box (and thus many more populated states). Likewise, with the rotational contribution, the motion on the left is approximated as harmonic (or between a HO and free rotor within qRRHO) and on the right a free rotor. Clearly this distinction is unphysical and there should be no difference in treatment for each molecule on the left and right hand sides of the reaction.
+This is unsurprising when on the reactant side the translational entropy associated with a water molecule is treated as a vibration or rotation (within the qRRHO\cite{Grimme2012} approach) while on the right, the single water molecule has free translation within a PIB (and thus many more populated states). Likewise, with the rotational contribution, the motion on the left is approximated as harmonic (or between a HO and free rotor within qRRHO) and on the right a free rotor. Clearly, this distinction is unphysical and there should be no difference in treatment for each molecule on the left and right hand sides of the reaction.
 
 \section{Translational Surface}
-With a view to use a more realistic treatment of the translational and rotational motion for a solute molecule in solution the corresponding energy wells are required ($V_\text{trans}(x, y, z)$, $V_\text{rot}(R_x, R_y, R_z)$, where $R_k$ is a rotation around axis $k$). Considering a water-in-water system, the translational surface for a solvated water molecule may be obtained by a time average over a simulation, which -- by analogy to the ergodic hypothesis -- should approach the average for many water molecules. Averaging the potential over frames from a revPBE0-D3 quality simulation of liquid water from ref. \cite{Young2021GAP} and displacing the most central water molecule in the Cartesian $x$-direction affords the section function $V_\text{trans.}(x, 0, 0)$ (\figurename{ \ref{fig::entropy_X3a}}). 
+To use a more realistic treatment of the translational and rotational motion for a solute molecule in solution, the corresponding energy wells are required ($V_\text{trans}(x, y, z)$, $V_\text{rot}(R_x, R_y, R_z)$, where $R_k$ is a rotation around axis $k$). For a water-in-water system, the translational surface may be obtained by a time average over a simulation, which -- by analogy to the ergodic hypothesis -- should approach the average for many water molecules. Averaging the potential over frames from a revPBE0-D3 quality simulation of liquid water from ref. \cite{Young2021GAP} and displacing the most central water molecule in the Cartesian $x$-direction affords the section function $V_\text{trans.}(x, 0, 0)$ (\figurename{ \ref{fig::entropy_X3a}}). 
 
 \begin{figure}[h!]
 	\centering
@@ -388,7 +383,7 @@ With a view to use a more realistic treatment of the translational and rotationa
 	\label{fig::entropy_X3a}
 \end{figure}
 
-Fitting these points to an infinite square well and harmonic potentials, with known QM eigenspectra, affords only moderate agreement to the averaged points on the potential.\footnote{Interestingly, Garza's method using the free-volume like approach to calculate the effective volume generates similar estimate as the square well fit in \figurename{ \ref{fig::entropy_X3a}}. $V \approx v_c \; ; \; v_c = (V_\text{water}^{1/3} + V_\text{free}^{1/3})^3 \; ; \; V_\text{free} = M_\text{w} / N_A \rho - V_\text{water} \; ;\; V_\text{water} = 27.971$ \AA${}^3$ using a spherical approximation of water and radii from ref. \cite{CRC}
+Fitting these points to an infinite square well and harmonic potentials, with known QM eigenspectra, affords only moderate agreement to the averaged points on the potential.\footnote{Interestingly, Garza's method using the free-volume like approach to calculate the effective volume generates a similar estimate as the square well fit in \figurename{ \ref{fig::entropy_X3a}}. $V \approx v_c \; ; \; v_c = (V_\text{water}^{1/3} + V_\text{free}^{1/3})^3 \; ; \; V_\text{free} = M_\text{w} / N_A \rho - V_\text{water} \; ;\; V_\text{water} = 27.971$ \AA${}^3$ using a spherical approximation of water and radii from ref. \cite{CRC}
 %import numpy as np
 %import autode as ade
 %from autode.atoms import get_vdw_radius
@@ -470,18 +465,18 @@ Likewise, while high quality AIMD simulations provide an accurate representation
 	\caption{Fitted parameters for exponential wells shown in \figurename{ \ref{fig::entropy_X3c}}.} 
 	\label{table::figX3c_params}
 \end{table}
-\vspace{0.9cm}
+
 Compared to the reference DFT-quality simulation, DFTB and MM under/overestimate the confinement of a water molecule within the solvent cage respectively, with the latter deviating more significantly. Given molecular tumbling and solvent reorganisation is a reasonably fast process,\footnote{From the Stokes-Einstein relation for the rotational diffusion coefficient $\tau \sim 4\beta\eta r^3$, where $r$ is the molecular radius and $\eta$ the viscosity, which yields $\tau \sim O(10^{-12})$ for small molecules.} short time dynamics should be sufficient to sample all the relevant configurations for small molecules. Therefore, DFTB simulations provide a good compromise between accuracy and computational cost, where reference simulations are not available. With associated errors on $k$ being $\sim 50$ \% and on $a \sim 2$ \% from only the methodology choice, any predictions must include that error.
 
 
 \subsection{2D and 3D Surfaces}
 
-To ensure the exponential well is a good approximation beyond the $V_\text{trans}(x, 0, 0)$ section function and generalises to the other Cartesian directions, the corresponding 2D and 3D surfaces were generated for CO$_2$ in water. Fitting 2D exponential and harmonic wells to the averaged surface shows the former to be a much better approximation to the true potential (\figurename \ref{fig::2d_co2_in_h2o_mm_xtb}). This is also obtained over a wider energy window than shown for the water-in-water system, cementing its applicability. The corresponding 3D potential is more challenging to compare, requiring a fourth dimension in energy, but does convey the spherical symmetry. The equivalence of $V_\text{trans}$ in all directions is unsurprising, as the potential is evaluated in the `lab' frame and thus the choice of direction is arbitrary when averaged over solute and solvent rotations. Given its spherical symmetry, it is then puzzling why the translational partition function is most commonly evaluated from an infinite cubic well, when the eigenspecturm for the analogous spherical well is known.\cite{Huang2016}
+To ensure the exponential well is a good approximation beyond the $V_\text{trans}(x, 0, 0)$ section function and generalises to the other Cartesian directions, the corresponding 2D and 3D surfaces were generated for CO$_2$ in water. Fitting 2D exponential and harmonic wells to the averaged surface shows the former is a much better approximation to the true potential (\figurename{ \ref{fig::2d_co2_in_h2o_mm_xtb}}). This is also obtained over a wider energy window than shown for the water-in-water system, cementing its applicability. The corresponding 3D potential is more challenging to compare, requiring a fourth dimension in energy, but does convey the spherical symmetry. The equivalence of $V_\text{trans}$ in all directions is unsurprising, as the potential is evaluated in the `lab' frame and thus the choice of direction is arbitrary when averaged over solute and solvent rotations. Given its spherical symmetry, it is then puzzling why the translational partition function is most commonly evaluated from an infinite cubic well, when the eigenspecturm for the analogous spherical well is known.\cite{Huang2016}
 
 \begin{figure}[h!]
 	\vspace{0.2cm}
 	\centering
-	\includegraphics[width=14.5cm]{4/figs/figX4/figX4.pdf}
+	\includegraphics[width=14cm]{4/figs/figX4/figX4.pdf}
 	\vspace{0.2cm}
 	\hrule
 	\caption{Translational potential energy surface for CO$_2$ in water evaluated by averaging GFN2-XTB single point energies over 100 frames separated by 1 ps obtained at the GAFF-TIP4P MM level using a 300 K $NVT$ simulation.} 
@@ -559,11 +554,11 @@ Correlating $k$ and $a$ for the solute-solvent systems reveals they are reasonab
 
 \newpage
 \section{Translational Entropy from Spherical Wells}
-Given the average potential for solute translation is spherical and well approximated by an exponential well to obtain the partition function must be obtained in order to calculate the translational entropy more accurately than the IGM approximation. 
+Given the average potential for solute translation is spherical, and well approximated by an exponential well (EW), the partition function must be obtained in order to calculate the translational entropy more accurately than the IGM approximation. 
 
 \subsection{Infinite Spherical Well}
 
-First considering the limiting infinite (step function) case of the exponential well, for an infinite spherical the potential is given by,
+First, considering the limiting infinite (step function) case of the exponential well, for an infinite spherical well the potential is given by,
 
 \begin{equation}
 V(\boldsymbol{r}) = 
@@ -623,7 +618,7 @@ S_c &= k_B T \frac{1}{Z_c} \frac{\partial Z_c}{\partial T} + k_B \ln(Z_c) \\
 \end{aligned}
 \end{equation}
 
-The quantum and classical PF for two systems are calculated as a function of the number of eigenvalues ($\bar{n}$) included in the summation (\figurename{ \ref{spherical_well_quantum_classical}}). For a classical system with a separation of eigenvalues far less than $k_BT$ ($c = 20$ au, $m = 48$ amu) and a more quantum H$_2$ molecule in a cavity with radius of 1 \AA (\figurename{ \ref{spherical_well_quantum_classical}}).
+The quantum and classical PFs for two systems are calculated as a function of the number of eigenvalues ($\bar{n}$) included in the summation (\figurename{ \ref{spherical_well_quantum_classical}}). These are a reasonably classical system, with eigenvalues separated by far less than $k_BT$ ($c = 20$ au, $m = 48$ amu) and a more quantum one of a H$_2$ molecule in a cavity with radius 1 \AA (\figurename{ \ref{spherical_well_quantum_classical}}).
 
 \begin{figure*}[b!]
 	\begin{subfigure}[t]{0.49\textwidth}
@@ -639,12 +634,12 @@ The quantum and classical PF for two systems are calculated as a function of the
 	\end{subfigure}
 	\vspace{0.2cm}
 	\hrule
-	\caption{$Z$ for a particle in a sphere (a) $c = 20$ au, $m = 48$ amu, $\delta x = 10^{-1},\;\max(x) = 10^3,\;\max(l) = 10^3$ and (b) $c = 1$ au, $m = 2$ amu, $\delta x = 10^{-2} ,\;\max(x) = 10^2,\;\max(l) = 10^2$. The partition function for a particle in a box (using the integral approximation) with $l = 2c$ is also plotted.} 
+	\caption{$Z$ for a particle in a sphere (a) $c = 20$ au, $m = 48$ amu, $\delta x = 10^{-1},\;\max(x) = 10^3,\;\max(l) = 10^3$ and (b) $c = 1$ au, $m = 2$ amu, $\delta x = 10^{-2} ,\;\max(x) = 10^2,\;\max(l) = 10^2$. The partition function for a PIB (using the integral approximation) with $l = 2c$ is also plotted.} 
 	\label{spherical_well_quantum_classical}
 \end{figure*}
 
 
-As expected for the classical system $Z$ converges to its classical analogue (\figurename{ \ref{spherical_well_quantum_classical}}a), requiring $10^5$ eigenvalues to converge, while for H$_2$ translation the classical PF is a poor approximation to the quantum equivalent and error of 3$\times$ (\figurename{ \ref{spherical_well_quantum_classical}}b). However, in the vast majority of cases the classical PF is likely to be a sufficient approximation, particularly as the entropy depends on the log of the PF.
+As expected for the classical system $Z$ converges to its classical analogue (\figurename{ \ref{spherical_well_quantum_classical}}a). The PF for H$_2$ translation is, however, not well reproduced classically with an overestimation of a factor of 3 compared to the quantum analogue (\figurename{ \ref{spherical_well_quantum_classical}}b). However, in the vast majority of cases the classical PF is likely to be a sufficient approximation, particularly as the entropy depends on the log of the PF.
 
 For a system of mass 48 amu and $c = 2$ \AA the PFs converge to within 5\% and the resultant entropy to within 0.2 J K$^{-1}$ mol$^{-1}$ at $\tilde{n} = 10^5$, well below the acceptable error (\figurename{ \ref{spherical_well_z_s_qunat_classical}}). Interestingly, a particle in a cubic box treatment with a side length equal to the diameter of the sphere is a reasonable approximation to the spherical analogue, with only a $\sim 5$ J K mol$^{-1}$ difference in the corresponding entropy.
 
@@ -653,7 +648,7 @@ For a system of mass 48 amu and $c = 2$ \AA the PFs converge to within 5\% and t
 	\includegraphics[height=7.5cm]{4/figs/spherical_well_z_s_qunat_classical}
 	\vspace{0.2cm}
 	\hrule
-	\caption{Classical and quantum partition functions (solid lines) and entropy (dot-dashed lines) vs the number of eigenvalues included in the summation ($\bar{n}$). PIB entropy (green) and classical (orange) and quantum (blue) particle in a sphere. $m =$ 48 amu and $c = 2$ \AA, $T$ = 298.15 K. $\partial Z / \partial T$ evaluated numerically $\delta T = 10^{-8}$ K.} 
+	\caption{Classical and quantum PFs (solid lines) and entropy (dot-dashed lines) vs the number of eigenvalues included in the summation ($\bar{n}$). PIB entropy (green) and classical (orange) and quantum (blue) particle in a sphere. $m =$ 48 amu and $c = 2$ \AA, $T$ = 298.15 K. $\partial Z / \partial T$ evaluated numerically $\delta T = 10^{-8}$ K.} 
 	\label{spherical_well_z_s_qunat_classical}
 \end{figure*}
 
@@ -679,7 +674,7 @@ with boundary conditions $\Psi(-\infty) =  \Psi(\infty) = 0$ ensuring the WF is 
 	\label{wf_1d_exp_well_numerical}
 \end{figure*}
 
-Henceforth the exponential potential refers to $V(x) = k(e^{a|x|} - 1)$, which takes the same zero of energy as a PIB/particle in a sphere. The first few eigenvalues of this potential are visualised in comparison with a 1D infinite square well (PIB) with a similar functional form (\figurename{ \ref{1d_exp_well_pib_potential_eigenvalues}}). The eigenvalues are significantly more separated than those of a similar PIB. Therefore, a classical approximation of the partition function may not be suitable.
+Henceforth the exponential potential refers to $V(x) = k(e^{a|x|} - 1)$, which takes the same zero of energy as a PIB/particle in a sphere. The first few eigenvalues of this potential are visualised in comparison with a 1D infinite square well (PIB) with a similar functional form (\figurename{ \ref{1d_exp_well_pib_potential_eigenvalues}}). The eigenvalues are significantly more separated than those of a similar PIB. Therefore, a classical approximation of the PF may not be suitable.
 
 \begin{figure*}[h!]
 
@@ -700,7 +695,7 @@ Henceforth the exponential potential refers to $V(x) = k(e^{a|x|} - 1)$, which t
 	\label{1d_exp_well_pib_potential_eigenvalues}
 \end{figure*}
 
-To calculate the quantum partition function only the low energy eigenstates are required thus the full eigenspectrum is not required. To do so requires a rapid solution of Eqn. \eqref{1d_exp_well_SE}, which is achieved using \emph{odeint} from the \emph{boost} C++ library.\cite{Ahnert2011} By sweeping energies and calculating the final value of the WF the eigenvalues may be obtained by searching for $\Psi(E, \max(x)) \ \sim 0$ i.e. a bound \& normalisable solution to Eqn. \eqref{1d_exp_well_SE}. As $\Psi(E, \max(x))$ is oscillatory in $E$ the task reduces to a root finding problem (e.g. \figurename{ \ref{1d_exp_well_psi_max_vs_energy}}).
+To calculate the quantum PF only the low energy eigenstates are required. To do so requires a rapid solution of Eqn. \eqref{1d_exp_well_SE}, which is achieved using \emph{odeint} from the \emph{boost} C++ library.\cite{Ahnert2011} By sweeping energies and calculating the final value of the WF the eigenvalues may be obtained by searching for $\Psi(E, \max(x)) \ \sim 0$ i.e. a bound and normalisable solution to Eqn. \eqref{1d_exp_well_SE}. As $\Psi(E, \max(x))$ is oscillatory in $E$ the task reduces to a root finding problem (e.g. \figurename{ \ref{1d_exp_well_psi_max_vs_energy}}).
 
 \begin{figure*}[h!]
 	\centering
@@ -733,11 +728,11 @@ where the substitution $u = \beta k e^{ax}$ has been utilised and $\text{Ei}(x)$
 	\includegraphics[height=7.5cm]{4/figs/1d_exp_well_z_qunatum_classical}
 	\vspace{0.2cm}
 	\hrule
-	\caption{Quantum and classical partition functions $Z$ vs the number of eigenvalues included in the summation ($n$). $a = 3.0 \text{ au}^{-1}, k = 0.057 \; k_B T, T = 298.15 \text{ K}, m =8.75 \times 10^4$ au. Eigenvalues were found by root finding in $E= [10^{-5}, 10^{-3}]$ au with $10^4$ intermediate values. $\max(x) = 5.0, \Psi(-\!\max(x)) = 10^{-20},\; d\Psi(x)/dx|_{-\!\max(x)} = 10^{-20}$ all in au.} 
+	\caption{Quantum and classical PFs vs the number of eigenvalues included in the summation ($n$). $a = 3.0 \text{ au}^{-1}, k = 0.057 \; k_B T, T = 298.15 \text{ K}, m =8.75 \times 10^4$ au. Eigenvalues were found by root finding in $E= [10^{-5}, 10^{-3}]$ au with $10^4$ intermediate values. $\max(x) = 5.0, \Psi(-\!\max(x)) = 10^{-20},\; d\Psi(x)/dx|_{-\!\max(x)} = 10^{-20}$ all in au.} 
 	\label{1d_exp_well_z_qunatum_classical}
 \end{figure*}
 
-For a system of mass 48 amu and a potential given in \figurename{ \ref{1d_exp_well_pib_potential_eigenvalues}a} (representative of a CO$_2$ molecule in a cavity surrounded by H$_2$O) the translational partition function converges rapidly with the number of eigenvalues included in the summation (\figurename{ \ref{1d_exp_well_z_qunatum_classical}}). Despite the larger separation in eigenvalues compared to a PIB the classical approximation to the PF is still accurate ($\Delta Z_{q\rightarrow c} = 0.2\%$).
+For a system of mass 48 amu and a potential given in \figurename{ \ref{1d_exp_well_pib_potential_eigenvalues}a} (representative of a CO$_2$ molecule in a cavity surrounded by H$_2$O) the translational PF converges rapidly with the number of eigenvalues included in the summation (\figurename{ \ref{1d_exp_well_z_qunatum_classical}}). Despite the larger separation in eigenvalues compared to a PIB the classical approximation to the PF is still accurate ($\Delta Z_{q\rightarrow c} = 0.2\%$).
 
 Proceeding to the 3D case the required eigenfunctions and eigenvalues are solutions of,\footnote{Where the constant shift $-k$ from setting the zero of energy is omitted as it just serves as a constant eigenvalue shift.}
 \begin{equation}
@@ -778,7 +773,7 @@ where once again only a partial eigenspecturm is required so solving Eqn. \eqref
 	\label{fig::entropy_X6}
 \end{figure*}
 
-The partial eigenspecturm is obtained as above and reasonably efficiently (execution time $\sim1$ min), from which summation over states converges reasonably to the classical result for CO$_2$ in water (\figurename{ \ref{fig::entropy_X7}a}), and is within 1 \% for a limiting case (\figurename{ \ref{fig::entropy_X7}b}) at a lower temperature.\footnote{A reduced temperature ($T$ = 50 K) is used in this system to limit the number of  eigenvalues required to converge the quantum partition function. The quantum--classical correspondence is expected to be even more exact at larger higher temperatures.}. This convergence is expected given as the dimensionality of a system increases, it becomes more classical in nature (\emph{cf.} the quantum-classical correspondence in the limit of infinite spacial dimensions).\cite{QuantClassCorrespondence}. Noting that the entropy depends on the log of the partition function this suggests the classical approximation will be sufficient.
+The partial eigenspecturm is obtained as above and reasonably efficiently (execution time $\sim1$ min), from which summation over states converges reasonably to the classical result for CO$_2$ in water (\figurename{ \ref{fig::entropy_X7}a}), and is within 1 \% for a limiting case (\figurename{ \ref{fig::entropy_X7}b}) at a lower temperature.\footnote{A reduced temperature ($T$ = 50 K) is used in this system to limit the number of  eigenvalues required to converge the quantum PF. The quantum--classical correspondence is expected to be even more exact at larger higher temperatures.}. This convergence is expected given as the dimensionality of a system increases, it becomes more classical in nature (\emph{cf.} the quantum-classical correspondence in the limit of infinite spacial dimensions).\cite{QuantClassCorrespondence}. Noting that the entropy depends on the log of the PF this suggests the classical approximation will be sufficient.
 
 \vspace{0.2cm}
 \begin{figure*}[h!]
@@ -795,12 +790,12 @@ The partial eigenspecturm is obtained as above and reasonably efficiently (execu
 	\end{subfigure}
 	\vspace{0.2cm}
 	\hrule
-	\caption{Quantum ($Z_q$) and classical ($Z_c$) partition functions for a 3D exponential well as a function of number of included eigenvalues ($\tilde{n}$) for (a) CO$_2$ in water ($a = 1.499$, $k=0.00221$, $m=8.75 \times 10^4$, $k_BT = 9.437 \times 10^{-4}$) and (b) a limiting case ($a = 1.499$, $k=1\times 10^{-4}$, $m=8.75 \times 10^5$, $k_BT = 1.583 \times 10^{-4}$). Eigenvalues located using a numerical solution of Eqn. \eqref{3d_exp_well_radial} by iterating through $E \in [1\times10^{-5}, 10 k_BT]$ in 20,000 steps with integer $l \in [0, 50]$ from $r = 1\times10^{-3}$ to $r_\text{max} = 1.7$. All quantities in atomic units. 
+	\caption{Quantum ($Z_q$) and classical ($Z_c$) partition functions for a 3D EW as a function of number of included eigenvalues ($\tilde{n}$) for (a) CO$_2$ in water ($a = 1.499$, $k=0.00221$, $m=8.75 \times 10^4$, $k_BT = 9.437 \times 10^{-4}$) and (b) a limiting case ($a = 1.499$, $k=1\times 10^{-4}$, $m=8.75 \times 10^5$, $k_BT = 1.583 \times 10^{-4}$). Eigenvalues located using a numerical solution of Eqn. \eqref{3d_exp_well_radial} by iterating through $E \in [1\times10^{-5}, 10 k_BT]$ in 20,000 steps with integer $l \in [0, 50]$ from $r = 1\times10^{-3}$ to $r_\text{max} = 1.7$. All quantities in atomic units. 
 	} 
 	\label{fig::entropy_X7}
 \end{figure*}
 
-The classical partition function is straightforwardly
+The classical PF is straightforwardly
 \begin{equation}
 \begin{aligned}
 Z_c^\text{exp} &= \frac{1}{h^3}\int\int e^{-\beta \mathcal{H}(\boldsymbol{p}, \boldsymbol{r})} \; d\boldsymbol{p} d\boldsymbol{r} \\
@@ -832,13 +827,13 @@ where the integral is non-analytic, and thus must be evaluated numerically, but 
 	\label{fig::entropy_X8}
 \end{figure*}
 
-The corresponding entropy for a molecule confined to an exponential well can be derived from the PF Eqn. \eqref{z_classical_exp_well} as,
+The corresponding entropy for a molecule confined to an EW can be derived from the PF Eqn. \eqref{z_classical_exp_well} as,
 \begin{equation}
 S_\text{trans}^\text{exp}= k_B {\Big (} \frac{3}{2} - {k}{\beta} + \ln(Z_c^\text{exp}) + \frac{4\pi k\beta\Lambda}{Z_c^\text{exp}} \int_{0}^{\infty} r^2 e^{ar} e^{-\beta k (e^{ar} - 1)} \; \text{d}r  {\Big )} 
 \label{s_ew}
 \end{equation}
 
-where $\Lambda = (2m\pi/\beta h^2)^{3/2}$ and the temperature derivative of the partition function is shown in Appendix \ref{section::appendix_igm_partition_functions}. The associated internal energy is then,
+where $\Lambda = (2m\pi/\beta h^2)^{3/2}$ and the temperature derivative of the PF is shown in Appendix \ref{section::appendix_igm_partition_functions}. The associated internal energy is then,
 
 \begin{equation}
 \begin{aligned}
@@ -851,7 +846,7 @@ E_\text{trans}^\text{exp} &= k_BT^2 \left(\frac{\partial \ln Z_c^\text{exp}}{\pa
 
 which reproduces the correct equipartition limit as $k \rightarrow 0$, and likewise as $a$ vanishes, again $E_\text{trans}^\text{exp} \rightarrow 3k_BT/2$.
 
-Regenerating surfaces over a narrower energy window generates more accurate parameters and translational entropies that are around one half (43 $\pm$ 2 \%) of their PIB analogues (at a 1 M effective volume) and provide a theoretical basis for sub-unity scalings proposed in refs. \cite{Tanaka2011, Deubel2006, Li2016, DiTommaso2010}. As expected, and in contrast to the IGM, the exponential well recovers a solvent dependence on the  translational entropy (and energy, from Eqn. \eqref{E_ew}) which should be present. For higher number density solvents e.g. water that are more tightly packed around the solute, the translational entropy is uniformly smaller than for acetonitrile or benzene, as would be expected.
+Regenerating surfaces over a narrower energy window generates more accurate parameters and translational entropies that are around one half (43 $\pm$ 2 \%) of their PIB analogues (at a 1 M effective volume) and provide a theoretical basis for sub-unity scalings proposed in refs. \cite{Tanaka2011, Deubel2006, Li2016, DiTommaso2010}. As expected, and in contrast to the IGM, the EW recovers a solvent dependence on the  translational entropy (and energy, from Eqn. \eqref{E_ew}) which should be present. For higher number density solvents e.g. water that are more tightly packed around the solute, the translational entropy is uniformly smaller than for acetonitrile or benzene, as would be expected.
 \vspace{0.2cm}
 
 \begin{table}[h!]
@@ -893,38 +888,37 @@ Regenerating surfaces over a narrower energy window generates more accurate para
 
 \subsection{Test Cases}
 
-With a new method to calculate the translational entropy experimental validation is required. Two benchmark sets that comprise accurate activation and reaction entropies were selected (Appendix \ref{section::appendix_entropy_test_cases}). Calculating IGM entropy differences reveals they are subject to a reasonably systematic shift using a 1 M effective volume (\figurename{ \ref{fig::entropy_X10}}). Both the entropies of reaction (blue, \figurename{ \ref{fig::entropy_X10}}) and activation (red, \figurename{ \ref{fig::entropy_X10}}) are bimolecular and therefore do not have a vanishing translational entropy contribution. Introducing an exponential well treatment of the translational entropy reduces the error to experimental values by some 3 \kcal, while also including an error that almost always encompasses the correct value (at 1$\sigma$). This error arises from an average model generated using $\bar{k}, \bar{a}$ parameters (from \tablename{ \ref{table::figX9_params}}), their associated standard deviations and propagating the assumed uncorrelated errors though to $\Delta S$. 
+With a new method to calculate the translational entropy experimental validation is required. Two benchmark sets that comprise accurate activation and reaction entropies were selected (Appendix \ref{section::appendix_entropy_test_cases}). Calculating IGM entropy differences reveals they are subject to a reasonably systematic shift using a 1 M effective volume (\figurename{ \ref{fig::entropy_X10}}). Both the entropies of reaction (blue, \figurename{ \ref{fig::entropy_X10}}) and activation (red, \figurename{ \ref{fig::entropy_X10}}) are bimolecular and therefore do not have a vanishing translational entropy contribution. Introducing an EW treatment of the translational entropy reduces the error to experimental values by some 3 \kcal, while also including an error that almost always encompasses the correct value (at 1$\sigma$). This error arises from an average model generated using $\bar{k}, \bar{a}$ parameters (from \tablename{ \ref{table::figX9_params}}), their associated standard deviations and propagating the assumed uncorrelated errors through to $\Delta S$. 
 
 \vspace{0.3cm}
 \begin{figure*}[h!]
 	\includegraphics[width=\textwidth]{4/figs/figX10/figX10}
 	\vspace{0.2cm}
 	\hrule
-	\caption{Correlation between calculated and experimental entropy contributions to the free energy for test sets {\bfseries{A, B}}, shown in Appendix \ref{section::appendix_entropy_test_cases}. Left are ideal gas values (1 M) and right exponential well generated from an average model and $1\sigma$ errors plotted from standard deviations in $k, a$.} 
+	\caption{Correlation between calculated and experimental entropy contributions to the free energy for test sets {\bfseries{A, B}}, shown in Appendix \ref{section::appendix_entropy_test_cases}. Left are ideal gas values (1 M) and right EW generated from an average model and $1\sigma$ errors plotted from standard deviations in $k, a$.} 
 	\label{fig::entropy_X10}
 \end{figure*}
 
 Once again, the solvent reorganisation entropy is not included in the calculated values as it is parametrised into the implicit solvent models. Although the overall solvent reorganisation free energy for a reaction is thought to cancel exactly, the environmental $\Delta H_\text{env}, T\Delta S_\text{env}$ terms may be significant (up to $\sim 10\;$\kcal, with opposing signs).\cite{Grunwald1995}
-However, a recent literature review of protein-ligand binding found little entropy-enthalpy compensation suggesting a system dependence.\cite{Chodera2013} Here, it would seem surprising if the solvent reorganisation entropy were to cause such a systematic shift given the diversity of solvents (methanol, dimethyl-formamide, acetonitrile, dimethyl-sulfoxide) suggesting that the origin lies in the intrinsic translational contribution. Using the exponential well approximation to the translational entropy here increases the absolute accuracy over the standard IGM treatment and provides a quantification of the likely error. 
+However, a recent literature review of protein-ligand binding found little entropy-enthalpy compensation suggesting a system dependence.\cite{Chodera2013} Here, it would seem surprising if the solvent reorganisation entropy were to cause such a systematic shift given the diversity of solvents (methanol, dimethyl-formamide, acetonitrile, dimethyl-sulfoxide) suggesting that the origin lies in the intrinsic translational contribution. Using the EW approximation to the translational entropy here increases the absolute accuracy over the standard IGM treatment and provides a quantification of the likely error. 
 \\\\
-Moving to the striking case of water-in-water presented above, which illustrated the limitation of the ideal gas model, an exponential well corrects almost all of the IGM deficiencies and affords a free energy difference close to zero (\figurename{ \ref{fig::entropy_X11}}). The agreement is somewhat surprising given (1) the SMD solvent model is parametrised to the IGM, (2) the rotational contribution remains at the rigid rotor level and (3) an average exponential well model is used. Explanations for some of these points are given in the following.
+Moving to the striking case of water-in-water presented above, which illustrated the limitation of the IGM, an EW corrects almost all of the IGM deficiencies and affords a free energy difference close to zero (\figurename{ \ref{fig::etropy_X11}}). The agreement is somewhat surprising given (1) the SMD solvent model is parametrised to the IGM, (2) the rotational contribution remains at the rigid rotor level and (3) an average EW model is used. Explanations for some of these points are given in the following.
 \\
-Free energy differences for the (H$_2$O)$_8 \longrightarrow$ (H$_2$O)$_7$ +  H$_2$O identity reaction using an exponential well may be calculated in two ways (blues, \figurename{ \ref{fig::entropy_X11}}); either treating the translation of one water molecule within the octamer using an exponential well in addition to the separated components [(H$_2$O)$_8$, (H$_2$O)$_7$, H$_2$O] and deleting three low frequency harmonic modes approximately corresponding to translation (exp$_1$), or just modifying the translational entropy and internal energy of each whole component  (exp$_2$). Interestingly, these two methods lead to an almost identical free energy change $\sim 0$. This is due to the vibrational entropy (treated as mostly rotation within the qRRHO with frequencies $< 50$ cm$^{-1}$) matching the exponential well translational entropy ($\sim 3\;$\kcal, at this temperature). 
+Free energy differences for the (H$_2$O)$_8 \longrightarrow$ (H$_2$O)$_7$ +  H$_2$O identity reaction using an EW may be calculated in two ways (blues, \figurename{ \ref{fig::entropy_X11}}); either treating the translation of one molecule within the octamer and the separated components [(H$_2$O)$_8$, (H$_2$O)$_7$, H$_2$O] using an EW,  and deleting three low frequency modes approximately corresponding to translation (exp$_1$), or just modifying (PIB$\rightarrow$EW) the translational entropy and internal energy of each whole component  (exp$_2$). Interestingly, these two methods lead to an almost identical free energy change $\sim 0$. This is due to the vibrational entropy (treated as mostly rotation within the qRRHO with frequencies $< 50$ cm$^{-1}$) matching the EW translational entropy ($\sim 3\;$\kcal, at this temperature). 
 \vspace{0.4cm}
 \begin{figure*}[h!]
 	\centering
 	\includegraphics[width=15cm]{4/figs/figX11/figX11}
 	\vspace{0.2cm}
 	\hrule
-	\caption{Comparison of ideal gas (qRRHO) and ideal gas with a exponential well treatment of the translational entropy free energy changes for the (H$_2$O)$_8 \longrightarrow$ (H$_2$O)$_7$ +  H$_2$O identity reaction in implicit (SMD) water. The three lowest energy modes corresponding to overall translational modes treated with an exponential well rather than a harmonic oscillator approximation for the water (H$_2$O)$_8$ are also shown.} 
+	\caption{Comparison of ideal gas (qRRHO) and ideal gas with a EW treatment of the translational entropy free energy changes for the (H$_2$O)$_8 \longrightarrow$ (H$_2$O)$_7$ +  H$_2$O identity reaction in implicit (SMD) water. The three lowest energy modes corresponding to overall translational modes treated with an EW rather than a harmonic oscillator approximation for the water (H$_2$O)$_8$ are also shown.} 
 	\label{fig::entropy_X11}
 \end{figure*}
 
-While the SMD implicit solvent model has been parametrised to ideal gas solvation free energies water clusters are absent from the test set,\cite{Marenich2009} making the large discrepancy less surprising. Furthermore, while the treatment of the rotational contribution to the entropy and internal energy changes when dissociating a water molecule from a cluster the absolute magnitude is small ($TS_\text{rot}^{\text{H}{}_2\text{O}} =$ 3.2 \kcal) and is compensated on the left-hand side of the reaction by the vibrational modes that are mostly treated as rotations. Finally, using an average model leads to a larger error for exp$_1$ value, but encompasses the correct value; while, in exp$_1$ the translational component broadly cancels.
-
+While the SMD implicit solvent model has been parametrised to IGM solvation free energies, water clusters are absent from the test set,\cite{Marenich2009} making the large discrepancy less surprising. Furthermore, while the treatment of the rotational contribution to the entropy and internal energy changes when dissociating a water molecule from a cluster the absolute magnitude is small ($TS_\text{rot}^{\text{H}{}_2\text{O}} =$ 3.2 \kcal) and is compensated on the left-hand side of the reaction by the vibrational modes that are mostly treated as rotations. Finally, using an average model leads to a larger error for exp$_1$ value, but encompasses the correct value; while, in exp$_1$ the translational component broadly cancels.
 
 \newpage
-Finally, host-guest binding affinity calculations performed in Chapter 3 may now be re-evaluated with this new methodology.  While Raymond has published a set of binding entropy changes,\cite{Leung2008} the systems comprise more than 300 atoms, making routine accurate DFT calculations (hybrid, with Hessians) out of reach. Therefore, the [Pd$_2$L$_4$]${}^{2+}$ systems investigated in ref. \cite{Young2019} will form a test set to calculate binding free energies using an exponential well approximation. Scaling the translational entropy down with an average EW approximation leads to excellent agreement to experiment where low frequency modes are treated as rotors (qRRHO, \figurename{ \ref{fig::entropy_X12}}), in contrast to the standard IGM. This suggests that, again, the exponential well provides improved accuracy while being more theoretically justified.\footnote{There, however, remains a significant functional dependence on $\Delta E_\text{bind, calc}$ of $\sim 5$ \kcal, and higher level coupled cluster calculations are not routinely possible for a system with $\sim 150$ atoms.}
+Finally, host-guest binding affinity calculations performed in Chapter 3 may now be re-evaluated with this new methodology.  A set of binding entropy changes are available in the literature,\cite{Leung2008} the systems comprise more than 300 atoms, making accurate DFT calculations (hybrid, with Hessians) prohibitively expensive. Therefore, the [Pd$_2$L$_4$]${}^{2+}$ systems ($\sim140$ atoms) investigated in ref. \cite{Young2019} will form a test set to calculate binding free energies using an EW approximation. Scaling the translational entropy down with an average EW approximation leads to excellent agreement to experiment where low frequency modes are treated as rotors (qRRHO, \figurename{ \ref{fig::entropy_X12}}), in contrast to the standard IGM. This suggests that, again, the EW provides improved accuracy while being more theoretically justified.\footnote{There, however, remains a significant functional dependence on $\Delta E_\text{bind, calc}$ of $\sim 5$ \kcal, and higher level coupled cluster calculations are not routinely possible for a system with $\sim 150$ atoms.}
 
 \vspace{0.4cm}
 \begin{figure*}[h!]
@@ -942,7 +936,7 @@ Finally, host-guest binding affinity calculations performed in Chapter 3 may now
 
 The ideal gas model (IGM) has been implemented and used in quantum chemistry programs for the best part of 30 years with almost no development and, while successful for gas phase reactions, it remains suboptimal for the solution phase. The translational contribution to the entropy, which dominates the free energy cost of associating two molecules, uses a particle in an infinite cubic well approximation to calculate the partition function. Here, we have shown an exponential well (EW) can be used to evaluate the translational entropy more accurately, including the correct functional form and symmetry of the problem. The classical partition function and resulting entropy are easily obtainable from numerical integrals and, in general, converge to their quantum counterparts. 
 
-In using an EW to calculate the translational contribution to the absolute entropy and thermal energy of a molecule there are some limitations. Namely, (1) high-quality dynamics simulations are required to generate frames over which the EW is fit. This is partially alleviated by using an average model but introduces a $\sim 2$ \kcalx error. (2) The overestimation of the entropy lost by the IGM is often cancelled directly by the basis set superposition error (or dispersion overestimation). For example, in the water-in-water test case using uncorrected PBE0-D3BJ/def2-SVP free energies affords agreement largely within 1\kcalx to the true free energy difference. This observation hints to why the prototypical B3LYP/6-31G(d) method affords such good agreement to experimental free energies. (3) Perhaps most importantly, implicit solvent models that are generally (excluding non-polar solutes in non-polar solvents) important for accurate solution phase energetics implicitly include corrections for using the IGM in solution by their parametrisation to experiment.
+However, with this treatment some limitations remain. Namely, (1) high-quality dynamics simulations are required to generate frames over which the EW is fit. This is partially alleviated by using an average model but introduces a $\sim 2$ \kcalx error. (2) The overestimation of the entropy lost by the IGM is often cancelled directly by the basis set superposition error (or dispersion overestimation). For example, in the water-in-water test case using uncorrected PBE0-D3BJ/def2-SVP free energies affords agreement largely within 1\kcalx to the true free energy difference. This observation hints to why the prototypical B3LYP/6-31G(d) method affords such good agreement to experimental free energies. (3) Perhaps most importantly, implicit solvent models that are generally (excluding non-polar solutes in non-polar solvents) important for accurate solution phase energetics implicitly include corrections for using the IGM in solution by their parametrisation to experiment.
 
 In summary, while an EW approximation provides a more sound theoretical basis for translational motion in solution, it is unlikely to provide significant improvements over the IGM. A more effective approach to calculate accurate free energy differences is perhaps to use `free energy' methods in combination with fast, accurate and reactive potentials. Methods towards this latter strategy are developed in Chapter 6.
 
