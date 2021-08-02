@@ -8,28 +8,25 @@
 \section{ML Representations}
 \subsection{SOAP} \label{section::soap_derivation}
 
-A SOAP vector\cite{Bartok2013} $\boldsymbol{p}$ is given by concatenating elements
-
+A SOAP vector\cite{Bartok2013} $\boldsymbol{p}$ is given by concatenating elements,
 \begin{equation}
 	p_{nn'l}^{Z_1, Z_2} = \pi \sqrt{\frac{8}{2l + 1}} \sum_m \left(c_{nlm}^{Z_1}\right)^* c_{n'lm}^{Z_2}
 \end{equation}
-
-for every pair of atoms with atomic number $Z$ and the coefficients ($c_{nlm}$) are of radial and angular basis functions centred a particular atom given by
-
+for every pair of atoms with atomic number $Z$ and the coefficients ($c_{nlm}$) are of radial and angular basis functions centred a particular atom given by,
 \begin{equation}
 	c_{nlm}^Z = \int_\mathcal{R} g_n(r) Y_{lm}(\phi,\theta) \rho^Z(\boldsymbol{r})\; \text{d}V
 \end{equation}
-where the atomic density is given as a sum over 3D Gaussian centred on each atom $i$ 
+where the atomic density is given as a sum over 3D Gaussian centred on each atom $i$,
 \begin{equation}
 	\rho^Z(\boldsymbol{r}) = \sum_{i \in \{Z\}} \exp\left(-\frac{|\boldsymbol{r} - \boldsymbol{R}_i|^2}{2\sigma_\text{at}^2}\right)
 \end{equation}
-A component of the neighbour density is then ($a := 1/2\sigma_\text{at}^2$) 
+A component of the neighbour density is then ($a := 1/2\sigma_\text{at}^2$), 
 % https://journals.aps.org/prb/pdf/10.1103/PhysRevB.87.184115
 % https://iopscience.iop.org/article/10.1088/0953-4075/22/1/004/pdf
 \begin{equation}
 	\text{e}^{-a|\boldsymbol{r} - \boldsymbol{R}_i|^2} = 4\pi \text{e}^{-a(r^2+R_i^2)}i_l(2arR_i) \sum_{l'm'}Y_{l'm'}(\phi, \theta) Y_{l'm'}^*(\boldsymbol{R}_i)
 \end{equation}
-inserting and using the orthogonality of the spherical harmonics integrated over theta and phi
+inserting and using the orthogonality of the spherical harmonics integrated over theta and phi,
 \begin{equation}
 	\begin{split}
 		c_{nlm}^Z &= \int_\mathcal{R} g_n(r) Y_{lm}(\phi,\theta)  \sum_{i \in \{Z\}} \exp\left(-a|\boldsymbol{r} - \boldsymbol{R}_i|^2\right) \text{d}V \\
@@ -38,27 +35,27 @@ inserting and using the orthogonality of the spherical harmonics integrated over
 		&=4\pi \sum_{i \in \{Z\}}Y_{lm}^*(\boldsymbol{R}_i) \int_\mathcal{\tilde{R}} g_n(r) \text{e}^{-a(r^2+R_i^2)}i_l(2arR_i)r^2\; \text{d}r
 	\end{split}
 \end{equation}
-where $i_l$ is a modified spherical Bessel function of the first kind. Inserting a orthonormal radial basis as $g_n(r)$
+where $i_l$ is a modified spherical Bessel function of the first kind. Inserting a orthonormal radial basis as $g_n(r)$,
 \begin{equation}
 	\begin{split}
 		c_{nlm}^Z &=4\pi \sum_{i \in \{Z\}}Y_{lm}^*(\boldsymbol{R}_i) \int_\mathcal{\tilde{R}} \sum_{n'}^{n_\text{max}} \beta_{nn'l}r^l e^{-\alpha_{n'l}r^2}\text{e}^{-a(r^2+R_i^2)} i_l(2arR_i)r^2\; \text{d}r \\
-		&= 4\pi \sum_{i \in \{Z\}}Y_{lm}^*(\boldsymbol{R}_i)\text{e}^{-aR_i^2} \sum_{n'}^{n_\text{max}} \beta_{nn'l}\int_\mathcal{\tilde{R}} r^{l + 2}  \text{e}^{-(\alpha_{n'l} + a)r^2} i_l(2arR_i)\; \text{d}r
+		&= 4\pi \sum_{i \in \{Z\}}Y_{lm}^*(\boldsymbol{R}_i)\text{e}^{-aR_i^2} \sum_{n'}^{n_\text{max}} \beta_{nn'l}\int_\mathcal{\tilde{R}} r^{l + 2}  \text{e}^{-(\alpha_{n'l} + a)r^2} i_l(2arR_i)\; \text{d}r.
 	\end{split}
 \end{equation}
 
-Evaluating the integral where $b  := \alpha_{n'l} + a$ and $c_i:= 2aR_i$
+Evaluating the integral where $b  := \alpha_{n'l} + a$ and $c_i:= 2aR_i$,
 
 \begin{equation}
 	I_{iln'} = \int_0^\infty r^{l+2} \text{e}^{-br^2}i_l(c_i r)\; \text{d}r
 \end{equation}
 
-using $i_\lambda(z) = i^{-\lambda}j_\lambda(iz)$ where from Gradshteyn and Ryzhik\cite{Gradshteyn2007} 
+using $i_\lambda(z) = i^{-\lambda}j_\lambda(iz)$ where from Gradshteyn and Ryzhik,\cite{Gradshteyn2007} 
 % https://arxiv.org/pdf/1908.07374.pdf
 
 \[\int_0^\infty x^{\lambda + 2}\text{e}^{-k_1x^2}j_\lambda(k_2x) \text{d}x =  
 \sqrt{\frac{\pi}{2}} \frac{k_2^\lambda}{(2k_1)^{\lambda + 3/2}}\exp\left(-\frac{k_2^2}{4k_1}\right)\]
 
-so the required integral is with $\lambda = l, k_1 = b, k_2 = ic_i$
+so the required integral is with $\lambda = l, k_1 = b, k_2 = ic_i$,
 
 \begin{equation}
 	\begin{split}
@@ -66,15 +63,15 @@ so the required integral is with $\lambda = l, k_1 = b, k_2 = ic_i$
 		&=  \sqrt{\frac{\pi}{2}} \frac{(2aR_i)^l}{(2(\alpha_{n'l} + a))^{l+3/2}}\exp\left(\frac{(aR_i)^2}{\alpha_{n'l} + a}\right)
 	\end{split}
 \end{equation}
-so then
+so then,
 
 \begin{equation}
 	\begin{split}
-		c_{nlm}^Z &= \sqrt{8\pi^3} \sum_{i \in \{Z\}}Y_{lm}^*(\boldsymbol{R}_i)\,\text{e}^{-aR_i^2} \sum_{n'}^{n_\text{max}} \beta_{nn'l} \frac{(2aR_i)^l}{(2(\alpha_{n'l} + a))^{l+3/2}}\exp\left(\frac{(aR_i)^2}{\alpha_{n'l} + a}\right)
+		c_{nlm}^Z &= \sqrt{8\pi^3} \sum_{i \in \{Z\}}Y_{lm}^*(\boldsymbol{R}_i)\,\text{e}^{-aR_i^2} \sum_{n'}^{n_\text{max}} \beta_{nn'l} \frac{(2aR_i)^l}{(2(\alpha_{n'l} + a))^{l+3/2}}\exp\left(\frac{(aR_i)^2}{\alpha_{n'l} + a}\right).
 	\end{split}
 \end{equation}
 
-Using real spherical harmonic functions 
+Using real spherical harmonic functions,
 
 \begin{equation}
 	Y_{l,m}(\theta, \phi) = \begin{cases}
@@ -83,11 +80,10 @@ Using real spherical harmonic functions
 		\sqrt{2}(-1)^m\,\text{Re}\{Y_l^{m}(\theta, \phi)\} &\quad \text{if } m > 0 \\
 	\end{cases}
 \end{equation}
-where
+where,
 \begin{equation}
-	Y_l^m (\theta, \phi) = \sqrt{\frac{(2l+1)(l- m)!}{4\pi (l+m)!}} P_l^{m}(\cos\theta)e^{im\phi}
+	Y_l^m (\theta, \phi) = \sqrt{\frac{(2l+1)(l- m)!}{4\pi (l+m)!}} P_l^{m}(\cos\theta)e^{im\phi}.
 \end{equation}
-
 
 
 
@@ -102,7 +98,7 @@ For completeness the well-known integral approximation to the particle in a box 
 Converting into spherical polar coordinates with $n_x^2 + n_y^2 + n_z^2 = n_r^2$ and integrating over $n_\theta$ and $n_\phi$ in the positive octant,
 \begin{equation}
 	\begin{aligned}
-		q_\text{trans} \approx \frac{1}{8} \cdot 4\pi \int_0^\infty dn_r\; n_r^2\exp{ {\Big \{} -{\beta}\cdot  \frac{\hbar^2 \pi^2}{2ml^2}n_r^2}{\Big \}} \\
+		q_\text{trans} &\approx \frac{1}{8} \cdot 4\pi \int_0^\infty dn_r\; n_r^2\exp{ {\Big \{} -{\beta}\cdot  \frac{\hbar^2 \pi^2}{2ml^2}n_r^2}{\Big \}} \\
 		&\approx \frac{\pi}{2} \cdot \frac{\sqrt{\pi}}{4} {\Big (} \frac{\hbar^2 \pi^2\beta}{2ml^2} {\Big )}^{-3/2} \\
 		&\approx \pi^{3/2} {\Big (} \frac{ml^2}{2\hbar^2 \pi^2\beta} {\Big )}^{3/2} \\
 		&\approx {\Big (} \frac{2\pi m k_B T}{h^2} {\Big )}^{3/2} V 
@@ -161,8 +157,7 @@ where $r$ is the bond length and $r_e$ the equilibrium bond length. The maximum 
 \end{equation}
 where $x$ is the displacement from equilibrium, with $x > -\frac{1}{a}\ln(2)$ to ensure the momentum is real. 
 
-The classical partition function is then\footnote{Using $\int_{-a}^{+a}  e^{-bx^2} dx = \sqrt{\pi/b}\;\text{erf}(a\sqrt{b})$ and that $\text{erf}$ is an even function.}
-
+The classical partition function is then,\footnote{Using $\int_{-a}^{+a}  e^{-bx^2} dx = \sqrt{\pi/b}\;\text{erf}(a\sqrt{b})$ and that $\text{erf}$ is an even function.}
 \begin{equation}
 	\begin{aligned}
 		Z_c &= \frac{1}{h}\int_{-\infty}^\infty \; dp\int_{-\infty}^{\infty} \; dx \; e^{-\beta E(x,p)} \\
@@ -171,7 +166,7 @@ The classical partition function is then\footnote{Using $\int_{-a}^{+a}  e^{-bx^
 		&= \frac{1}{h} \int_{-\infty}^{\infty}\;\int_{p_-}^{p_+}\; e^{-\beta {p^2}/{2m}} e^{-\beta D_e (1 - e^{-ax})^2}  \; dx  \; dp \\
 		&= \frac{1}{h} \int_{-\infty}^{\infty}\; e^{-\beta D_e (1 - e^{-ax})^2}  \cdot \frac{\sqrt{\pi}\;\text{erf}(p\sqrt{\beta/2m})}{\sqrt{\beta/2m}} \Bigg|_{p_-}^{p_+} \; dx \\
 		&= \frac{2}{h}\sqrt{\frac{2m\pi}{\beta}} \int_{-\frac{1}{a}\ln(2)}^{\infty}\; e^{-\beta D_e (1 - e^{-ax})^2}   \;\text{erf}(p_+\sqrt{\beta/2m}) \; dx \\
-		&= \frac{2}{h}\sqrt{\frac{2m\pi}{\beta}} \int_{-\frac{1}{a}\ln(2)}^{\infty}\; e^{-\beta D_e (1 - e^{-ax})^2}   \;\text{erf}{\Big (} \sqrt{\beta D_e(1 - (1-e^{-ax})^2)}{\Big )} \; dx 
+		&= \frac{2}{h}\sqrt{\frac{2m\pi}{\beta}} \int_{-\frac{1}{a}\ln(2)}^{\infty}\; e^{-\beta D_e (1 - e^{-ax})^2}   \;\text{erf}{\Big (} \sqrt{\beta D_e(1 - (1-e^{-ax})^2)}{\Big )} \; dx. 
 	\end{aligned}
 	\label{morse_pf_integral}
 \end{equation}
@@ -206,9 +201,6 @@ the derivative is,
 		\right)
 	\end{aligned}
 \end{equation}
-
-
-
 
 
 \clearpage
