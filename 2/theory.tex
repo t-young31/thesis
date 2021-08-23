@@ -24,7 +24,7 @@ which, in first quantisation is,
 \hat{H}_\text{elec} = -\frac{1}{2}\sum_{i}^\text{elec} \nabla^2_i  - \sum_{i}^\text{elec}\sum_A^\text{nuc}\frac{Z_A}{|\boldsymbol{r}_i - \boldsymbol{R}_A|} +  \sum_{i}^\text{elec}\sum_{j < i}^\text{elec} \frac{1}{|\boldsymbol{r}_i - \boldsymbol{r}_j|} + \sum_{A}^\text{nuc}\sum_{B < A}^\text{nuc} \frac{Z_A Z_B}{|\boldsymbol{R}_A - \boldsymbol{R}_B|}
 \label{H_elec}
 \end{equation}
- in atomic units, with nuclear charges $Z_A$ and $\nabla$ is the Laplacian operator and the final term is just a constant with respect to the electronic wave function $\hat{V}_\text{nuc-nuc} = V_\text{nn}$. With an electronic Hamiltonian the ground sate energy may be obtained using the variational principle,
+ in atomic units, with nuclear charges $Z_A$, $\nabla$ is the Laplacian operator and the final term is just a constant with respect to the electronic wave function ($\hat{V}_\text{nuc-nuc} = V_\text{nn}$). With an electronic Hamiltonian the ground sate energy may be obtained using the variational principle,
  \begin{equation}
  	E_\text{est.} = \min_{\{\alpha\}}\left(\frac{\braket{\psi(\alpha) | \hat{H}_\text{elec}| \psi(\alpha)}}{\braket{\psi(\alpha)| \psi(\alpha)}}\right) \ge E_0
  \end{equation}
@@ -71,7 +71,7 @@ The general form of a functional is,
 \begin{eqnarray}
 E[\rho(\boldsymbol{r})] = T_\text{elec}[\rho(\boldsymbol{r})]  + V_{J}[\rho(\boldsymbol{r})] + V_\text{ext}[\rho(\boldsymbol{r})] + V_\text{xc}[\rho(\boldsymbol{r})] 
 \end{eqnarray}
-where $T_\text{elec}$ is the total kinetic energy of the electrons, $V_{J}$ the Coulomb repulsion between electrons, $V_\text{ext}$ the `external' electron-nuclear interaction and $V_\text{xc}$ the exchange and correlation functional. Unfortunately, no good approximations to $T_\text{elec}$ exist,\cite{OFDFT2009} motivating the use of Kohn-Sham (KS) DFT, where $\rho$ is expressed in an orbital basis.\cite{KS1965} This allows the exact expression for the kinetic energy for a fictitious non-interacting system with the same density as the full system to be used at the expense of increasing the dimensionality from 3 to 3$N$ and the practical scaling from $O(1)$ to formally $O(N^4)$ \footnote{$V_J$ is a 4-index quantity in atomic orbitals} in the system size $N$.\cite{Lignres2005}
+where $T_\text{elec}$ is the total kinetic energy of the electrons, $V_{J}$ the Coulomb repulsion between electrons, $V_\text{ext}$ the `external' electron-nuclear interaction and $V_\text{xc}$ the exchange and correlation functional. Unfortunately, no good approximations to $T_\text{elec}$ exist,\cite{OFDFT2009} motivating the use of Kohn-Sham (KS) DFT, where $\rho$ is expressed in an orbital basis.\cite{KS1965} This allows the exact expression for the kinetic energy for a fictitious non-interacting system with the same density as the full system to be used at the expense of increasing the dimensionality from 3 to 3$N$ and the practical scaling from $O(1)$ to formally $O(N^4)$\footnote{$V_J$ is a 4-index quantity in atomic orbitals} in the system size $N$.\cite{Lignres2005}
 
 With KS-DFT being the only practical type, the choice of exchange-correlation functional constitutes the DFT zoo's diversity. These are usually arranged according to a Jacobs Ladder hierarchy of increasing complexity, which may not necessarily correlate with accuracy.\cite{Perdew2001} The first rung up from the `Hartree world' is the local density approximation, where $V_\text{xc}$ is a function of the local density at a point; the second rung also depends on the gradient of the density, and includes generalised gradient approximations (GGAs, e.g. PBE,\cite{Perdew1996} BLYP\cite{BLYP_B_1988, LYP_1988}); the third rung also the second derivative of the density (metaGGA, e.g. TPSS\cite{TPSS}); while the fourth and most commonly utilised rung uses exact HF exchange (hybrid, e.g. PBE0,\cite{Adamo1999} B3LYP,\cite{Stephens1994, Becke1993} M06-2X\cite{Zhao2007}) to correct some of the self-interaction error encountered in DFT. Beyond the fourth rung post-HF correlation is introduced usually at a significant computational cost.
 
@@ -118,7 +118,7 @@ Inclusion of the triples cluster operator ($\hat{T}_3$) is usually required to o
 
 \subsection{Molecular Implementation}
 
-Employing numerical approaches to approximate $E$ using WF or density ansatzes as (combinations of-) Slater determinants requires the orbitals need to be expanded in a basis. Molecular orbitals (MOs) are generally expressed as a linear combination of atomic orbitals (AOs) as,
+Employing numerical approaches to approximate $E$ using WF or density ansatzes as (combinations of-) Slater determinants requires the orbitals to be expanded in a basis. Molecular orbitals (MOs) are generally expressed as a linear combination of atomic orbitals (AOs) as,
 \begin{equation}
 	\varphi(\boldsymbol{r}_1) = \phi(\boldsymbol{x}_1)\sigma(\omega_1) \qquad ; \qquad \phi(\boldsymbol{x}_1) = \sum_{k}^\text{AOs} c_k\phi_k^\text{AO}(\boldsymbol{x}_1)
 \end{equation}
@@ -293,7 +293,7 @@ for a collection of nuclear coordinates $\boldsymbol{R}$ with velocities $\bolds
 
 Iterating these equations requires a time-step ($\Delta t$) small enough for the expansion to be accurate but large enough to be computationally efficient. In practice, this is chosen to be $\sim 1$ fs and corresponds to the fastest motion (bond stretching), while fixing E-H bonds allows for a larger 2 fs time-step.\cite{Sweet2013}
 
-In a closed $NVT$ ensemble the energy is conserved, thus the temperature $T \sim 2 T_\text{KE} / 3Nk_\text{B}$ (for $N$ particles) fluctuates as the system accesses different regions of the PES. To simulate at constant temperature  requires thermostats.
+In a closed $NVE$ ensemble the energy is conserved, thus the temperature $T \sim 2 T_\text{KE} / 3Nk_\text{B}$ (for $N$ particles) fluctuates as the system accesses different regions of the PES. To simulate at constant temperature  requires thermostats.
 
 \subsection{Thermostats}
 
@@ -322,7 +322,7 @@ where $\epsilon$ is proportional to the well depth and $q$ a partial atomic char
 This description of the PES is, however, not without its limitations, particularly important are: (1) bonds are harmonic and cannot break, making reactive events impossible to study; (2) static charges are used with no polarisation/charge transfer possible; (3) dispersion is not pairwise additive; (4) closed shell repulsion is exponential in distance not $r^{-12}$; (5) angle potentials are fully harmonic and cannot have two minima (e.g. trigonal bi-pyramidal and square planar metal complexes); (6) fixed atom types are used to define $\epsilon, \sigma$ for a pair of atoms using combination rules, which are an approximation to the optimum values.\cite{Boda2008} Therefore, employing these empirical potentials requires consideration of the resulting (somewhat unknowable) errors, potential lack of transferability and may not facilitate in quantitative comparisons.\cite{Harrison2018, LewisAtwell2021}
 
 
-\section{Machine Learnt Potentials}
+\section{Machine Learned Potentials}
 \subsection{Preamble}
 
 Machine learning concerns the development and study of computer algorithms that improve with data.\cite{Mitchell1997} Categorised into supervised and unsupervised flavours depending on whether the target values are known or not, ML has been widely adopted in the sciences since its inception in  the 1960s.\cite{Carleo2019} Within the chemical domain applications include advanced quantitative structure activity relationships (QSAR) and interatomic potentials (ML force-fields), amongst many others.\cite{Cova2019} An ML or `data-driven' approach to a potential may be written as,
@@ -412,7 +412,7 @@ where $ \boldsymbol{k}^T(\boldsymbol{X}^*) = (k(\boldsymbol{X}_1, \boldsymbol{X}
 	k(\boldsymbol{X}_i, \boldsymbol{X}_j) = \sigma_w^2 \int_\text{space} \rho_i (\boldsymbol{x}) \rho_j (\boldsymbol{x})\; \text{d}\boldsymbol{x} = \sum_{n, n', l} p_{nn'l}^{(i)}p_{nn'l}^{(j)} 
 \end{equation}
 
-which just measures the similarity between two atomic neighbour densities, such that similar environments have kernel values close to one and, thus, likely similar energies. GAP implementations may also include two and three-body components such that the total energy is then a sum of terms and usually a radial basis function kernel,
+which just measures the similarity between two atomic neighbour densities, such that similar environments have kernel values close to one and, thus, likely similar energies. GAP implementations may also include two and three-body components such that the total energy is then a sum of terms, often employing a radial basis function kernel,
 \begin{equation}
 	k_\text{RBF}(\boldsymbol{X}_i, \boldsymbol{X}_j) = \exp\left(-\frac{|\boldsymbol{X}_i - \boldsymbol{X}_j|}{2\theta^2}\right)
 \end{equation}
