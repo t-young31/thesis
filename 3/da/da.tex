@@ -231,7 +231,7 @@ The square planar palladium dummy atom model originally presented by Fujita et a
 	\label{table::si_da_1}
 \end{table}
 
-The modified Fujita parameters a Pd(II) were initially tested in water, employing the three-point transferable intermolecular potential (TIP3P).\cite{Jorgensen1983} The system was simulated for 5 ns and the Pd–O distance obtained from analysis of the radial distribution function (RDF, Figure \ref{fig::si_da_1}). The modal distance compared is somewhat shorter than the experimental value (1.85 \AA$\;$ cf. expt.\cite{Persson2010} 2.01 \AA).
+The modified Fujita parameters a Pd(II) were initially tested in water, employing the three-point transferable intermolecular potential (TIP3P).\cite{Jorgensen1983} The system was simulated for 5 ns and the Pd–O distance obtained from analysis of the radial distribution function (RDF, Figure \ref{fig::si_da_1}). The modal distance is somewhat shorter than the experimental value (1.85 \AA$\;$ cf. expt.\cite{Persson2010} 2.01 \AA).
 
 
 \begin{figure}[h!]
@@ -315,7 +315,7 @@ $\\
 	\end{tabularx}
 	\hrule
 	\vspace{0.2cm}
-	\caption{Average key distances for C-1, C-2, bq$\subset$C-1 and bq$\subset$C-2 calculated from MD simulations. Standard deviations in the block averages through the trajectory are given. NA = not available. a) OTf$\subset$C-1[OTf]. CCDC: 768969. Ref \cite{Liao2010}; b) [pentacenedione$\subset$C-1][OTf]4. CCDC: 1492902. Ref. 6; c) [C-2][SbF6-]2. CCDC: 853226. Ref. \cite{Lewis2012}.}
+	\caption{Average key distances for C-1, C-2, bq$\subset$C-1 and bq$\subset$C-2 calculated from MD simulations. Standard deviations in the block averages through the trajectory are given. NA = not available. a) OTf$\subset$C-1[OTf]. CCDC: 768969. Ref \cite{Liao2010}; b) [pentacenedione$\subset$C-1][OTf]4. CCDC: 1492902. Ref. \cite{August2016}; c) [C-2][SbF$_6^{-}$]$_2$. CCDC: 853226. Ref. \cite{Lewis2012}.}
 	\label{table::si_da_2}
 \end{table}
 
@@ -491,7 +491,7 @@ As can be seen in Table \ref{table::si_da_5}, the thermodynamic contributions to
 \\
 		$\Delta$(bq$\subset$C-2)&	2.8	&-11.8&	-8.3&	7.0	&-13.1&	16.0
 \\
-		&$\Delta\Delta H$cont&	$T\Delta\Delta S$trans	&$T\Delta\Delta S$rot&	$T\Delta\Delta S$vib&	$T\Delta\Delta S$tot&	$\Delta\Delta G$cont 
+		&$\Delta\Delta H_\text{cont}$&	$T\Delta\Delta S_\text{trans}$	&$T\Delta\Delta S_{rot}$&	$T\Delta\Delta S_\text{vib}$&	$T\Delta\Delta S_\text{tot}$&	$\Delta\Delta G_{cont}$ 
 \\
      	&	-0.2&	0.0	&0.0&	0.8	&0.8 &	-1.0
 \\
@@ -499,7 +499,7 @@ As can be seen in Table \ref{table::si_da_5}, the thermodynamic contributions to
 	\end{tabularx}
 	\hrule
 	\vspace{0.2cm}
-	\caption{Thermodynamic contributions (\kcal) to the potential energy calculated at the PBE0-D3BJ/def2-SVP level of theory obtained directly from ORCA. $\Delta X_\text{bind}$ = bq$\subset$C-X – (bq + C-X); X=H, S, G.}
+	\caption{Thermodynamic contributions (\kcal) to the potential energy calculated at the PBE0-D3BJ/def2-SVP level of theory obtained directly from ORCA. $\Delta X_\text{bind}$ = bq$\subset$C-X – (bq + C-X); X=$H, S, G$.}
 	\label{table::si_da_5}
 \end{table}
 
@@ -531,7 +531,7 @@ This correction reduces the translational entropy term; for a two to one change 
 
 However, despite this correction, there is still an inconsistency in the treatment of the translational entropy. In solution the translation of bq and C-1 are treated as a particle in a box, while within C-1, the translation of bq is treated by an interpolation of a harmonic oscillator (HO) and rigid rotor (RR), this quasi-RRHO approximation is the default in the ORCA package. While Grimme’s quasi-RRHO approximation\cite{Grimme2012} is suitable for treating low-frequency normal modes corresponding to rotations, obviously it is inappropriate for treating a translational mode such as those depicted in Figure \ref{fig::si_da_12}, which are treated as $>$90\% free rotors within the default weighting scheme used by Grimme and implemented in ORCA (Figure \ref{fig::si_da_13}). 
 
-Treating all the modes harmonically, partially removes the dampening of the low frequency modes contribution to the entropy and again reduces $\Delta G_\text{cont}$. Using the harmonic approximation along with the 1 M standard stare correction within our otherm code \\ (https://github.com/duartegroup/otherm) we obtain $\Delta G_\text{cont}$(bq$\subset$C-1) = 11.2 \kcal and $\Delta G_\text{cont}$(bq$\subset$C-1) = 12.5 \kcal (Table  \ref{table::si_da_6}). Of course, this then removes the more correct treatment of modes which correspond to rotations.
+Treating all the modes harmonically partially removes the dampening of the low frequency modes contribution to the entropy and again reduces $\Delta G_\text{cont}$. Using the harmonic approximation along with the 1 M standard stare correction within our otherm code \\ (\url{https://github.com/duartegroup/otherm}) we obtain $\Delta G_\text{cont}$(bq$\subset$C-1) = 11.2 \kcal and $\Delta G_\text{cont}$(bq$\subset$C-1) = 12.5 \kcalx (Table  \ref{table::si_da_6}). Of course, this then removes the more correct treatment of modes which correspond to rotations.
 
 
 \begin{figure}[h!]
@@ -616,7 +616,7 @@ From the proceeding discussion we have shown there to be differences with the tr
 	\end{tabularx}
 	\hrule
 	\vspace{0.2cm}
-	\caption{Thermodynamic contributions (\kcal) to the potential energy calculated at the PBE0-D3BJ/def2-SVP level of theory. $\Delta_\text{bind}$ = (bq$\subset$C-X + DCM) - (bq + DCM$\subset$C-X). Energies calculated at the SMD(DCM) M2/M1 level of theory. Note that the geometry optimized structures of DCM$\subset$C-1 and DCM$\subset$C-2 contained two and three imaginary modes respectively (all < 20$i$ cm$^{-1}$). }
+	\caption{Thermodynamic contributions (\kcal) to the potential energy calculated at the PBE0-D3BJ/def2-SVP level of theory. $\Delta_\text{bind}$ = (bq$\subset$C-X + DCM) - (bq + DCM$\subset$C-X). Energies calculated at the SMD(DCM) M2/M1 level of theory. Note that the geometry optimized structures of DCM$\subset$C-1 and DCM$\subset$C-2 contained two and three imaginary modes respectively (all $<20$i cm$^{-1}$).}
 	\label{table::si_da_7}
 \end{table}
 
@@ -669,7 +669,7 @@ From the proceeding discussion we have shown there to be differences with the tr
 \\
 		&q10&	-3.4	&-	&-
 \\
-		MAD		&&&	&	1.7
+		MAE		&&&	&	1.7
 \\
 
 	\end{tabularx}
@@ -732,7 +732,7 @@ From the proceeding discussion we have shown there to be differences with the tr
 	\includegraphics[width=13cm]{3/da//figs/figS20}
 	\vspace{0.2cm}
 	\hrule
-	\caption{Representative set of 10 uncatalysed Diels–Alder (DA) reactions reported in ref. 20}
+	\caption{Quinones and dienes for a representative set of 10 uncatalysed Diels–Alder (DA) reactions reported in ref. \cite{MartCentelles2018}.}
 	\label{fig::si_da_20}
 \end{figure}
 
@@ -854,7 +854,7 @@ From the proceeding discussion we have shown there to be differences with the tr
 \clearpage   % Don't delete me, required for formatting
 
 
-First, the most stable species or set of species available to the C-2, bq, isoprene in DCM system is found, from which the TS likely occurs. We assume that a pre-equilibrium is established quickly, with all energetic barriers being smaller than the for the DA reaction between isoprene and bq. Due to the conformational flexibility of L-1/2, other arrangements of the reactants inside the cage, including binding of both the diene and dienophile is also possible. However, they were found to have higher energies both at the complex and TS stage. 
+First, the most stable species or set of species available to the C-2, bq, isoprene in DCM system is found, from which the TS likely occurs. We assume that a pre-equilibrium is established quickly, with all energetic barriers being smaller than the for the DA reaction between isoprene and bq. Due to the conformational flexibility of L${}^\text{CH}$/L${}^\text{N}$, other arrangements of the reactants inside the cage, including binding of both the diene and dienophile is also possible. However, they were found to have higher energies both at the complex and TS stage. 
 
 The increased electrophilicity of the quinone within the cage can be quantified by the total effective charge of bq within C-1/C-2 (relative to its neutral form in solution). Within C-1/C-2 bq has a slightly positive charge – indicating that the +4 cage removes some electron density from bq, thereby activating it as a dienophile. This effect is slightly more pronounced in C-1 across the different decomposition schemes.
 
@@ -890,7 +890,7 @@ To assess the effect the C-H$\cdots$O interactions play in enhancing the electro
 	\includegraphics[width=\textwidth]{3/da//figs/figS24}
 	\vspace{0.2cm}
 	\hrule
-	\caption{Electron density difference map for bq$\subset$C-2 showing regions depleted(red) and enhanced (green) in electron density when the interaction between cage and substrate is activated. Density difference plotted at an isovalue of 0.001 au.}
+	\caption{Electron density difference map for bq$\subset$C-2 showing regions depleted (red) and enhanced (blue) in electron density when the interaction between cage and substrate is activated. Density difference plotted at an isovalue of 0.001 au.}
 	\label{fig::si_da_24}
 \end{figure}
 
@@ -976,7 +976,7 @@ For the full catalytic cycle presented in the manuscript the corresponding entha
 	\includegraphics[width=12cm]{3/da//figs/figS29}
 	\vspace{0.2cm}
 	\hrule
-	\caption{(a) Non-covalent interaction (NCI) isosurface (0.05 au) at the TS geometry for C-1 and C-2. An identifiable CH$\cdots$N interaction (purple circles) between the CH group of the diene and the catalyst nitrogen is observed in C-2. NCI calculated at the PBE0-D3BJ/def2-SVP level of theory. (b) Potential energy as a function of distance from 2 rearmost X (C/N) atoms to C$_\alpha$s on q1 calculated at the PBE0-D3BJ/def2-SVP level of theory. Distance at the TS is indicated with a vertical grey line.}
+	\caption{(a) Non-covalent interaction (NCI) isosurface (0.05 au) at the TS geometry for C-1 and C-2. An identifiable CH$\cdots$N interaction (purple circles) between the CH group of the diene and the catalyst nitrogen is observed in C-2. NCI calculated at the PBE0-D3BJ/def2-SVP level of theory. (b) Potential energy as a function of distance from 2 rearmost X (C/N) atoms to C$_\alpha$s on bq calculated at the PBE0-D3BJ/def2-SVP level of theory. Distance at the TS is indicated with a vertical grey line.}
 	\label{fig::si_da_29}
 \end{figure}
 
