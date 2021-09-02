@@ -246,7 +246,7 @@ It is worth noting that in the systems tested by Garza, Henchmen and Nakai the a
 
 A meaningful comparison to experiment requires comparing free energies that have been obtained at the same (standard) state, which for molecules is usually taken to be 1 M. A correction is then needed to calculate a free energy at the standard state for an unequal simulation volume of,\cite{General2010} 
 \begin{equation}
-	F^{\standardstate} = F^\text{sim} + k_BT \ln\left(\frac{V^\standardstate}{V^\text{sim}}\right)
+	F^{\standardstate} = F^\text{sim} - k_BT \ln\left(\frac{V^\standardstate}{V^\text{sim}}\right)
 \end{equation}
 where $F$ is a free energy ($G, A$) and $V^\text{sim}$ the volume used for the simulation. 
 
@@ -254,7 +254,7 @@ In calculating the translational entropy within a defined cavity the solute conc
 %8.3145*298.15*ln(1661/30)/1000/4.184
 Therefore, 2.5 \kcalx provides a useful upper bound on the concentration correction the true `simulation' volume from which the exponential well is obtained is larger than just the molecular volume. In fact, with a molecular volume more representative of those usually studied in solution phase reactions, with a radius $\sim 5$ \AA$\;$  ($\sim 500-700$ \AA$^3$ is common in drug-like molecules\cite{Khanna2009}) the volume correction decreases to just 0.5–-0.7 \kcalx at room temperature. Thus, in all but the smallest solvated molecules, this contribution is small.
 \\
-It is worth noting that this correction term is distinct from the entropy of mixing, as the maximum $TS_\text{mix} \sim 0.4\;$ \kcal,\footnote{Obtained from the standard statistical mechanics result $\Delta S_\text{mix} = -R(x \ln x + (1-x)\ln(1 - x))$ for a two component system one of which has mole fraction $x$.}  and thus generally negligible at ambient temperature or below.
+It is worth noting that this correction term is distinct from the entropy of mixing, as the maximum $TS_\text{mix} \sim 0.4\;$ \kcal,\footnote{Obtained from the standard statistical mechanics result $\Delta S_\text{mix} = -k_B(x \ln x + (1-x)\ln(1 - x))$ for a two component system one of which has mole fraction $x$.}  and thus generally negligible at ambient temperature or below.
 
 
 \section{Limitations of the IGM and Harmonic Approximation}
@@ -771,7 +771,7 @@ where once again only a partial eigenspecturm is required so solving Eqn. \eqref
 	\label{fig::entropy_X6}
 \end{figure*}
 
-The partial eigenspecturm is obtained as above and reasonably efficiently (execution time $\sim1$ min), from which summation over states converges reasonably to the classical result for CO$_2$ in water (\figurename{ \ref{fig::entropy_X7}a}), and is within 1 \% for a limiting case (\figurename{ \ref{fig::entropy_X7}b}) at a lower temperature.\footnote{A reduced temperature ($T$ = 50 K) is used in this system to limit the number of  eigenvalues required to converge the quantum PF. The quantum--classical correspondence is expected to be even more exact at larger higher temperatures.}. This convergence is expected given as the dimensionality of a system increases, it becomes more classical in nature (\emph{cf.} the quantum-classical correspondence in the limit of infinite spacial dimensions).\cite{QuantClassCorrespondence}. Noting that the entropy depends on the log of the PF this suggests the classical approximation will be sufficient.
+The partial eigenspecturm is obtained as above and reasonably efficiently (execution time $\sim1$ min), from which summation over states converges reasonably to the classical result for CO$_2$ in water (\figurename{ \ref{fig::entropy_X7}a}), and is within 1 \% for a limiting case (\figurename{ \ref{fig::entropy_X7}b}) at a lower temperature.\footnote{A reduced temperature ($T$ = 50 K) is used in this system to limit the number of  eigenvalues required to converge the quantum PF. The quantum--classical correspondence is expected to be even more exact at larger higher temperatures.} This convergence is expected given as the dimensionality of a system increases, it becomes more classical in nature (\emph{cf.} the quantum-classical correspondence in the limit of infinite spacial dimensions).\cite{QuantClassCorrespondence}. Noting that the entropy depends on the log of the PF this suggests the classical approximation will be sufficient.
 
 \vspace{0.2cm}
 \begin{figure*}[h!]

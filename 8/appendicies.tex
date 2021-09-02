@@ -90,9 +90,9 @@ where,
 \section{Solution Phase Entropy}
 \subsection{Partition Functions} \label{section::appendix_igm_partition_functions}
 
-For completeness the well-known integral approximation to the particle in a box PF is reproduced below. Provided the gaps between energy levels are small the integral can be replaced by a sum to give,
+For completeness, the well-known integral approximation to the particle in a box PF is reproduced below. Provided the gaps between energy levels are small the integral can be replaced by a sum to give,
 \begin{equation}
-	q_\text{trans} \approx \int_0^\infty dn_x\;dn_y\;dn_z\; \exp{ {\Big \{} -{\beta}\cdot  \frac{\hbar^2 \pi^2}{2ml^2}(n_x^2 + n_y^2 + n_z^2)}{\Big \}}.
+	q_\text{trans} \approx \iiint_0^\infty dn_x\;dn_y\;dn_z\; \exp{ {\Big \{} -{\beta}\cdot  \frac{\hbar^2 \pi^2}{2ml^2}(n_x^2 + n_y^2 + n_z^2)}{\Big \}}.
 \end{equation}
 
 Converting into spherical polar coordinates with $n_x^2 + n_y^2 + n_z^2 = n_r^2$ and integrating over $n_\theta$ and $n_\phi$ in the positive octant,
@@ -111,7 +111,7 @@ where the standard integral $\int_{0}^{\infty} dx\; x^2 e^{-ax^2} = \sqrt{\pi}/4
 		q_\text{trans, c} &= \frac{1}{h^{3}}\int\int e^{-\beta H(\boldsymbol{p}, \boldsymbol{x})} \; d\boldsymbol{p}^{3} d\boldsymbol{x}^{3} \\
 		&= \frac{1}{h^{3}}\int_{-\infty}^\infty e^{-\beta \boldsymbol{p}^2/2m} \; d\boldsymbol{p}^{3} \int_0^l e^{-\beta \cdot 0} \;  d\boldsymbol{x}^{3} \\
 		&= \frac{1}{h^{3}} {\Big \{}  \int_{-\infty}^\infty e^{-\beta {p_k}^2/2m} \; d{p_k} {\Big \}}^3 {\Big \{}  \int_0^l  \;  dx_k {\Big \}}^3 \\
-		&= \frac{l^3}{h^{3}} {\Big \{}  \sqrt{\frac{\pi}{1/(2 k_b T)}} {\Big \}}^3 \\
+		&= \frac{l^3}{h^{3}} {\Big \{}  \sqrt{\frac{\pi}{1/(2 k_B T)}} {\Big \}}^3 \\
 		&={\Big (} \frac{2\pi m k_B T}{h^2} {\Big )}^{3/2} V.
 		\label{q_trans_pib_classical}
 	\end{aligned}
@@ -133,15 +133,15 @@ is derived as follows. First the classical partition function is,\footnote{Using
 		&= \frac{1}{h}\int_{-\infty}^\infty \; dp \; e^{-\beta p^2/2m} \int_{-\infty}^{\infty} \; dx \; e^{-\beta V(x)} \\
 		&= \frac{1}{h}\int_{-r_e}^\infty \; dp \; e^{-\beta p^2/2m} \int_{-r_e}^{\infty} \; dx \; e^{-\beta m\omega^2x^2/2} \\
 		&=\frac{1}{h}\cdot \frac{\sqrt{\pi}\;\text{erfc}(-r_e \sqrt{\beta/2m})}{2\sqrt{\beta/2m}}\cdot \frac{\sqrt{\pi}\;\text{erfc}(-r_e \sqrt{\beta m\omega^2/2})}{2\sqrt{\beta m\omega^2/2}} \\
-		&=\frac{\pi k_b T}{2h\omega} \;\text{erfc}(-r_e \sqrt{\beta/2m})\;\text{erfc}(-r_e \sqrt{\beta m\omega^2/2})
+		&=\frac{\pi k_B T}{2h\omega} \;\text{erfc}(-r_e \sqrt{\beta/2m})\;\text{erfc}(-r_e \sqrt{\beta m\omega^2/2})
 	\end{aligned}
 \end{equation}
 
-where $\text{erfc}(x)$ is the complementary error function. The derivative with respect to temperature for $a = r_e^2/ 2k_B m$ and $b = r_e^2m\omega^2/2k_B$ is, 
+where $\text{erfc}(x)$ is the complementary error function. The derivative with respect to temperature for $a := r_e^2/ 2k_B m$ and $b := r_e^2m\omega^2/2k_B$ is, 
 \begin{equation}
 	\begin{aligned}
-		\frac{d Z_c}{dT} &= \frac{d}{dT} {\Big \{} \frac{\pi k_b T}{2h\omega} \;\text{erfc}(- \sqrt{a/T})\;\text{erfc}(- \sqrt{b/T}) {\Big \}} \\
-		&= \frac{ k_b}{4\hbar\omega} {\Bigg (} \text{erfc}(- \sqrt{a/T})\;\text{erfc}(- \sqrt{b/T}\,) - \frac{b e^{-b/T} \; \text{erfc}(-\sqrt{a/T})}{\sqrt{b\pi T}} - \frac{a e^{-a/T} \; \text{erfc}(-\sqrt{b/T})}{\sqrt{a\pi T}} {\Bigg )}
+		\frac{d Z_c}{dT} &= \frac{d}{dT} {\Big \{} \frac{\pi k_B T}{2h\omega} \;\text{erfc}(- \sqrt{a/T})\;\text{erfc}(- \sqrt{b/T}) {\Big \}} \\
+		&= \frac{ k_B}{4\hbar\omega} {\Bigg (} \text{erfc}(- \sqrt{a/T})\;\text{erfc}(- \sqrt{b/T}\,) - \frac{b e^{-b/T} \; \text{erfc}(-\sqrt{a/T})}{\sqrt{b\pi T}} - \frac{a e^{-a/T} \; \text{erfc}(-\sqrt{b/T})}{\sqrt{a\pi T}} {\Bigg )}
 	\end{aligned}
 \end{equation}
 
@@ -161,9 +161,9 @@ The classical partition function is then,\footnote{Using $\int_{-a}^{+a}  e^{-bx
 \begin{equation}
 	\begin{aligned}
 		Z_c &= \frac{1}{h}\int_{-\infty}^\infty \; dp\int_{-\infty}^{\infty} \; dx \; e^{-\beta E(x,p)} \\
-		&= \frac{1}{h}\int_{p_-}^{p_+} \int_{-\infty}^{\infty}\; e^{-\beta \{{p^2}/{2m} + D_e (1 - e^{-ax})^2\}}  \; dx  \; dp \\
-		&= \frac{1}{h}\int_{p_-}^{p_+} \int_{-\infty}^{\infty}\; e^{-\beta {p^2}/{2m}} e^{-\beta D_e (1 - e^{-ax})^2}  \; dx  \; dp \\
-		&= \frac{1}{h} \int_{-\infty}^{\infty}\;\int_{p_-}^{p_+}\; e^{-\beta {p^2}/{2m}} e^{-\beta D_e (1 - e^{-ax})^2}  \; dx  \; dp \\
+		&= \frac{1}{h}\int_{p_-}^{p_+} \int_{-\frac{1}{a}\ln(2)}^{\infty}\; e^{-\beta \{{p^2}/{2m} + D_e (1 - e^{-ax})^2\}}  \; dx  \; dp \\
+		&= \frac{1}{h}\int_{p_-}^{p_+} \int_{-\frac{1}{a}\ln(2)}^{\infty}\; e^{-\beta {p^2}/{2m}} e^{-\beta D_e (1 - e^{-ax})^2}  \; dx  \; dp \\
+		&= \frac{1}{h} \int_{-\frac{1}{a}\ln(2)}^{\infty}\;\int_{p_-}^{p_+}\; e^{-\beta {p^2}/{2m}} e^{-\beta D_e (1 - e^{-ax})^2}  \; dp  \; dx \\
 		&= \frac{1}{h} \int_{-\infty}^{\infty}\; e^{-\beta D_e (1 - e^{-ax})^2}  \cdot \frac{\sqrt{\pi}\;\text{erf}(p\sqrt{\beta/2m})}{\sqrt{\beta/2m}} \Bigg|_{p_-}^{p_+} \; dx \\
 		&= \frac{2}{h}\sqrt{\frac{2m\pi}{\beta}} \int_{-\frac{1}{a}\ln(2)}^{\infty}\; e^{-\beta D_e (1 - e^{-ax})^2}   \;\text{erf}(p_+\sqrt{\beta/2m}) \; dx \\
 		&= \frac{2}{h}\sqrt{\frac{2m\pi}{\beta}} \int_{-\frac{1}{a}\ln(2)}^{\infty}\; e^{-\beta D_e (1 - e^{-ax})^2}   \;\text{erf}{\Big (} \sqrt{\beta D_e(1 - (1-e^{-ax})^2)}{\Big )} \; dx. 

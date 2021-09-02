@@ -176,7 +176,7 @@ To rectify these limitations a completely new (Open)SMILES parser was developed 
 
 While simple, this approach is remarkably efficient at generating linear molecules, with an execution time generally $<100$ milliseconds. There are, of course, special cases that require some care. For example, double bonds with a defined $E/Z$ stereochemistry require the dihedral angle across the double bond to be adjusted appropriately. Rings and particularly fused rings are challenging to build using this approach, as added atoms can no longer be chosen to minimise the repulsion with the rest of the structure. Once ring atoms have been added sequentially the dihedral angles are adjusted to minimise,
 \begin{equation}
-	V = k(r-r_\text{avg})^2 + \sum_{i>j} {c_{ij}}/{r^n}
+	V = k(r-r_\text{avg})^2 + \sum_{i>j} {c_{ij}}/{r_{ij}^n}
 \end{equation}
 where $n$ is a positive integer and average distances $r_\text{avg}$ are taken from the CCDC. This `closes' the ring while maintaining a small steric repulsion. 
 
