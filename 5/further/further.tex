@@ -184,7 +184,7 @@ For a flat aromatic ring (e.g. phenyl) then the three dihedrals must be simply b
 
 \subsection{Future Development}
 
-Currently, \ade provides access to reaction profiles for a wide range of reactions. However, some limitations remain that encourage further developments.Currently a maximum of four bonds can be been broken and formed in a a single step and the performance limited by the inaccuracy of `low-level’ electronic structure methods. Addressing these limitations will be the subject of future development, with the current focus on the following aspects:
+Currently, \ade provides access to reaction profiles for a wide range of reactions. However, some limitations remain that encourage further developments. Currently a maximum of four bonds can be been broken and formed in a a single step and the performance limited by the inaccuracy of `low-level’ electronic structure methods. Addressing these limitations will be the subject of future development, with the current focus on the following aspects:
  
 \begin{itemize}
 	\item Improved load balancing in conformer optimisation. Currently, each conformer optimisation or single-point energy evaluation is performed in serial. While this approach is close to optimal for calculations run on $\lesssim 8$ CPU cores, for which most electronic structure codes parallelise almost linearly up to, it is not for \ade calculations performed on more cores. A context-aware and dynamic multiprocessing approach therefore would be beneficial to reduce the total wall time.
